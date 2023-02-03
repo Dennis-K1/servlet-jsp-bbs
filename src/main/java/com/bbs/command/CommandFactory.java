@@ -1,41 +1,83 @@
 package com.bbs.command;
 
-import com.bbs.command.admin.AdminCommandMap;
+import com.bbs.command.admin.AdminIndexCommand;
+import com.bbs.command.admin.AdminLoginCommand;
+import com.bbs.command.client.IndexCommand;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 모든 Controller 에서 사용하는 Command 팩토리
  */
 public abstract class CommandFactory {
 
+
 	/**
-	 * 요청 경로와 요청 CommandKey 에 맞는 Command 객체 반환
-	 * @param request 클라이언트 요청
+	 * 어드민 페이지 커맨드 맵
 	 */
-	public static Command getCommand(HttpServletRequest request) {
+	private static final Map<String, Command> adminCommandMap = loadAdminCommandMap();
 
-		Map<String, Map<String, Command>> commandMap = loadCommandMap();
+	/**
+	 * 클라이언트 페이지 커맨드 맵
+	 */
+	private static final Map<String, Command> clientCommandMap = loadClientCommandMap();
 
-		String commandName = request.getServletPath().substring(1);
-		String commandKey = request.getPathInfo().substring(1);
 
-		Command command = commandMap.get(commandName).get(commandKey);
+	/**
+	 * 요청 경로에 해당하는 Command 객체 반환
+	 *
+	 * @param requestURI 요청 경로
+	 */
+	public static Command getCommand(String requestURI) {
 
-		return command;
+		if (requestURI.length() > 1 && requestURI.endsWith("/")) {
+			requestURI = requestURI.substring(0, requestURI.length() - 1);
+		}
+
+		if (isAdminRequest(requestURI)) {
+			return adminCommandMap.get(requestURI);
+		}
+
+		return clientCommandMap.get(requestURI);
+	}
+
+
+	/**
+	 * 어드민 페이지 커맨드 맵
+	 */
+	private static Map<String, Command> loadAdminCommandMap() {
+
+		Map<String, Command> commandMap = new ConcurrentHashMap();
+
+		commandMap.put("/admin", new AdminIndexCommand());
+		commandMap.put("/admin/login", new AdminLoginCommand());
+
+		return commandMap;
 	}
 
 	/**
-	 * Map 객체에 요청 경로와 해당하는 CommandMap 취합하여 반환
+	 * 클라이언트 페이지 커맨드 맵
 	 */
-	private static Map<String, Map<String, Command>> loadCommandMap() {
+	private static Map<String, Command> loadClientCommandMap() {
 
-		Map<String, Map<String, Command>> commandMap = new ConcurrentHashMap();
+		Map<String, Command> commandMap = new ConcurrentHashMap();
 
-		commandMap.put("admin", new AdminCommandMap());
+		commandMap.put("/", new IndexCommand());
 
 		return commandMap;
+	}
+
+	/**
+	 * 경로명 시작이 어드민 페이지에 해당하는 "admin"인지 확인
+	 * @param requestURI 요청 경로
+	 * @return admin 페이지 요청일 시 true
+	 */
+	private static boolean isAdminRequest(String requestURI) {
+		String[] dividedPaths = requestURI.split("/");
+		if (dividedPaths.length > 1 && dividedPaths[1].equals("admin")) {
+			return true;
+		}
+		return false;
 	}
 }
 

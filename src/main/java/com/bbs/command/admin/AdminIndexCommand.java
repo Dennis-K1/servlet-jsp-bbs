@@ -6,11 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TestCommand implements Command {
+public class AdminIndexCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		return "123";
+		return ADMIN_VIEW_PATH + "index.jsp";
 	}
 }

@@ -2,6 +2,7 @@ package com.bbs.command;
 
 import com.bbs.command.admin.AdminIndexCommand;
 import com.bbs.command.admin.AdminLoginCommand;
+import com.bbs.command.admin.UserCommand;
 import com.bbs.command.client.IndexCommand;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,6 +52,7 @@ public abstract class CommandFactory {
 
 		commandMap.put("/admin", new AdminIndexCommand());
 		commandMap.put("/admin/login", new AdminLoginCommand());
+		commandMap.put("/admin/user", new UserCommand());
 
 		return commandMap;
 	}

@@ -4,6 +4,9 @@ import com.bbs.command.admin.AdminIndexCommand;
 import com.bbs.command.admin.AdminLoginCommand;
 import com.bbs.command.admin.UserCommand;
 import com.bbs.command.client.IndexCommand;
+import com.bbs.command.client.UserLoginCommand;
+import com.bbs.command.client.UserRegisterCommand;
+import com.bbs.util.CommandUtil;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,11 +34,7 @@ public abstract class CommandFactory {
 	 */
 	public static Command getCommand(String requestURI) {
 
-		if (requestURI.length() > 1 && requestURI.endsWith("/")) {
-			requestURI = requestURI.substring(0, requestURI.length() - 1);
-		}
-
-		if (isAdminRequest(requestURI)) {
+		if (CommandUtil.isAdminRequest(requestURI)) {
 			return adminCommandMap.get(requestURI);
 		}
 
@@ -65,21 +64,11 @@ public abstract class CommandFactory {
 		Map<String, Command> commandMap = new ConcurrentHashMap();
 
 		commandMap.put("/", new IndexCommand());
+		commandMap.put("/login", new UserLoginCommand());
+		commandMap.put("/register", new UserRegisterCommand());
 
 		return commandMap;
 	}
 
-	/**
-	 * 경로명 시작이 어드민 페이지에 해당하는 "admin"인지 확인
-	 * @param requestURI 요청 경로
-	 * @return admin 페이지 요청일 시 true
-	 */
-	private static boolean isAdminRequest(String requestURI) {
-		String[] dividedPaths = requestURI.split("/");
-		if (dividedPaths.length > 1 && dividedPaths[1].equals("admin")) {
-			return true;
-		}
-		return false;
-	}
 }
 

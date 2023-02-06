@@ -4,11 +4,40 @@
 
 <mapper namespace="com.bbs.dao.UserDAO">
   <select id="getUser" parameterType="string" resultType="com.bbs.domain.User">
-        SELECT
-            *
-        FROM
-            user
-        WHERE
-            account = #{value}
+    SELECT
+        *
+    FROM
+        user
+    WHERE
+        account = #{value}
+  </select>
+
+  <select id="getRoleName" parameterType="Long" resultType="String">
+    SELECT
+        name
+    FROM
+        role
+    WHERE
+        id = #{value}
+  </select>
+
+  <insert id="registerUser" parameterType="com.bbs.domain.User">
+    INSERT INTO
+        user (role_id,
+              account,
+              password)
+    VALUES
+            (#{roleId},
+            #{account},
+            #{password})
+  </insert>
+
+  <select id="getUserPassword" parameterType="string" resultType="string">
+    SELECT
+        password
+    FROM
+        user
+    WHERE
+        account = #{value}
   </select>
 </mapper>

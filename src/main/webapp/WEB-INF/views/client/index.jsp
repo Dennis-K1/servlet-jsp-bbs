@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<%=request.getAttribute("account")%>
 client index
 </body>
 </html>

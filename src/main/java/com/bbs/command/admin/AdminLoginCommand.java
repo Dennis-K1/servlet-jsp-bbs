@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.ibatis.javassist.NotFoundException;
 
 public class AdminLoginCommand implements Command {
@@ -34,6 +35,9 @@ public class AdminLoginCommand implements Command {
 		if (!userService.isExistingUser(admin) || !userService.isAdmin(admin)) {
 			throw new ServletException("존재하지 않는 어드민");
 		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("account", admin.getAccount());
 
 		return
 			CommandInformation.builder()

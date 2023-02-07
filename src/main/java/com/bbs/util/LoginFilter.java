@@ -1,5 +1,6 @@
 package com.bbs.util;
 
+import com.bbs.service.UserService;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class LoginFilter implements Filter {
 
-	private static final String[] whiteList = {"/", "/login", "/admin/login"};
+	private static final String[] whiteList = {"/", "/login", "/admin/login", "/register"};
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

@@ -3,7 +3,6 @@ package com.bbs.service;
 import com.bbs.domain.User;
 import com.bbs.dao.UserDAO;
 import com.bbs.util.Role;
-import java.util.Objects;
 
 /**
  * 사용자 관련 서비스
@@ -11,15 +10,11 @@ import java.util.Objects;
 public class UserService {
 
 	/**
-	 * 해당 아이디의 사용자 반환
-	 * @param account 사용자 아이디
-	 * @return 사용자 정보를 담은 User 객체
+	 * 유저 등록
+	 *
+	 * @param user 유저가 입력한 정보로 생성한 사용자 객체
+	 * @return
 	 */
-	public User getUser(String account) {
-		UserDAO userDAO = new UserDAO();
-		return userDAO.getUser(account);
-	}
-
 	public int registerUser(User user) {
 		UserDAO userDAO = new UserDAO();
 		return userDAO.registerUser(user);
@@ -33,7 +28,7 @@ public class UserService {
 	public boolean isAdmin(User admin) {
 		UserDAO userDAO = new UserDAO();
 
-		Long roleId = userDAO.getUser(admin.getAccount()).getRoleId();
+		Long roleId = userDAO.getUserByAccount(admin.getAccount()).getRoleId();
 
 		String roleName = userDAO.getRoleName(roleId);
 
@@ -43,20 +38,22 @@ public class UserService {
 		return false;
 	}
 
-	public boolean isExistingUser(User user) {
+	/**
+	 * 로그인
+	 * 유저가 입력한 아이디, 비밀번호 검증
+	 *
+	 * @param user 유저가 입력한 정보로 생성한 사용자 객체
+	 * @return 통과시 사용자 객체, 미통과시 null
+	 */
+	public User login(User user) {
 		UserDAO userDAO = new UserDAO();
-		if (Objects.equals(null, userDAO.getUser(user.getAccount()))) {
-			return false;
+		User userInformation = userDAO.getUserByAccount(user.getAccount());
+		if (userInformation == null) {
+			return null;
 		}
-		return true;
-	}
-
-	public boolean isCorrectPassword(User user) {
-		UserDAO userDAO = new UserDAO();
-		String userPassword = userDAO.getUserPassword(user.getAccount());
-		if (userPassword.equals(user.getPassword())) {
-			return true;
+		if (!user.getPassword().equals(userInformation.getPassword())) {
+			return null;
 		}
-		return false;
+		return userInformation;
 	}
 }

@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter({"/register", "/login"})
+@WebFilter({"/register", "/login", "/admin/login"})
 public class PasswordEncryptionFilter implements Filter {
 
 	@Override

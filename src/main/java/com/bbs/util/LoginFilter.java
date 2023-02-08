@@ -15,9 +15,22 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class LoginFilter implements Filter {
 
+	/**
+	 * 로그인 필터가 적용되지 않는 요청 경로 모음
+	 */
 	private static final String[] whiteList = {"/admin/login", "/admin/login/","/", "/login", "/login/", "/register",
 		"/register/"};
 
+	/**
+	 * whiteList 에 해당하는 요청 경로일 경우 pass
+	 * 아닌 경우 로그인 여부 확인 후 로그인 되어있을 경우 진행, 아닐 경우 로그인 페이지 이동
+	 *
+	 * @param request the <code>ServletRequest</code> object contains the client's request
+	 * @param response the <code>ServletResponse</code> object contains the filter's response
+	 * @param chain the <code>FilterChain</code> for invoking the next filter or the resource
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 		throws IOException, ServletException {

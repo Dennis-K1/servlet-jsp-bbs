@@ -7,6 +7,9 @@ import java.util.Base64;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+/**
+ * 패스워드 인코딩을 위한 래퍼 객체
+ */
 public class PasswordEncryptionWrapper extends HttpServletRequestWrapper {
 
 	/**
@@ -19,6 +22,12 @@ public class PasswordEncryptionWrapper extends HttpServletRequestWrapper {
 		super(request);
 	}
 
+	/**
+	 * 파라미터명이 Password 일 경우 패스워드 인코딩 후 반환
+	 * @param name 파라미터명
+	 *
+	 * @return 파라미터 값
+	 */
 	@Override
 	public String getParameter(String name) {
 		if (name != null && name.equals("password")) {
@@ -27,6 +36,12 @@ public class PasswordEncryptionWrapper extends HttpServletRequestWrapper {
 		return super.getParameter(name);
 	}
 
+	/**
+	 * 패스워드 인코딩 (SHA-512)
+	 *
+	 * @param password 패스워드 값
+	 * @return 인코딩된 패스워드
+	 */
 	private String encodePassword(String password) {
 		MessageDigest messageDigest = null;
 

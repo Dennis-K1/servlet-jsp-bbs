@@ -2,11 +2,8 @@ package com.bbs.controller;
 
 import com.bbs.command.Command;
 import com.bbs.command.CommandFactory;
-import com.bbs.command.CommandInformation;
+import com.bbs.command.View;
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,22 +27,24 @@ public class Controller extends HttpServlet {
 	protected void handleRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
-		String commandKey = getCommandKey(request);
+		String requestURI = getRequestURI(request);
 
-		Command command = CommandFactory.getCommand(commandKey);
+		Command command = CommandFactory.getCommand(requestURI);
 
-		CommandInformation commandInformation = command.execute(request, response);
+		View view = command.execute(request, response);
 
-		if (commandInformation.isRedirect()) {
-			response.sendRedirect(commandInformation.getPath());
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher(commandInformation.getPath());
-			dispatcher.forward(request, response);
-		}
+		view.resolveView(requestURI);
 
+		view.render(request, response);
 	}
 
-	private String getCommandKey(HttpServletRequest request) {
+	/**
+	 * 요청 경로 맨 끝에 슬래쉬가 있을 경우 제거 후 요청 경로 반환
+	 *
+	 * @param request
+	 * @return
+	 */
+	private String getRequestURI(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
 		if (requestURI.length() > 1 && requestURI.endsWith("/")) {

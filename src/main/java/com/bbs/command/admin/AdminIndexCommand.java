@@ -1,22 +1,28 @@
 package com.bbs.command.admin;
 
 import com.bbs.command.Command;
-import com.bbs.command.CommandInformation;
+import com.bbs.command.View;
+import com.bbs.util.SessionKeys;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AdminIndexCommand implements Command {
 
 	@Override
-	public CommandInformation execute(HttpServletRequest request, HttpServletResponse response)
+	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
-		String method = request.getMethod();
+		HttpSession session = request.getSession();
 
-		return CommandInformation.builder()
-			.path(ADMIN_VIEW_PATH + "index.jsp")
+		if (session.getAttribute(SessionKeys.LOGIN_ADMIN) != null) {
+			request.setAttribute("account", session.getAttribute(SessionKeys.LOGIN_ADMIN));
+		}
+
+		return View.builder()
+			.path("/index")
 			.build();
 	}
 }

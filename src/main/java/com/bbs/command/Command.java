@@ -11,16 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface Command {
 
 	/**
-	 * 어드민 페이지 경로
-	 */
-	String ADMIN_VIEW_PATH = "/WEB-INF/views/admin/";
-
-	/**
-	 * 클라이언트 페이지 경로
-	 */
-	String CLIENT_VIEW_PATH = "/WEB-INF/views/client/";
-
-	/**
 	 * 커맨드 객체 로직 실행
 	 * @param request
 	 * @param response
@@ -28,7 +18,7 @@ public interface Command {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	CommandInformation execute(
+	View execute(
 		HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException;
 }

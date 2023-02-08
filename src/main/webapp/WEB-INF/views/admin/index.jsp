@@ -11,6 +11,7 @@
     <title>어드민 인덱스</title>
 </head>
 <body>
-어드민 인덱스
+<%=request.getAttribute("account")%>
+admin index
 </body>
 </html>

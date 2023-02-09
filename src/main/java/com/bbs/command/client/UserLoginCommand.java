@@ -4,7 +4,7 @@ import com.bbs.command.ClientCommands;
 import com.bbs.command.Command;
 import com.bbs.command.View;
 import com.bbs.domain.User;
-import com.bbs.exception.CommonException;
+import com.bbs.exception.Errors;
 import com.bbs.service.UserService;
 import com.bbs.util.CommandUtil;
 import com.bbs.util.SessionKeys;
@@ -40,7 +40,7 @@ public class UserLoginCommand implements Command {
 
 		if (userService.login(user) == null) {
 			return View.redirectTo(ClientCommands.LOGIN.getPath(),
-				CommonException.LOGIN_FAILURE.getMessage());
+				Errors.LOGIN_FAILURE.getMessage());
 		}
 
 		session.setAttribute(SessionKeys.LOGIN_CLIENT, user.getAccount());

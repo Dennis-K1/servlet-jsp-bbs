@@ -9,6 +9,19 @@ import javax.servlet.http.HttpSession;
 public class CommandUtil {
 
 	/**
+	 * 주어진 문자열이 부호 없는 정수인지 검증
+	 *
+	 * @param parameter 문자열 입력
+	 * @return Boolean
+	 */
+	public static Boolean isPositiveInteger(String parameter) {
+		if (parameter == null) {
+			return false;
+		}
+		return parameter.matches("^[1-9]\\d*");
+	}
+
+	/**
 	 * 사용자가 로그인된 상태인지 확인
 	 * @param session 세션
 	 * @param sessionKey 로그인 시 세션 저장 키

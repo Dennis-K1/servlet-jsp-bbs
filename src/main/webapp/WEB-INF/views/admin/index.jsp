@@ -1,5 +1,9 @@
-<%@ page import="com.bbs.exception.CommonException" %>
-<%@ page import="com.bbs.util.CommandUtil" %><%--
+        <%@ page import="com.bbs.exception.Errors" %>
+<%@ page import="com.bbs.util.CommandUtil" %>
+<%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-03
@@ -12,7 +16,12 @@
     <title>어드민 인덱스</title>
 </head>
 <body>
-<%=request.getAttribute("account")%>
-admin index
+<% Iterator pathIterator = AdminCommands.getMap().keySet().iterator();
+    String path = null;
+    while (pathIterator.hasNext()) {
+        path = pathIterator.next().toString();
+    %>
+<a href="<%=path%>"><%=path%></a><br>
+<%}%>
 </body>
 </html>

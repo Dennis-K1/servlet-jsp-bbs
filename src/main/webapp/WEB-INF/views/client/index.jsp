@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.bbs.command.ClientCommands" %>
+<%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-03
@@ -11,7 +12,12 @@
     <title>Title</title>
 </head>
 <body>
-<%=request.getAttribute("account")%>
-client index
+<% Iterator pathIterator = ClientCommands.getMap().keySet().iterator();
+    String path = null;
+    while (pathIterator.hasNext()) {
+        path = pathIterator.next().toString();
+%>
+<a href="<%=path%>"><%=path%></a><br>
+<%}%>
 </body>
 </html>

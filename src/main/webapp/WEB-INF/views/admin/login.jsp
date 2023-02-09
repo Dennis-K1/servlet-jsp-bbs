@@ -1,22 +1,25 @@
-<%--
+<%@ page import="com.bbs.util.JSPUtilRoutes" %><%--
   Created by IntelliJ IDEA.
   User: bw120
-  Date: 2023-02-06
-  Time: 오후 6:32
+  Date: 2023-02-03
+  Time: 오후 4:52
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>어드민 로그인</title>
 </head>
 <body>
-<form name="loginForm" action="/login" method="post">
+
+<jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
+
+<form name="loginForm" action="/admin/login" method="post">
     <table>
         <tr>
             <td>
-                <h1>로그인 페이지</h1>
+                <h1>어드민 로그인 페이지</h1>
             </td>
         </tr>
         <tr>

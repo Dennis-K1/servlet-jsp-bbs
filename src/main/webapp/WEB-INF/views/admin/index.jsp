@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.bbs.exception.CommonException" %>
+<%@ page import="com.bbs.util.CommandUtil" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-03

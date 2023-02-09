@@ -48,7 +48,7 @@ public class LoginFilter implements Filter {
 
 		//어드민 요청일 경우
 		if (CommandUtil.isAdminRequest(requestURI)) {
-			if (isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
+			if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
 				chain.doFilter(request, response);
 				return;
 			}
@@ -57,26 +57,13 @@ public class LoginFilter implements Filter {
 		}
 
 		//클라이언트 요청일 경우
-		if (isUserLoggedIn(session, SessionKeys.LOGIN_CLIENT)) {
+		if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_CLIENT)) {
 			chain.doFilter(request, response);
 			return;
 		}
 		httpServletResponse.sendRedirect("/login");
 	}
 
-	/**
-	 * 사용자가 로그인된 상태인지 확인
-	 * @param session 세션
-	 * @param sessionKey 로그인 시 세션 저장 키
-	 * @return boolean
-	 */
-	private boolean isUserLoggedIn(HttpSession session, String sessionKey){
-		String loginSessionValue = (String) session.getAttribute(sessionKey);
-		if (loginSessionValue != null) {
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * 화이트리스트 경로에 해당하는지 확인

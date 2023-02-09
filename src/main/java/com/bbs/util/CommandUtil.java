@@ -1,11 +1,26 @@
 package com.bbs.util;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * 커맨드, 요청, 응답에 공통적으로 사용되는 util 모음
  */
 public class CommandUtil {
+
+	/**
+	 * 사용자가 로그인된 상태인지 확인
+	 * @param session 세션
+	 * @param sessionKey 로그인 시 세션 저장 키
+	 * @return boolean
+	 */
+	public static boolean isUserLoggedIn(HttpSession session, String sessionKey){
+		String loginSessionValue = (String) session.getAttribute(sessionKey);
+		if (loginSessionValue != null) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * GET 요청 여부 확인

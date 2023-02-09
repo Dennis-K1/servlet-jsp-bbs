@@ -1,8 +1,10 @@
 package com.bbs.command.admin;
 
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
 import com.bbs.command.View;
 import com.bbs.domain.User;
+import com.bbs.exception.CommonException;
 import com.bbs.service.UserService;
 import com.bbs.util.CommandUtil;
 import com.bbs.util.SessionKeys;
@@ -12,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * 어드민 로그인 관련 커맨드
+ */
 public class AdminLoginCommand implements Command {
 
 	@Override
@@ -21,15 +26,10 @@ public class AdminLoginCommand implements Command {
 		HttpSession session = request.getSession();
 
 		if (CommandUtil.isGETMethod(request)) {
-			if (session.getAttribute(SessionKeys.LOGIN_ADMIN) != null) {
-				return View.builder()
-					.isRedirect(true)
-					.path("/")
-					.build();
+			if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
+				return View.redirectTo(AdminCommands.INDEX.getPath());
 			}
-			return View.builder()
-				.path("/loginForm")
-				.build();
+			return View.forwardTo(AdminCommands.LOGIN.getPath());
 		}
 
 		UserService userService = new UserService();
@@ -39,19 +39,12 @@ public class AdminLoginCommand implements Command {
 			.build();
 
 		if (userService.login(admin) == null || !userService.isAdmin(admin)) {
-			return View.builder()
-				.isRedirect(true)
-				.isValidationError(true)
-				.path("/login")
-				.build();
+			return View.redirectTo(AdminCommands.LOGIN.getPath(),
+				CommonException.LOGIN_FAILURE.getMessage());
 		}
 
 		session.setAttribute(SessionKeys.LOGIN_ADMIN, admin.getAccount());
 
-		return
-			View.builder()
-				.isRedirect(true)
-				.path("/")
-				.build();
+		return View.redirectTo(AdminCommands.INDEX.getPath());
 	}
 }

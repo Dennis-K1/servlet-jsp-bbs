@@ -1,14 +1,7 @@
 package com.bbs.command;
 
-import com.bbs.command.admin.AdminIndexCommand;
-import com.bbs.command.admin.AdminLoginCommand;
-import com.bbs.command.admin.UserCommand;
-import com.bbs.command.client.IndexCommand;
-import com.bbs.command.client.UserLoginCommand;
-import com.bbs.command.client.UserRegisterCommand;
 import com.bbs.util.CommandUtil;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 모든 Controller 에서 사용하는 Command 팩토리
@@ -19,12 +12,12 @@ public abstract class CommandFactory {
 	/**
 	 * 어드민 페이지 커맨드 맵
 	 */
-	private static final Map<String, Command> adminCommandMap = loadAdminCommandMap();
+	private static final Map<String, Command> adminCommandMap = AdminCommands.getMap();
 
 	/**
 	 * 클라이언트 페이지 커맨드 맵
 	 */
-	private static final Map<String, Command> clientCommandMap = loadClientCommandMap();
+	private static final Map<String, Command> clientCommandMap = ClientCommands.getMap();
 
 
 	/**
@@ -40,35 +33,5 @@ public abstract class CommandFactory {
 
 		return clientCommandMap.get(requestURI);
 	}
-
-
-	/**
-	 * 어드민 페이지 커맨드 맵
-	 */
-	private static Map<String, Command> loadAdminCommandMap() {
-
-		Map<String, Command> commandMap = new ConcurrentHashMap();
-
-		commandMap.put("/admin", new AdminIndexCommand());
-		commandMap.put("/admin/login", new AdminLoginCommand());
-		commandMap.put("/admin/user", new UserCommand());
-
-		return commandMap;
-	}
-
-	/**
-	 * 클라이언트 페이지 커맨드 맵
-	 */
-	private static Map<String, Command> loadClientCommandMap() {
-
-		Map<String, Command> commandMap = new ConcurrentHashMap();
-
-		commandMap.put("/", new IndexCommand());
-		commandMap.put("/login", new UserLoginCommand());
-		commandMap.put("/register", new UserRegisterCommand());
-
-		return commandMap;
-	}
-
 }
 

@@ -1,5 +1,6 @@
 package com.bbs.command.client;
 
+import com.bbs.command.ClientCommands;
 import com.bbs.command.Command;
 import com.bbs.command.View;
 import com.bbs.util.SessionKeys;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * 클라이언트 인덱스(메인)페이지 커맨드
+ */
 public class IndexCommand implements Command {
 
 	@Override
@@ -21,8 +25,6 @@ public class IndexCommand implements Command {
 			request.setAttribute("account", session.getAttribute(SessionKeys.LOGIN_CLIENT));
 		}
 
-		return View.builder()
-			.path("/index")
-			.build();
+		return View.forwardTo(ClientCommands.INDEX.getPath());
 	}
 }

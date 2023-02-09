@@ -3,6 +3,7 @@ package com.bbs.dao;
 
 import com.bbs.domain.User;
 import com.bbs.util.MybatisSqlSessionFactory;
+import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -71,4 +72,12 @@ public class UserDAO {
 	}
 
 
+	public List<User> getUserList(int pageNumber) {
+		SqlSession session = getSqlSession();
+		try {
+			return session.selectList(USER_MAPPER + "getUserList", pageNumber);
+		} finally {
+			session.close();
+		}
+	}
 }

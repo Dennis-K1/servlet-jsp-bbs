@@ -3,6 +3,7 @@ package com.bbs.service;
 import com.bbs.domain.User;
 import com.bbs.dao.UserDAO;
 import com.bbs.util.Role;
+import java.util.List;
 
 /**
  * 사용자 관련 서비스
@@ -47,13 +48,18 @@ public class UserService {
 	 */
 	public User login(User user) {
 		UserDAO userDAO = new UserDAO();
-		User userInformation = userDAO.getUserByAccount(user.getAccount());
-		if (userInformation == null) {
+		User userDetail = userDAO.getUserByAccount(user.getAccount());
+		if (userDetail == null) {
 			return null;
 		}
-		if (!user.getPassword().equals(userInformation.getPassword())) {
+		if (!user.getPassword().equals(userDetail.getPassword())) {
 			return null;
 		}
-		return userInformation;
+		return userDetail;
+	}
+
+	public List<User> getUserList(int pageNumber) {
+		UserDAO userDAO = new UserDAO();
+		return userDAO.getUserList(pageNumber);
 	}
 }

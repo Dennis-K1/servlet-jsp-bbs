@@ -1,8 +1,4 @@
-        <%@ page import="com.bbs.exception.Errors" %>
-<%@ page import="com.bbs.util.CommandUtil" %>
 <%@ page import="com.bbs.command.AdminCommands" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
   User: bw120
@@ -16,6 +12,7 @@
     <title>어드민 인덱스</title>
 </head>
 <body>
+
 <% Iterator pathIterator = AdminCommands.getMap().keySet().iterator();
     String path = null;
     while (pathIterator.hasNext()) {

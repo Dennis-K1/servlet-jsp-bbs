@@ -2,7 +2,9 @@ package com.bbs.command;
 
 import com.bbs.command.admin.AdminIndexCommand;
 import com.bbs.command.admin.AdminLoginCommand;
+import com.bbs.command.admin.AdminUserDeleteCommand;
 import com.bbs.command.admin.AdminUserManagementCommand;
+import com.bbs.command.admin.AdminUserRecoveryCommand;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -60,6 +62,8 @@ public enum AdminCommands {
 		map.put(AdminCommands.LOGIN.path, new AdminLoginCommand());
 		map.put(AdminCommands.INDEX.path, new AdminIndexCommand());
 		map.put(AdminCommands.USER_MANAGEMENT.path, new AdminUserManagementCommand());
+		map.put(AdminCommands.USER_DELETE.path, new AdminUserDeleteCommand());
+		map.put(AdminCommands.USER_RECOVERY.path, new AdminUserRecoveryCommand());
 	}
 }
 

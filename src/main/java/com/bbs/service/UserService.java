@@ -23,6 +23,7 @@ public class UserService {
 
 	/**
 	 * 어드민 권한 확인
+	 *
 	 * @param admin 사용자 정보 객체
 	 * @return boolean
 	 */
@@ -40,8 +41,7 @@ public class UserService {
 	}
 
 	/**
-	 * 로그인
-	 * 유저가 입력한 아이디, 비밀번호 검증
+	 * 로그인 유저가 입력한 아이디, 비밀번호 검증
 	 *
 	 * @param user 유저가 입력한 정보로 생성한 사용자 객체
 	 * @return 통과시 사용자 객체, 미통과시 null
@@ -58,8 +58,29 @@ public class UserService {
 		return userDetail;
 	}
 
-	public List<User> getUserList(int pageNumber) {
+	public List<User> getUserList(int pageNumberOFFSET) {
 		UserDAO userDAO = new UserDAO();
-		return userDAO.getUserList(pageNumber);
+		return userDAO.getUserList(pageNumberOFFSET);
+	}
+
+	public int getNumberOfUsers() {
+		UserDAO userDAO = new UserDAO();
+		return userDAO.getNumberOfUsers();
+	}
+
+	public int deleteUserById(int id) {
+		UserDAO userDAO = new UserDAO();
+		if (userDAO.deleteUserById(id) == 1){
+			return userDAO.updateDateDeleted(id);
+		}
+		return 0;
+	}
+
+	public int recoverUserById(int id) {
+		UserDAO userDAO = new UserDAO();
+		if (userDAO.recoverUserById(id) == 1){
+			return userDAO.recoverDateDeleted(id);
+		}
+		return 0;
 	}
 }

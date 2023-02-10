@@ -72,12 +72,58 @@ public class UserDAO {
 	}
 
 
-	public List<User> getUserList(int pageNumber) {
+	public List<User> getUserList(int pageNumberOFFSET) {
 		SqlSession session = getSqlSession();
 		try {
-			return session.selectList(USER_MAPPER + "getUserList", pageNumber);
+			return session.selectList(USER_MAPPER + "getUserList", pageNumberOFFSET);
 		} finally {
 			session.close();
 		}
 	}
+
+	public int getNumberOfUsers() {
+		SqlSession session = getSqlSession();
+		try {
+			return session.selectOne(USER_MAPPER + "getNumberOfUsers");
+		} finally {
+			session.close();
+		}
+	}
+
+	public int deleteUserById(int id) {
+		SqlSession session = getSqlSession();
+		try {
+			return session.update(USER_MAPPER + "deleteUserById", id);
+		} finally {
+			session.close();
+		}
+	}
+
+	public int updateDateDeleted(int id) {
+		SqlSession session = getSqlSession();
+		try {
+			return session.update(USER_MAPPER + "updateDateDeleted", id);
+		} finally {
+			session.close();
+		}
+	}
+
+	public int recoverUserById(int id) {
+		SqlSession session = getSqlSession();
+		try {
+			return session.update(USER_MAPPER + "recoverUserById", id);
+		} finally {
+			session.close();
+		}
+	}
+
+	public int recoverDateDeleted(int id) {
+		SqlSession session = getSqlSession();
+		try {
+			return session.update(USER_MAPPER + "recoverDateDeleted", id);
+		} finally {
+			session.close();
+		}
+	}
+
 }

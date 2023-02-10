@@ -12,6 +12,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/admin">/admin</a><br>
 <% Iterator pathIterator = ClientCommands.getMap().keySet().iterator();
     String path = null;
     while (pathIterator.hasNext()) {

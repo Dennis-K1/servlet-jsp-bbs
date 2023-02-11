@@ -4,6 +4,7 @@ import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
 import com.bbs.command.View;
 import com.bbs.dao.UserDAO;
+import com.bbs.domain.Pagination;
 import com.bbs.domain.User;
 import com.bbs.service.UserService;
 import com.bbs.util.CommandUtil;
@@ -26,37 +27,16 @@ public class AdminUserManagementCommand implements Command {
 		UserService userService = new UserService();
 
 		if (CommandUtil.isGETMethod(request)) {
-			int pageNumberOFFSET = getPageNumberOFFSET(request.getParameter("pageNumber"));
-			List<User> userList = userService.getUserList(pageNumberOFFSET);
-			int pageNumber = pageNumberOFFSET / 10 + 1;
-			int numberOfUsers = userService.getNumberOfUsers();
+			int numberOfItems = userService.getNumberOfUsers();
+			String requestedPageNumber = request.getParameter("pageNumber");
+			Pagination pagination = new Pagination(requestedPageNumber, numberOfItems);
+			List<User> userList = userService.getUserList(pagination.getPageNumberOffset());
 			request.setAttribute("userList", userList);
-			request.setAttribute("numberOfUsers", numberOfUsers);
-			request.setAttribute("pageNumber", pageNumber);
-			request.setAttribute("pageSize", PAGE_SIZE);
-			int pageCount = Math.round(numberOfUsers / PAGE_SIZE) + 1;
-			request.setAttribute("pageCount", pageCount);
-			int startPage = (pageNumber / 10) * 10 + 1;
-			request.setAttribute("startPage", startPage);
-			int endPage = (pageNumber / 10) * 10 + 10;
-			if (endPage > pageCount) {
-				endPage = pageCount;
-			}
-			request.setAttribute("endPage", endPage);
-			List<Integer> displayedPageNumbers = new ArrayList<>();
-			for (int page = startPage; page <= endPage; page++) {
-				displayedPageNumbers.add(page);
-			}
-			request.setAttribute("displayedPageNumbers", displayedPageNumbers);
+			request.setAttribute("pagination", pagination);
 			return View.forwardTo(AdminCommands.USER_MANAGEMENT.getPath());
 		}
 		return null;
 	}
 
-	private int getPageNumberOFFSET(String pageNumber) {
-		if (CommandUtil.isPositiveInteger(pageNumber)) {
-			return (Integer.parseInt(pageNumber) - 1) * 10;
-		}
-		return 0;
-	}
+
 }

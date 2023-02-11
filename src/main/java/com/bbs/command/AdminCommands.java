@@ -2,6 +2,7 @@ package com.bbs.command;
 
 import com.bbs.command.admin.AdminIndexCommand;
 import com.bbs.command.admin.AdminLoginCommand;
+import com.bbs.command.admin.AdminNoticeManagementCommand;
 import com.bbs.command.admin.AdminUserDeleteCommand;
 import com.bbs.command.admin.AdminUserManagementCommand;
 import com.bbs.command.admin.AdminUserRecoveryCommand;
@@ -46,6 +47,36 @@ public enum AdminCommands {
 	 */
 	USER_RECOVERY("/admin/users/recovery"),
 
+	/**
+	 * 공지사항 관리
+	 * - GET : 공지사항 리스트
+	 */
+	NOTICE_MANAGEMENT("/admin/notices"),
+
+	/**
+	 * 공지사항 작성
+	 * - GET : 작성 form
+	 * - POST : 업로드
+	 */
+	NOTICE_POST("/admin/notices/post"),
+
+	/**
+	 * 공지사항 삭제
+	 */
+	NOTICE_DELETE("/admin/notices/delete"),
+
+	/**
+	 * 공지사항 상세페이지
+	 */
+	NOTICE_DETAIL("/admin/notices/${id}"),
+
+	/**
+	 * 공지사항 수정
+	 * - GET : 수정 form
+	 * - POST : 수정 실행
+	 */
+	NOTICE_UPDATE("/admin/notices/update"),
+
 	/*
 	편의를 위한 enum 끝 표시 //TODO THE_END_OF_ENUM 삭제
 	 */
@@ -64,6 +95,7 @@ public enum AdminCommands {
 		map.put(AdminCommands.USER_MANAGEMENT.path, new AdminUserManagementCommand());
 		map.put(AdminCommands.USER_DELETE.path, new AdminUserDeleteCommand());
 		map.put(AdminCommands.USER_RECOVERY.path, new AdminUserRecoveryCommand());
+		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new AdminNoticeManagementCommand());
 	}
 }
 

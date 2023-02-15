@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
  * 게시글 관련 DB 접근 객체
  */
 public class ArticleDAO {
+
 	private SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();
 
 	/**
@@ -25,11 +26,9 @@ public class ArticleDAO {
 	 * @return
 	 */
 	public int getNumberOfArticlesBySearch(PageParameters pageParameters) {
-		SqlSession session = sqlSessionFactory.openSession(true);
-		try{
-			return session.selectOne(ARTICLE_MAPPER + "getNumberOfArticlesBySearch", pageParameters);
-		} finally {
-			session.close();
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			return session.selectOne(ARTICLE_MAPPER + "getNumberOfArticlesBySearch",
+				pageParameters);
 		}
 	}
 
@@ -40,11 +39,32 @@ public class ArticleDAO {
 	 * @return
 	 */
 	public List<Article> getArticleList(PageParameters pageParameters) {
-		SqlSession session = sqlSessionFactory.openSession(true);
-		try{
+		try (SqlSession session = sqlSessionFactory.openSession(true)){
 			return session.selectList(ARTICLE_MAPPER + "getArticleList", pageParameters);
-		} finally {
-			session.close();
+		}
+	}
+
+	public int deleteArticleById(Long id) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			return session.update(ARTICLE_MAPPER + "deleteArticleById", id);
+		}
+	}
+
+	public int updateDateDeleted(Long id) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			return session.update(ARTICLE_MAPPER + "updateDateDeleted", id);
+		}
+	}
+
+	public int recoverArticleById(Long id) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			return session.update(ARTICLE_MAPPER + "recoverArticleById", id);
+		}
+	}
+
+	public int recoverDateDeleted(Long id) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			return session.update(ARTICLE_MAPPER + "recoverDateDeleted", id);
 		}
 	}
 }

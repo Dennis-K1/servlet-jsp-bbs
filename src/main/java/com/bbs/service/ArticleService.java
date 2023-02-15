@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import com.bbs.dao.ArticleDAO;
+import com.bbs.dao.UserDAO;
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
 import java.util.List;
@@ -30,5 +31,21 @@ public class ArticleService {
 	public List<Article> getArticleList(PageParameters pageParameters) {
 		ArticleDAO articleDAO = new ArticleDAO();
 		return articleDAO.getArticleList(pageParameters);
+	}
+
+	public int deleteArticleById(Long id) {
+		ArticleDAO articleDAO = new ArticleDAO();
+		if (articleDAO.deleteArticleById(id) == 1){
+			return articleDAO.updateDateDeleted(id);
+		}
+		return 0;
+	}
+
+	public int recoverArticleById(Long id) {
+		ArticleDAO articleDAO = new ArticleDAO();
+		if (articleDAO.recoverArticleById(id) == 1){
+			return articleDAO.recoverDateDeleted(id);
+		}
+		return 0;
 	}
 }

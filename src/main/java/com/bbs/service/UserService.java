@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class UserService {
 
+
 	/**
 	 * 유저 등록
 	 *
@@ -58,9 +59,9 @@ public class UserService {
 		return userDetail;
 	}
 
-	public List<User> getUserList(int pageNumberOFFSET) {
+	public List<User> getUserList(int pageNumberOffset) {
 		UserDAO userDAO = new UserDAO();
-		return userDAO.getUserList(pageNumberOFFSET);
+		return userDAO.getUserList(pageNumberOffset);
 	}
 
 	public int getNumberOfUsers() {

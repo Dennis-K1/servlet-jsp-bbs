@@ -72,10 +72,10 @@ public class UserDAO {
 	}
 
 
-	public List<User> getUserList(int pageNumberOFFSET) {
+	public List<User> getUserList(int pageNumberOffset) {
 		SqlSession session = getSqlSession();
 		try {
-			return session.selectList(USER_MAPPER + "getUserList", pageNumberOFFSET);
+			return session.selectList(USER_MAPPER + "getUserList", pageNumberOffset);
 		} finally {
 			session.close();
 		}

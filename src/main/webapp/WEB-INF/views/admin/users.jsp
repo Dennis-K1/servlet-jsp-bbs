@@ -95,18 +95,18 @@
             </tr>
         </c:forEach>
     </table>
-    <div id="pagination">
-        <c:if test="${pageNumber <= fn:length(displayedPageNumbers)}">
-            <button onclick="toPageOf(${startPage})" class="pageButton">&lt;&lt;</button>
-            <button onclick="toPageOf(${pageNumber - 1})" class="pageButton">&lt;</button>
-        <c:forEach items="${displayedPageNumbers}" var="page">
+    <div id="pageParameters">
+        <c:if test="${pageParameters.pageNumber <= fn:length(pageParameters.displayedPageNumbers)}">
+            <button onclick="toPageOf(${pageParameters.startPage})" class="pageButton">&lt;&lt;</button>
+            <button onclick="toPageOf(${pageParameters.pageNumber - 1})" class="pageButton">&lt;</button>
+        <c:forEach items="${pageParameters.displayedPageNumbers}" var="page">
             <c:choose>
-                <c:when test="${page == pageNumber}"><button class="pageButtonClicked">${page}</button></c:when>
+                <c:when test="${page == pageParameters.pageNumber}"><button class="pageButtonClicked">${page}</button></c:when>
                 <c:otherwise><button onclick="toPageOf(${page})" class="pageButton">${page}</button></c:otherwise>
             </c:choose>
         </c:forEach>
-            <button onclick="toPageOf(${pageNumber + 1})" class="pageButton">&gt;</button>
-            <button onclick="toPageOf(${endPage})" class="pageButton">&gt;&gt;</button>
+            <button onclick="toPageOf(${pageParameters.pageNumber + 1})" class="pageButton">&gt;</button>
+            <button onclick="toPageOf(${pageParameters.endPage})" class="pageButton">&gt;&gt;</button>
         </c:if>
     </div>
 

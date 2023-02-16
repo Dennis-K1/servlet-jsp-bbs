@@ -11,44 +11,10 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="text/javascript"
+            src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/templates/css/item-list.css">
 </head>
-<style scoped>
-  a:link {
-    color: black;
-    text-decoration: none;
-  }
-
-  a:visited {
-    color: black;
-    text-decoration: none;
-  }
-  .pageButton{
-    background-color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-
-  }
-
-  .pageButtonClicked{
-    background-color: white;
-    border: none;
-    padding: 5px;
-    color: red;
-  }
-
-  .titleButton{
-    background-color: white;
-    border: none;
-    text-decoration: underline;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .pageButton:hover{
-    background-color: grey;
-  }
-</style>
 <body>
 <div align ="center">
     <hr width="70%">
@@ -119,40 +85,21 @@
 </body>
 <script>
     const toPageOf = (pageNumber) => {
-      window.location.href=`<%=AdminCommands.USER_MANAGEMENT.getPath()%>?pageNumber=\${pageNumber}`
+      const parameterObject = {'pageNumber':pageNumber}
+      linkTo("<%=AdminCommands.USER_MANAGEMENT.getPath()%>", parameterObject)
     }
 
     const recoverUserById = (userId) => {
-      const parameterKey = 'userId'
-      const action = '<%=AdminCommands.USER_RECOVERY.getPath()%>'
+      const parameterObject = {'userId': userId}
       const method = 'post'
-      sendFormWithParameter(userId, parameterKey, action, method)
+      const action = '<%=AdminCommands.USER_RECOVERY.getPath()%>'
+      sendFormWithParameter(parameterObject, method, action)
     }
     const deleteUserById = (userId) => {
-      const parameterKey = 'userId'
-      const action = '<%=AdminCommands.USER_DELETE.getPath()%>'
+      const parameterObject = {'userId': userId}
       const method = 'post'
-      sendFormWithParameter(userId, parameterKey, action, method)
-    }
-
-    const sendFormWithParameter = (parameter, parameterKey, action, method) => {
-      let form = document.createElement("form");
-      let parameterArray = new Array();
-      let inputArray = new Array();
-      form.action = action;
-      form.method = method;
-
-      parameterArray.push( [parameterKey, parameter] );
-
-      for (let i = 0; i < parameterArray.length; i++) {
-        inputArray[i] = document.createElement("input");
-        inputArray[i].setAttribute("type", "hidden");
-        inputArray[i].setAttribute('name', parameterArray[i][0]);
-        inputArray[i].setAttribute("value", parameterArray[i][1]);
-        form.appendChild(inputArray[i]);
-      }
-      document.body.appendChild(form);
-      form.submit();
+      const action = '<%=AdminCommands.USER_DELETE.getPath()%>'
+      sendFormWithParameter(parameterObject, method, action)
     }
 </script>
 

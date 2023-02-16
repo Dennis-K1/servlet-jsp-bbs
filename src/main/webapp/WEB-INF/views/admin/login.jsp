@@ -10,11 +10,9 @@
 <html>
 <head>
     <title>어드민 로그인</title>
+<jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
 </head>
 <body>
-
-<jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
-
 <form name="loginForm" action="/admin/login" method="post">
     <table>
         <tr>

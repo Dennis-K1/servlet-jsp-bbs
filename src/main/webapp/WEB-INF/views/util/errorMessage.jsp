@@ -15,3 +15,12 @@
   </script>
   <c:remove var="error" scope="session"></c:remove>
 </c:if>
+
+<%--이전 페이지에서 뒤로가기 하여 해당 페이지 도착한 경우 새로고침--%>
+<script>
+  window.onpageshow = function(event) {
+    if (event.persisted) {
+      document.location.reload();
+    }
+  };
+</script>

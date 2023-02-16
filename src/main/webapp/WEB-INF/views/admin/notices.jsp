@@ -11,46 +11,13 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="text/javascript"
+            src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/templates/css/item-list.css">
 </head>
-<style scoped>
-  a:link {
-    color: black;
-    text-decoration: none;
-  }
 
-  a:visited {
-    color: black;
-    text-decoration: none;
-  }
-  .pageButton{
-    background-color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-
-  }
-
-  .pageButtonClicked{
-    background-color: white;
-    border: none;
-    padding: 5px;
-    color: red;
-  }
-
-  .titleButton{
-    background-color: white;
-    border: none;
-    text-decoration: underline;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .pageButton:hover{
-    background-color: grey;
-  }
-</style>
 <body>
-<div align ="center">
+<div align="center">
     <hr width="70%">
     <h1>공지사항 관리</h1>
     <hr width="70%">
@@ -60,6 +27,7 @@
             <th width="7%">번호</th>
             <th width="15%">작성자</th>
             <th width="15%">제목</th>
+            <th width="15%">조회수</th>
             <th width="15%">등록일</th>
             <th width="3%">삭제여부</th>
             <th width="5%">삭제일</th>
@@ -69,18 +37,19 @@
         <c:forEach items="${noticeList}" var="notice">
             <tr>
                 <td>${notice.id}</td>
-                    <%--다른 경로일 경우(다른 폴더)
-                    <a href="/Misiion-Web/jsp/notice/detail.jsp">
-                     --%>
-<%--                <td><a href="detail.jsp?no=${notice.no }">${notice.account }</a></td>--%>
                 <td>${notice.account}</td>
-                <td>${notice.title}</td>
+                <td>
+                    <a href="<%=AdminCommands.NOTICE_DETAIL.getPath()%>?articleId=${notice.id}">${notice.title}</a>
+                </td>
+                <td>${notice.views}</td>
                 <td>${notice.dateRegistered }</td>
                 <td>${notice.articleDeleted }</td>
                 <td>${notice.dateDeleted }</td>
                 <c:choose>
                     <c:when test="${notice.articleDeleted == 0}">
-                        <td><button onclick="deleteUserById(${notice.id})">X</button></td>
+                        <td>
+                            <button onclick="deleteArticleById(${notice.id})">X</button>
+                        </td>
                     </c:when>
                     <c:otherwise>
                         <td></td>
@@ -91,7 +60,9 @@
                         <td></td>
                     </c:when>
                     <c:otherwise>
-                        <td><button onclick="recoverUserById(${notice.id})">X</button></td>
+                        <td>
+                            <button onclick="recoverArticleById(${notice.id})">X</button>
+                        </td>
                     </c:otherwise>
                 </c:choose>
             </tr>
@@ -99,22 +70,40 @@
     </table>
     <div id="pageParameters">
         <c:if test="${pageParameters.pageNumber <= fn:length(pageParameters.displayedPageNumbers)}">
-            <button onclick="toPageOf(${pageParameters.startPage})" class="pageButton">&lt;&lt;</button>
+            <button onclick="toPageOf(${pageParameters.startPage})" class="pageButton">&lt;&lt;
+            </button>
             <c:choose>
-                <c:when test="${pageParameters.pageNumber == pageParameters.startPage}"><button class="pageButton">&lt;</button> </c:when>
-                <c:otherwise><button onclick="toPageOf(${pageParameters.pageNumber - 1})" class="pageButton">&lt;</button></c:otherwise>
+                <c:when test="${pageParameters.pageNumber == pageParameters.startPage}">
+                    <button class="pageButton">&lt;</button>
+                </c:when>
+                <c:otherwise>
+                    <button onclick="toPageOf(${pageParameters.pageNumber - 1})" class="pageButton">
+                        &lt;
+                    </button>
+                </c:otherwise>
             </c:choose>
-        <c:forEach items="${pageParameters.displayedPageNumbers}" var="page">
+            <c:forEach items="${pageParameters.displayedPageNumbers}" var="page">
+                <c:choose>
+                    <c:when test="${page == pageParameters.pageNumber}">
+                        <button class="pageButtonClicked">${page}</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button onclick="toPageOf(${page})" class="pageButton">${page}</button>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
             <c:choose>
-                <c:when test="${page == pageParameters.pageNumber}"><button class="pageButtonClicked">${page}</button></c:when>
-                <c:otherwise><button onclick="toPageOf(${page})" class="pageButton">${page}</button></c:otherwise>
+                <c:when test="${pageParameters.pageNumber == pageParameters.endPage}">
+                    <button class="pageButton">&gt;</button>
+                </c:when>
+                <c:otherwise>
+                    <button onclick="toPageOf(${pageParameters.pageNumber + 1})" class="pageButton">
+                        &gt;
+                    </button>
+                </c:otherwise>
             </c:choose>
-        </c:forEach>
-            <c:choose>
-                <c:when test="${pageParameters.pageNumber == pageParameters.endPage}"><button class="pageButton">&gt;</button> </c:when>
-                <c:otherwise><button onclick="toPageOf(${pageParameters.pageNumber + 1})" class="pageButton">&gt;</button></c:otherwise>
-            </c:choose>
-            <button onclick="toPageOf(${pageParameters.endPage})" class="pageButton">&gt;&gt;</button>
+            <button onclick="toPageOf(${pageParameters.endPage})" class="pageButton">&gt;&gt;
+            </button>
         </c:if>
     </div>
 
@@ -124,44 +113,26 @@
         </c:forEach>
     </ul>
 </div>
+<button onclick="location.href=`<%=AdminCommands.NOTICE_INPUT.getPath()%>`">글 등록</button>
 </body>
 <script>
-    const toPageOf = (pageNumber) => {
-      window.location.href=`<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>?pageNumber=\${pageNumber}`
-    }
+  const toPageOf = (pageNumber) => {
+    const parameterObject = {'pageNumber':pageNumber}
+    linkTo("<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>", parameterObject)
+  }
 
-    <%--const recoverUserById = (userId) => {--%>
-    <%--  const parameterKey = 'userId'--%>
-    <%--  const action = '<%=AdminCommands.USER_RECOVERY.getPath()%>'--%>
-    <%--  const method = 'post'--%>
-    <%--  sendFormWithParameter(userId, parameterKey, action, method)--%>
-    <%--}--%>
-    <%--const deleteUserById = (userId) => {--%>
-    <%--  const parameterKey = 'userId'--%>
-    <%--  const action = '<%=AdminCommands.USER_DELETE.getPath()%>'--%>
-    <%--  const method = 'post'--%>
-    <%--  sendFormWithParameter(userId, parameterKey, action, method)--%>
-    <%--}--%>
-
-    const sendFormWithParameter = (parameter, parameterKey, action, method) => {
-      let form = document.createElement("form");
-      let parameterArray = new Array();
-      let inputArray = new Array();
-      form.action = action;
-      form.method = method;
-
-      parameterArray.push( [parameterKey, parameter] );
-
-      for (let i = 0; i < parameterArray.length; i++) {
-        inputArray[i] = document.createElement("input");
-        inputArray[i].setAttribute("type", "hidden");
-        inputArray[i].setAttribute('name', parameterArray[i][0]);
-        inputArray[i].setAttribute("value", parameterArray[i][1]);
-        form.appendChild(inputArray[i]);
-      }
-      document.body.appendChild(form);
-      form.submit();
-    }
+  const recoverArticleById = (articleId) => {
+    const parameterObject = {'articleId':articleId}
+    const method = 'post'
+    const action = '<%=AdminCommands.ARTICLE_RECOVERY.getPath()%>'
+    sendFormWithParameter(parameterObject, method, action)
+  }
+  const deleteArticleById = (articleId) => {
+    const parameterObject = {'articleId':articleId}
+    const method = 'post'
+    const action = '<%=AdminCommands.ARTICLE_DELETE.getPath()%>'
+    sendFormWithParameter(parameterObject, method, action)
+  }
 </script>
 
 </html>

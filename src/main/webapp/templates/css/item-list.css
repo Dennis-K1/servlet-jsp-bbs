@@ -1,0 +1,37 @@
+
+a:link {
+  color: black;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.pageButton {
+  background-color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+
+}
+
+.pageButtonClicked {
+  background-color: white;
+  border: none;
+  padding: 5px;
+  color: red;
+}
+
+.titleButton {
+  background-color: white;
+  border: none;
+  text-decoration: underline;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.pageButton:hover {
+  background-color: grey;
+}

@@ -2,7 +2,7 @@ package com.bbs.service;
 
 import com.bbs.domain.User;
 import com.bbs.dao.UserDAO;
-import com.bbs.util.Role;
+import com.bbs.domain.Role;
 import java.util.List;
 
 /**
@@ -59,16 +59,33 @@ public class UserService {
 		return userDetail;
 	}
 
+	/**
+	 * 검색조건 기반 클라이언트 조회
+	 *
+	 * @param pageNumberOffset 조회 시작 인덱스
+	 * @return
+	 */
 	public List<User> getUserList(int pageNumberOffset) {
 		UserDAO userDAO = new UserDAO();
 		return userDAO.getUserList(pageNumberOffset);
 	}
 
+	/**
+	 * 총 클라이언트 수 조회
+	 *
+	 * @return
+	 */
 	public int getNumberOfUsers() {
 		UserDAO userDAO = new UserDAO();
 		return userDAO.getNumberOfUsers();
 	}
 
+	/**
+	 * 대상 클라이언트 삭제 처리 (삭제 처리, 삭제일 갱신)
+	 *
+	 * @param id 클라이언트 번호
+	 * @return
+	 */
 	public int deleteUserById(int id) {
 		UserDAO userDAO = new UserDAO();
 		if (userDAO.deleteUserById(id) == 1){
@@ -77,6 +94,12 @@ public class UserService {
 		return 0;
 	}
 
+	/**
+	 * 대상 클라이언트 복구 처리 (복구 처리, 삭제일 갱신)
+	 *
+	 * @param id 클라이언트 번호
+	 * @return
+	 */
 	public int recoverUserById(int id) {
 		UserDAO userDAO = new UserDAO();
 		if (userDAO.recoverUserById(id) == 1){

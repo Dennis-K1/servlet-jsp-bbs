@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.util.JSPUtilRoutes" %><%--
+<%@ page import="com.bbs.properties.JSPUtilRoutes" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-03

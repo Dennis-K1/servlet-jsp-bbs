@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.command.ClientCommands" %>
+<%@ page import="com.bbs.properties.ClientCommands" %>
 <%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
   User: bw120

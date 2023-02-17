@@ -1,4 +1,4 @@
-package com.bbs.util;
+package com.bbs.security;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;

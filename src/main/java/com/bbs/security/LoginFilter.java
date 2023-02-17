@@ -1,6 +1,7 @@
-package com.bbs.util;
+package com.bbs.security;
 
-import com.bbs.domain.User;
+import com.bbs.properties.SessionKeys;
+import com.bbs.util.CommandUtil;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,7 +19,7 @@ public class LoginFilter implements Filter {
 	/**
 	 * 로그인 필터가 적용되지 않는 요청 경로 모음
 	 */
-	private static final String[] whiteList = {"/admin/login", "/admin/login/","/", "/login", "/login/", "/register",
+	private static final String[] whiteList = {"/admin/login", "/admin/login/","/", "/login", "/login/", "/register", ".css", ".js",
 		"/register/"};
 
 	/**
@@ -75,6 +76,9 @@ public class LoginFilter implements Filter {
 		for (String whiteListPath : whiteList) {
 			if (requestURI.equals(whiteListPath)) {
 				return true;
+			}
+			if (requestURI.contains(".") && requestURI.substring(requestURI.lastIndexOf(".")).equals(whiteListPath)){
+					return true;
 			}
 		}
 		return false;

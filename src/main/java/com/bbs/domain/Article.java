@@ -1,8 +1,10 @@
 package com.bbs.domain;
 
 import java.util.Date;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 /**
@@ -30,8 +32,8 @@ public class Article {
 	/**
 	 * 사용자 테이블 PK
 	 */
+	@Setter
 	private Long userId;
-
 
 	/**
 	 * 사용자 아이디
@@ -83,4 +85,26 @@ public class Article {
 	 */
 	private String password;
 
+	/**
+	 * 게시글 이미지 인코딩
+	 */
+	@Setter
+	private String image;
+
+	/**
+	 * 게시글 등록 객체를 위한 빌더
+	 * @param boardId 게시판 번호
+	 * @param userId 유저 번호
+	 * @param account 유저 아아디
+	 * @param title 게시글 제목
+	 * @param content 게시글 내용
+	 */
+	@Builder
+	public Article(Long boardId, Long userId, String account, String title, String content) {
+		this.boardId = boardId;
+		this.userId = userId;
+		this.account = account;
+		this.title = title;
+		this.content = content;
+	}
 }

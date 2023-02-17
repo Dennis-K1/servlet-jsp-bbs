@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bbs.dao.FileDAO">
+
+<!--  게시글 정보 등록 -->
+  <insert id="inputFile" parameterType="com.bbs.domain.File">
+    INSERT INTO
+        file (article_id, original_name, save_name, directory, extension)
+    VALUES
+        (#{articleId},
+         #{originalName},
+         #{saveName},
+         #{directory},
+         #{extension})
+  </insert>
+
+<!--  게시글 번호로 파일 정보 조회 -->
+  <select id="getFileByArticleId" parameterType="long" resultType="com.bbs.domain.File">
+    SELECT
+        *
+    FROM
+        file
+    WHERE
+        article_id = #{value}
+  </select>
+</mapper>

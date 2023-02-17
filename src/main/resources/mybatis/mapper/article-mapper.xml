@@ -4,19 +4,19 @@
 
 <mapper namespace="com.bbs.dao.ArticleDAO">
 
-<!-- 검색 키워드 및 대상 게시판 기반 총 게시글 수 반환-->
-<select id="getNumberOfArticlesBySearch" resultType="int" parameterType="com.bbs.domain.PageParameters">
-  SELECT
-        COUNT(*)
-  FROM
-        article
-  WHERE
-        board_id = #{boardId}
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND title LIKE #{keyword}
-        </if>
-</select>
+  <!-- 검색 키워드 및 대상 게시판 기반 총 게시글 수 반환-->
+  <select id="getNumberOfArticlesBySearch" resultType="int" parameterType="com.bbs.domain.PageParameters">
+    SELECT
+          COUNT(*)
+    FROM
+          article
+    WHERE
+          board_id = #{boardId}
+          <if test="searchKeyword != null">
+            <bind name="keyword" value="'%' + searchKeyword + '%'" />
+            AND title LIKE #{keyword}
+          </if>
+  </select>
 
   <!--  페이지 번호 및 검색 키워드 기반 유저 리스트 반환 *** 최대 10개까지 *** -->
   <select id="getArticleList" resultType="com.bbs.domain.Article" parameterType="com.bbs.domain.PageParameters">
@@ -32,89 +32,94 @@
           <bind name="keyword" value="'%' + searchKeyword + '%'" />
           AND title LIKE #{keyword}
         </if>
+        ORDER BY article.id DESC
         LIMIT 10
-    OFFSET
-        #{pageNumberOffset}
+        OFFSET
+            #{pageNumberOffset}
   </select>
 
-
-
-
-
-
-
-<!--  유저 아이디로 유저 조회 -->
-  <select id="getUserByAccount" parameterType="string" resultType="com.bbs.domain.User">
-    SELECT
-      *
-    FROM
-      user
-    WHERE
-      account = #{value}
-  </select>
-
-<!--  유저 권한명 조회 -->
-  <select id="getRoleName" parameterType="Long" resultType="String">
-    SELECT
-        name
-    FROM
-        role
-    WHERE
-        id = #{value}
-  </select>
-
-<!--  유저 DB 등록 -->
-  <insert id="registerUser" parameterType="com.bbs.domain.User">
-    INSERT INTO
-        user (role_id,
-              account,
-              password)
-    VALUES
-            (#{roleId},
-            #{account},
-            #{password})
-  </insert>
-
-
-
-
-
-<!--  id(PK)에 해당하는 유저 삭제 처리-->
-  <update id="deleteUserById" parameterType="int">
+  <!--  id(PK)에 해당하는 게시글 삭제 처리-->
+  <update id="deleteArticleById" parameterType="long">
     UPDATE
-        user
+      article
     SET
-        user_deleted = 1
+      article_deleted = 1
     WHERE
-        id = #{value} AND role_id = 2
+      id = #{value}
   </update>
 
-<!--  유저 삭제일 갱신 -->
-  <update id="updateDateDeleted" parameterType="int">
+  <!--  게시글 삭제일 갱신 -->
+  <update id="updateDateDeleted" parameterType="long">
     UPDATE
-        user
+      article
     SET
-        date_deleted = CURRENT_TIMESTAMP()
+      date_deleted = CURRENT_TIMESTAMP()
     WHERE
-        id = #{value} AND role_id = 2
+      id = #{value}
   </update>
 
-<!--  id(PK)에 해당하는 유저 복구 -->
-  <update id="recoverUserById" parameterType="int">
+  <!--  id(PK)에 해당하는 게시글 복구 -->
+  <update id="recoverArticleById" parameterType="long">
     UPDATE
-      user
+      article
     SET
-      user_deleted = 0
+      article_deleted = 0
     WHERE
-      id = #{value} AND role_id = 2
+      id = #{value}
   </update>
-<!--  유저 삭제일 복구 -->
-  <update id="recoverDateDeleted" parameterType="int">
+
+  <!--  게시글 삭제일 복구 -->
+  <update id="recoverDateDeleted" parameterType="long">
     UPDATE
-      user
+      article
     SET
       date_deleted = NULL
     WHERE
-      id = #{value} AND role_id = 2
+      id = #{value}
   </update>
+
+  <!--inputArticle-->
+  <insert id="inputArticle" parameterType="com.bbs.domain.Article">
+    INSERT INTO
+        article (board_id, user_id, title, content)
+    VALUES
+        (#{boardId},
+        #{userId},
+        #{title},
+        #{content})
+    <selectKey keyProperty="id" resultType="long">
+        SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+  <!--  유저 아이디로 유저 조회 -->
+  <select id="getArticleById" parameterType="long" resultType="com.bbs.domain.Article">
+    SELECT
+      *
+    FROM
+      article
+    WHERE
+      id = #{value}
+  </select>
+
+  <!--  대상 게시글 조회수 증가 -->
+  <update id="increaseArticleViewsById" parameterType="long">
+    UPDATE
+        article
+    SET
+        views = views + 1
+    WHERE
+        id = #{value}
+  </update>
+
+  <!-- 해당 게시글 파일 첨부 표시 업데이트 -->
+  <update id="updateFileAttachedByArticleId" parameterType="long">
+    UPDATE
+        article
+    SET
+        file_attached = 1
+    WHERE
+        id = #{value}
+  </update>
+
 </mapper>

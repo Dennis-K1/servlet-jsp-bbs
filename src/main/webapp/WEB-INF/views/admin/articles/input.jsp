@@ -1,4 +1,5 @@
-<%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.properties.AdminCommands" %>
+<%@ page import="com.bbs.properties.JSPUtilRoutes" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -12,11 +13,12 @@
 <html>
 <head>
     <title>Title</title>
+    <jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
 </head>
 <body>
 <c:choose>
     <c:when test="${boardId == 1}">
-        <form name="articleForm" action="<%=AdminCommands.NOTICE_INPUT.getPath()%>" method="post">
+        <form action="<%=AdminCommands.NOTICE_INPUT.getPath()%>" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>
@@ -30,6 +32,10 @@
                 <tr>
                     <td><label for="content">내용 : </label></td>
                     <td><textarea name="content" id="content" autocomplete="off"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label for="file">내용 : </label></td>
+                    <td><input type="file" name="file" id="file"></td>
                 </tr>
                 <tr>
                     <td colspan="2">

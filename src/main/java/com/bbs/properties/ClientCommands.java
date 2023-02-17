@@ -1,5 +1,6 @@
-package com.bbs.command;
+package com.bbs.properties;
 
+import com.bbs.command.Command;
 import com.bbs.command.client.IndexCommand;
 import com.bbs.command.client.UserLoginCommand;
 import com.bbs.command.client.UserRegisterCommand;

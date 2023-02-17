@@ -1,4 +1,4 @@
-package com.bbs.exception;
+package com.bbs.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

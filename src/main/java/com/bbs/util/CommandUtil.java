@@ -1,5 +1,6 @@
 package com.bbs.util;
 
+import com.bbs.properties.AdminCommands;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,6 +8,17 @@ import javax.servlet.http.HttpSession;
  * 커맨드, 요청, 응답에 공통적으로 사용되는 util 모음
  */
 public class CommandUtil {
+
+	/**
+	 * 세션 저장된 사용자 아이디 조회
+	 * @param request 요청 객체
+	 * @param loginSessionKey 클라이언트 / 어드민 로그인 세션 키
+	 * @return 사용자 아이디
+	 */
+	public static String getUserAccountFromSession(HttpServletRequest request, String loginSessionKey) {
+		HttpSession session = request.getSession();
+		return (String) session.getAttribute(loginSessionKey);
+	}
 
 	/**
 	 * 주어진 문자열이 부호 없는 정수인지 검증
@@ -59,4 +71,15 @@ public class CommandUtil {
 		return false;
 	}
 
+	/**
+	 * 요청 경로에 맞는 게시판 pk 반환
+	 *
+	 * @param request 요청 객체
+	 * @return
+	 */
+	public static Long getBoardIdByRequest(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		String requestPath = requestURI.split("/")[2];
+		return AdminCommands.getBoardIdMap().get(requestPath);
+	}
 }

@@ -1,13 +1,13 @@
-package com.bbs.command.admin;
+package com.bbs.command.admin.user;
 
-import com.bbs.command.AdminCommands;
+import com.bbs.properties.AdminCommands;
 import com.bbs.command.Command;
-import com.bbs.command.View;
+import com.bbs.domain.View;
 import com.bbs.domain.User;
-import com.bbs.exception.Errors;
+import com.bbs.domain.Errors;
 import com.bbs.service.UserService;
 import com.bbs.util.CommandUtil;
-import com.bbs.util.SessionKeys;
+import com.bbs.properties.SessionKeys;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 /**
  * 어드민 로그인 관련 커맨드
  */
-public class AdminLoginCommand implements Command {
+public class LoginCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)

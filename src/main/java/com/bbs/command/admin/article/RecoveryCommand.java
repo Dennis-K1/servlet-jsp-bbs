@@ -1,16 +1,15 @@
-package com.bbs.command.admin;
+package com.bbs.command.admin.article;
 
-import com.bbs.command.AdminCommands;
+import com.bbs.properties.AdminCommands;
 import com.bbs.command.Command;
-import com.bbs.command.View;
-import com.bbs.dao.ArticleDAO;
+import com.bbs.domain.View;
 import com.bbs.service.ArticleService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminArticleRecoveryCommand implements
+public class RecoveryCommand implements
 	Command {
 
 	@Override

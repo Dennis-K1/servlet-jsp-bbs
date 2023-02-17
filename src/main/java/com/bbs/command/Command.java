@@ -1,5 +1,6 @@
 package com.bbs.command;
 
+import com.bbs.domain.View;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

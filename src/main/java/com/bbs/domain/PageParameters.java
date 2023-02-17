@@ -69,7 +69,7 @@ public class PageParameters {
 		this.numberOfItems = numberOfItems;
 		this.pageNumber = validatePageNumber(requestedPageNumber);
 		this.pageNumberOffset = getOffset(this.pageNumber);
-		this.pageCount = Math.round(numberOfItems / PAGE_SIZE) + 1;
+		this.pageCount = (int) (Math.ceil((double) numberOfItems / PAGE_SIZE));
 		this.startPage = (this.pageNumber / 10) * 10 + 1;
 		this.endPage = (this.pageNumber / 10) * 10 + 10;
 		if (this.endPage > pageCount) {

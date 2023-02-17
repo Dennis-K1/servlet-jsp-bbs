@@ -1,16 +1,14 @@
-package com.bbs.command.admin;
+package com.bbs.command.admin.article;
 
-import com.bbs.command.AdminCommands;
+import com.bbs.properties.AdminCommands;
 import com.bbs.command.Command;
-import com.bbs.command.View;
+import com.bbs.domain.View;
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
 import com.bbs.service.ArticleService;
 import com.bbs.util.CommandUtil;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +25,7 @@ public class AdminNoticeManagementCommand implements Command {
 		ArticleService articleService = new ArticleService();
 
 		if (CommandUtil.isGETMethod(request)) {
-			Long boardId = getBoardIdByRequest(request);
+			Long boardId = CommandUtil.getBoardIdByRequest(request);
 			String searchKeyword = request.getParameter("searchKeyword");
 			String requestedPageNumber = request.getParameter("pageNumber");
 
@@ -48,13 +46,5 @@ public class AdminNoticeManagementCommand implements Command {
 			return View.forwardTo(AdminCommands.NOTICE_MANAGEMENT.getPath());
 		}
 		return null;
-	}
-
-	private Long getBoardIdByRequest(HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
-		Map<String, Long> boardIdMap = new HashMap<>();
-		boardIdMap.put(AdminCommands.NOTICE_MANAGEMENT.getPath(), 1L);
-//		boardIdMap.put("community", 2L);
-		return boardIdMap.get(requestURI);
 	}
 }

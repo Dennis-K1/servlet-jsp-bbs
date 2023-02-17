@@ -1,4 +1,4 @@
-package com.bbs.util;
+package com.bbs.properties;
 
 /**
  * 세션에 저장될 키값 모음

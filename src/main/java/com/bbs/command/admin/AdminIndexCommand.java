@@ -1,10 +1,10 @@
 package com.bbs.command.admin;
 
-import com.bbs.command.AdminCommands;
+import com.bbs.properties.AdminCommands;
 import com.bbs.command.Command;
-import com.bbs.command.View;
+import com.bbs.domain.View;
 import com.bbs.util.CommandUtil;
-import com.bbs.util.SessionKeys;
+import com.bbs.properties.SessionKeys;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

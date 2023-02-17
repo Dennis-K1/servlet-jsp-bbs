@@ -1,8 +1,8 @@
-package com.bbs.command.admin;
+package com.bbs.command.admin.user;
 
-import com.bbs.command.AdminCommands;
+import com.bbs.properties.AdminCommands;
 import com.bbs.command.Command;
-import com.bbs.command.View;
+import com.bbs.domain.View;
 import com.bbs.domain.PageParameters;
 import com.bbs.domain.User;
 import com.bbs.service.UserService;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 유저 관리 목록 페이지 관련 커맨드
  */
-public class AdminUserManagementCommand implements Command {
+public class ManagementCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)

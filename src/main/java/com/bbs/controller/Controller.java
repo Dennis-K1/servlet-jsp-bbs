@@ -2,7 +2,7 @@ package com.bbs.controller;
 
 import com.bbs.command.Command;
 import com.bbs.command.CommandFactory;
-import com.bbs.command.View;
+import com.bbs.domain.View;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

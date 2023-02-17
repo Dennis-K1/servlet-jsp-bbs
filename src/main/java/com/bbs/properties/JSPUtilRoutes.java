@@ -1,4 +1,4 @@
-package com.bbs.util;
+package com.bbs.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

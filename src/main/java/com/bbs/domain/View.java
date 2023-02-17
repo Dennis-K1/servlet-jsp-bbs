@@ -1,11 +1,10 @@
-package com.bbs.command;
+package com.bbs.domain;
 
 import com.bbs.util.CommandUtil;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import lombok.Builder;
 import lombok.Getter;
 

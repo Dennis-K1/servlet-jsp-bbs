@@ -1,4 +1,4 @@
-package com.bbs.util;
+package com.bbs.config;
 
 
 import java.io.IOException;

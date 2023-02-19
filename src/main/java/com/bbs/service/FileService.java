@@ -1,7 +1,8 @@
 package com.bbs.service;
 
-import com.bbs.dao.ArticleDAO;
-import com.bbs.dao.FileDAO;
+import com.bbs.config.MybatisSqlSessionFactory;
+import com.bbs.mapper.ArticleMapper;
+import com.bbs.mapper.FileMapper;
 import com.bbs.domain.File;
 import com.bbs.properties.FileProperties;
 import com.oreilly.servlet.MultipartRequest;
@@ -14,6 +15,8 @@ import java.util.Base64;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 /**
  * 파일 관련 서비스
@@ -21,13 +24,20 @@ import org.apache.commons.io.FileUtils;
 public class FileService {
 
 	/**
+	 * 마이바티스 및 매퍼 실행을 위한 SqlSessionFactory
+	 */
+	private SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();
+
+	/**
 	 * 게시글 번호로 파일 정보 조회
 	 * @param articleId 게시글 번호
 	 * @return File
 	 */
 	public File getFileByArticleId(Long articleId) {
-		FileDAO fileDAO = new FileDAO();
-		return fileDAO.getFileByArticleId(articleId);
+		try(SqlSession session = sqlSessionFactory.openSession(true)){
+			FileMapper fileMapper = session.getMapper(FileMapper.class);
+			return fileMapper.getFileByArticleId(articleId);
+		}
 	}
 
 	/**
@@ -49,10 +59,12 @@ public class FileService {
 	 * @return 수행 결과
 	 */
 	public int inputFile(File file) {
-		FileDAO fileDAO = new FileDAO();
-		ArticleDAO articleDAO = new ArticleDAO();
-		articleDAO.updateFileAttachedByArticleId(file.getArticleId());
-		return fileDAO.inputFile(file);
+		try(SqlSession session = sqlSessionFactory.openSession(true)){
+			FileMapper fileMapper = session.getMapper(FileMapper.class);
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			articleMapper.updateFileAttachedByArticleId(file.getArticleId());
+			return fileMapper.inputFile(file);
+		}
 	}
 
 	/**

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bbs.dao.FileDAO">
+<mapper namespace="com.bbs.dao.FileMapper">
 
 <!--  게시글 정보 등록 -->
   <insert id="inputFile" parameterType="com.bbs.domain.File">

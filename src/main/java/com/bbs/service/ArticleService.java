@@ -1,17 +1,25 @@
 package com.bbs.service;
 
-import com.bbs.dao.ArticleDAO;
-import com.bbs.dao.UserDAO;
+import com.bbs.config.MybatisSqlSessionFactory;
+import com.bbs.mapper.ArticleMapper;
+import com.bbs.mapper.UserMapper;
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
 import com.bbs.domain.User;
 import java.util.List;
 import java.util.Objects;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 /**
  * 게시글 관련 서비스
  */
 public class ArticleService {
+
+	/**
+	 * 마이바티스 및 매퍼 실행을 위한 SqlSessionFactory
+	 */
+	private SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();
 
 	/**
 	 * 검색 조건 기반 총 게시글 갯수 조회
@@ -20,8 +28,10 @@ public class ArticleService {
 	 * @return
 	 */
 	public int getNumberOfArticlesBySearch(PageParameters pageParameters) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		return articleDAO.getNumberOfArticlesBySearch(pageParameters);
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.getNumberOfArticlesBySearch(pageParameters);
+		}
 	}
 
 	/**
@@ -31,8 +41,10 @@ public class ArticleService {
 	 * @return
 	 */
 	public List<Article> getArticleList(PageParameters pageParameters) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		return articleDAO.getArticleList(pageParameters);
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.getArticleList(pageParameters);
+		}
 	}
 
 	/**
@@ -42,9 +54,11 @@ public class ArticleService {
 	 * @return
 	 */
 	public int deleteArticleById(Long id) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		if (articleDAO.deleteArticleById(id) == 1){
-			return articleDAO.updateDateDeleted(id);
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			if (articleMapper.deleteArticleById(id) == 1) {
+				return articleMapper.updateDateDeleted(id);
+			}
 		}
 		return 0;
 	}
@@ -56,9 +70,11 @@ public class ArticleService {
 	 * @return
 	 */
 	public int recoverArticleById(Long id) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		if (articleDAO.recoverArticleById(id) == 1){
-			return articleDAO.recoverDateDeleted(id);
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			if (articleMapper.recoverArticleById(id) == 1) {
+				return articleMapper.recoverDateDeleted(id);
+			}
 		}
 		return 0;
 	}
@@ -70,11 +86,14 @@ public class ArticleService {
 	 * @return
 	 */
 	public int inputArticle(Article article) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		UserDAO userDAO = new UserDAO();
-		User user = userDAO.getUserByAccount(article.getAccount());
-		article.setUserId(user.getId());
-		return articleDAO.inputArticle(article);
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+
+			User user = userMapper.getUserByAccount(article.getAccount());
+			article.setUserId(user.getId());
+			return articleMapper.inputArticle(article);
+		}
 	}
 
 	/**
@@ -84,12 +103,14 @@ public class ArticleService {
 	 * @return
 	 */
 	public Article getArticleById(Long id) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		Article article = articleDAO.getArticleById(id);
-		if (Objects.equals(null, article)){
-			throw new RuntimeException();
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			Article article = articleMapper.getArticleById(id);
+			if (Objects.equals(null, article)) {
+				throw new RuntimeException();
+			}
+			return article;
 		}
-		return article;
 	}
 
 	/**
@@ -99,7 +120,9 @@ public class ArticleService {
 	 * @return
 	 */
 	public int increaseArticleViewsById(Long id) {
-		ArticleDAO articleDAO = new ArticleDAO();
-		return articleDAO.increaseArticleViewsById(id);
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.increaseArticleViewsById(id);
+		}
 	}
 }

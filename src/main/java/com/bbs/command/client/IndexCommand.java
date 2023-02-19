@@ -1,6 +1,6 @@
 package com.bbs.command.client;
 
-import com.bbs.properties.ClientCommands;
+import com.bbs.command.ClientCommands;
 import com.bbs.command.Command;
 import com.bbs.domain.View;
 import com.bbs.properties.SessionKeys;

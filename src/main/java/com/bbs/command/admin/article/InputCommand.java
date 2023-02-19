@@ -1,7 +1,7 @@
 package com.bbs.command.admin.article;
 
 import com.bbs.domain.Errors;
-import com.bbs.properties.AdminCommands;
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
 import com.bbs.domain.View;
 import com.bbs.domain.Article;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 게시글 등록 관련 커맨드
+ * 게시글 등록 커맨드
  */
 public class InputCommand implements
 	Command {
@@ -28,11 +28,6 @@ public class InputCommand implements
 		throws ServletException, IOException {
 
 		Long boardId = CommandUtil.getBoardIdByRequest(request);
-
-		if (CommandUtil.isGETMethod(request)) {
-			request.setAttribute("boardId", boardId);
-			return View.forwardTo(AdminCommands.ARTICLE_INPUT.getPath());
-		}
 
 		FileService fileService = new FileService();
 		ArticleService articleService = new ArticleService();

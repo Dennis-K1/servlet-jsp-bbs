@@ -1,6 +1,6 @@
 package com.bbs.command.admin.user;
 
-import com.bbs.properties.AdminCommands;
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
 import com.bbs.domain.View;
 import com.bbs.domain.PageParameters;

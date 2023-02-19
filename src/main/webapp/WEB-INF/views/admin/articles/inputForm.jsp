@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.properties.AdminCommands" %>
+<%@ page import="com.bbs.command.AdminCommands" %>
 <%@ page import="com.bbs.properties.JSPUtilRoutes" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>

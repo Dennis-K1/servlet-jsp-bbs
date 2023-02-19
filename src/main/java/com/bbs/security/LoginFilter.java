@@ -19,8 +19,10 @@ public class LoginFilter implements Filter {
 	/**
 	 * 로그인 필터가 적용되지 않는 요청 경로 모음
 	 */
-	private static final String[] whiteList = {"/admin/login", "/admin/login/","/", "/login", "/login/", "/register", ".css", ".js",
-		"/register/"};
+	private static final String[] whiteList = {"/","/login","/login/","/loginForm", "/loginForm/",
+												"/register", "/register/","/registerForm", "/registerForm/",
+												"/admin/login/","/admin/login","/admin/loginForm", "/admin/loginForm/",
+												".css", ".js"};
 
 	/**
 	 * whiteList 에 해당하는 요청 경로일 경우 pass
@@ -53,7 +55,7 @@ public class LoginFilter implements Filter {
 				chain.doFilter(request, response);
 				return;
 			}
-			httpServletResponse.sendRedirect("/admin/login");
+			httpServletResponse.sendRedirect("/admin/loginForm");
 			return;
 		}
 

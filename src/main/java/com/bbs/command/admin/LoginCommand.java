@@ -1,6 +1,6 @@
-package com.bbs.command.admin.user;
+package com.bbs.command.admin;
 
-import com.bbs.properties.AdminCommands;
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
 import com.bbs.domain.View;
 import com.bbs.domain.User;
@@ -25,13 +25,6 @@ public class LoginCommand implements Command {
 
 		HttpSession session = request.getSession();
 
-		if (CommandUtil.isGETMethod(request)) {
-			if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
-				return View.redirectTo(AdminCommands.INDEX.getPath());
-			}
-			return View.forwardTo(AdminCommands.LOGIN.getPath());
-		}
-
 		UserService userService = new UserService();
 		User admin = User.builder()
 			.account(request.getParameter("account"))
@@ -39,7 +32,7 @@ public class LoginCommand implements Command {
 			.build();
 
 		if (userService.login(admin) == null || !userService.isAdmin(admin)) {
-			return View.redirectTo(AdminCommands.LOGIN.getPath(),
+			return View.redirectTo(AdminCommands.LOGIN_FORM.getPath(),
 				Errors.LOGIN_FAILURE.getMessage());
 		}
 

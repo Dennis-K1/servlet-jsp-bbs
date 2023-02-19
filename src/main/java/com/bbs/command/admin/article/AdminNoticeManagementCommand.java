@@ -1,6 +1,6 @@
 package com.bbs.command.admin.article;
 
-import com.bbs.properties.AdminCommands;
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
 import com.bbs.domain.View;
 import com.bbs.domain.Article;
@@ -24,27 +24,24 @@ public class AdminNoticeManagementCommand implements Command {
 
 		ArticleService articleService = new ArticleService();
 
-		if (CommandUtil.isGETMethod(request)) {
-			Long boardId = CommandUtil.getBoardIdByRequest(request);
-			String searchKeyword = request.getParameter("searchKeyword");
-			String requestedPageNumber = request.getParameter("pageNumber");
+		Long boardId = CommandUtil.getBoardIdByRequest(request);
+		String searchKeyword = request.getParameter("searchKeyword");
+		String requestedPageNumber = request.getParameter("pageNumber");
 
-			PageParameters pageParameters = PageParameters.builder()
-				.searchKeyword(searchKeyword)
-				.boardId(boardId)
-				.build();
+		PageParameters pageParameters = PageParameters.builder()
+			.searchKeyword(searchKeyword)
+			.boardId(boardId)
+			.build();
 
-			int numberOfItems = articleService.getNumberOfArticlesBySearch(pageParameters);
+		int numberOfItems = articleService.getNumberOfArticlesBySearch(pageParameters);
 
-			pageParameters.setPaginationElements(requestedPageNumber, numberOfItems);
+		pageParameters.setPaginationElements(requestedPageNumber, numberOfItems);
 
-			List<Article> noticeList = articleService.getArticleList(pageParameters);
+		List<Article> noticeList = articleService.getArticleList(pageParameters);
 
-			request.setAttribute("noticeList", noticeList);
-			request.setAttribute("pageParameters", pageParameters);
+		request.setAttribute("noticeList", noticeList);
+		request.setAttribute("pageParameters", pageParameters);
 
-			return View.forwardTo(AdminCommands.NOTICE_MANAGEMENT.getPath());
-		}
-		return null;
+		return View.forwardTo(AdminCommands.NOTICE_MANAGEMENT.getPath());
 	}
 }

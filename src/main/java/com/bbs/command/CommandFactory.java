@@ -1,7 +1,5 @@
 package com.bbs.command;
 
-import com.bbs.properties.AdminCommands;
-import com.bbs.properties.ClientCommands;
 import com.bbs.util.CommandUtil;
 import java.util.Map;
 

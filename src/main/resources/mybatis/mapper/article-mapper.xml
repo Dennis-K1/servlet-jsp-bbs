@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bbs.dao.ArticleMapper">
+<mapper namespace="com.bbs.mapper.ArticleMapper">
 
   <!-- 검색 키워드 및 대상 게시판 기반 총 게시글 수 반환-->
   <select id="getNumberOfArticlesBySearch" resultType="int" parameterType="com.bbs.domain.PageParameters">

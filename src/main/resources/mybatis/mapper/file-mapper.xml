@@ -16,7 +16,15 @@
          #{extension})
   </insert>
 
-<!--  게시글 번호로 파일 정보 조회 -->
+<!--  파일 정보 삭제-->
+  <delete id="deleteFile" parameterType="com.bbs.domain.File">
+    DELETE FROM
+        file
+    WHERE
+        id = #{id}
+  </delete>
+
+  <!--  게시글 번호로 파일 정보 조회 -->
   <select id="getFileByArticleId" parameterType="long" resultType="com.bbs.domain.File">
     SELECT
         *

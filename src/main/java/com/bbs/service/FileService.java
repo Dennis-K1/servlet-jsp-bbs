@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
@@ -67,6 +68,14 @@ public class FileService {
 		}
 	}
 
+	public int deleteFile(File previousFile) throws IOException {
+		Files.delete(Paths.get(previousFile.getDirectory() + "\\"+ previousFile.getSaveName()));
+		try(SqlSession session = sqlSessionFactory.openSession(true)){
+			FileMapper fileMapper = session.getMapper(FileMapper.class);
+			return fileMapper.deleteFile(previousFile);
+		}
+	}
+
 	/**
 	 * 업로드 파일 temp 폴더에 저장하며 MultipartRequest 생성
 	 * @param request 요청 객체
@@ -115,4 +124,17 @@ public class FileService {
 			.extension(extension)
 			.build();
 	}
+
+	public Boolean isFileAttached(Long articleId) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			FileMapper fileMapper = session.getMapper(FileMapper.class);
+			File file = fileMapper.getFileByArticleId(articleId);
+			if (Objects.equals(null, file)) {
+				return false;
+			}
+			return true;
+		}
+	}
+
+
 }

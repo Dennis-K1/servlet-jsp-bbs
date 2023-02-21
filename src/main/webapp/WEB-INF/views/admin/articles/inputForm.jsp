@@ -34,8 +34,12 @@
                     <td><textarea name="content" id="content" autocomplete="off"></textarea></td>
                 </tr>
                 <tr>
-                    <td><label for="file">내용 : </label></td>
-                    <td><input type="file" name="file" id="file"></td>
+                    </div>
+                    <td><label for="file">파일 업로드</label></td>
+                    <td><input type="file" name="file" id="file" accept=".jpg, .jpeg, .png"
+                               onchange="setImagePreview(event)"></td>
+                    <td><img id="preview"></td>
+                    <td><button type="button" id="removePreviewButton" onclick="removePreview()" style="display: none">삭제</button></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -51,4 +55,28 @@
 </c:choose>
 
 </body>
+<script>
+  const removePreview = () => {
+    let preview = document.getElementById("preview");
+    let removePreview = document.getElementById("removePreviewButton");
+    let file = document.getElementById("file");
+    file.value = "";
+    delete preview.src;
+    preview.style.display = "none";
+    removePreview.style.display = "none";
+  }
+
+  const setImagePreview = (event) => {
+    let preview = document.getElementById("preview");
+    let removePreviewButton = document.getElementById("removePreviewButton");
+    if (event.target.files.length > 0) {
+      let src = URL.createObjectURL(event.target.files[0]);
+      preview.src = src;
+      preview.style.display = "block";
+      removePreviewButton.style.display = "block";
+    } else {
+      removePreview();
+    }
+  }
+</script>
 </html>

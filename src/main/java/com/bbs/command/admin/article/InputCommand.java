@@ -57,7 +57,7 @@ public class InputCommand implements
 			throw new RuntimeException("게시글 등록 실패");
 		}
 
-		if (isFileUploaded(multipartRequest)) {
+		if (CommandUtil.isFileUploaded(multipartRequest)) {
 			File file = fileService.createFileVO(multipartRequest, article.getId());
 
 			fileService.relocateFileFromTempDirectory(file);
@@ -89,16 +89,5 @@ public class InputCommand implements
 		return true;
 	}
 
-	/**
-	 * 파일 첨부 여부 확인
-	 *
-	 * @param multipartRequest
-	 * @return
-	 */
-	private Boolean isFileUploaded(MultipartRequest multipartRequest) {
-		if (Objects.equals(null, multipartRequest.getFilesystemName("file"))) {
-			return false;
-		}
-		return true;
-	}
+
 }

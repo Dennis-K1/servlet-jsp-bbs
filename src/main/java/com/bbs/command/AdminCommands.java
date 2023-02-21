@@ -1,15 +1,15 @@
 package com.bbs.command;
 
 import com.bbs.command.admin.LoginFormCommand;
+import com.bbs.command.admin.article.EditCommand;
 import com.bbs.command.admin.article.EditFormCommand;
 import com.bbs.command.admin.article.DetailCommand;
 import com.bbs.command.admin.AdminIndexCommand;
 import com.bbs.command.admin.LoginCommand;
 import com.bbs.command.admin.article.InputCommand;
-import com.bbs.command.admin.article.AdminNoticeManagementCommand;
+import com.bbs.command.admin.article.ManagementCommand;
 import com.bbs.command.admin.article.InputFormCommand;
 import com.bbs.command.admin.user.DeleteCommand;
-import com.bbs.command.admin.user.ManagementCommand;
 import com.bbs.command.admin.user.RecoveryCommand;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +59,11 @@ public enum AdminCommands {
 	 * 유저 상세페이지
 	 */
 	USER_DETAIL("/admin/users/detail"),
+
+	/**
+	 * (공통) 게시글 목록 관리
+	 */
+	ARTICLE_MANAGEMENT("/admin/articles/management"),
 
 	/**
 	 * (공통) 게시글 삭제
@@ -144,16 +149,17 @@ public enum AdminCommands {
 		map.put(AdminCommands.INDEX.path, new AdminIndexCommand());
 		map.put(AdminCommands.LOGIN.path, new LoginCommand());
 		map.put(AdminCommands.LOGIN_FORM.path, new LoginFormCommand());
-		map.put(AdminCommands.USER_MANAGEMENT.path, new ManagementCommand());
+		map.put(AdminCommands.USER_MANAGEMENT.path, new com.bbs.command.admin.user.ManagementCommand());
 		map.put(AdminCommands.USER_DELETE.path, new DeleteCommand());
 		map.put(AdminCommands.USER_RECOVERY.path, new RecoveryCommand());
-		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new AdminNoticeManagementCommand());
+		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.ARTICLE_DELETE.path, new com.bbs.command.admin.article.DeleteCommand());
 		map.put(AdminCommands.ARTICLE_RECOVERY.path, new com.bbs.command.admin.article.RecoveryCommand());
 		map.put(AdminCommands.NOTICE_INPUT.path, new InputCommand());
 		map.put(AdminCommands.NOTICE_INPUT_FORM.path, new InputFormCommand());
 		map.put(AdminCommands.NOTICE_DETAIL.path, new DetailCommand());
-		map.put(AdminCommands.NOTICE_EDIT.path, new EditFormCommand());
+		map.put(AdminCommands.ARTICLE_EDIT.path, new EditCommand());
+		map.put(AdminCommands.NOTICE_EDIT_FORM.path, new EditFormCommand());
 	}
 
 	@Getter

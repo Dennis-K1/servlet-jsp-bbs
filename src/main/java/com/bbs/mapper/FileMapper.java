@@ -7,4 +7,6 @@ public interface FileMapper {
 	public int inputFile(File file);
 
 	public File getFileByArticleId(Long articleId);
+
+	int deleteFile(File previousFile);
 }

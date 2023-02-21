@@ -1,4 +1,5 @@
-<%@ page import="com.bbs.properties.AdminCommands" %>
+<%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.domain.Article" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -8,8 +9,13 @@
   Time: 오전 1:23
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+
+    Article article = (Article) request.getAttribute("article");
+	request.setAttribute("articleId", article.getId());
+%>
 <html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <title>Title</title>
     <script type="text/javascript"
@@ -35,11 +41,10 @@
     </c:otherwise>
 </c:choose>
 
-<button onclick="location.href=`<%=AdminCommands.NOTICE_EDIT.getPath()%>?articleId=${article.id}`">수정</button>
+<button onclick="location.href=`<%=AdminCommands.NOTICE_EDIT_FORM.getPath()%>?articleId=${article.id}`">수정</button>
 <button onclick="location.href=`<%=AdminCommands.NOTICE_DETAIL.getPath()%>`">삭제</button>
 <button>목록</button>
 </body>
 <script>
-
 </script>
 </html>

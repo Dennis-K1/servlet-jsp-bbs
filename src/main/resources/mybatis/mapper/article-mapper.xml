@@ -12,22 +12,27 @@
           article
     WHERE
           board_id = #{boardId}
+          AND article_deleted = 0
           <if test="searchKeyword != null">
             <bind name="keyword" value="'%' + searchKeyword + '%'" />
             AND title LIKE #{keyword}
           </if>
   </select>
 
-  <!--  페이지 번호 및 검색 키워드 기반 유저 리스트 반환 *** 최대 10개까지 *** -->
+  <!--  페이지 번호 및 검색 키워드 기반 유저 리스트 반환 *** 최대 10개까지 ***
+        ** 파일 테이블에 각 게시글에 종속된 파일이 없을 경우 Article VO의 fileAttached 필드 false 처리 -->
   <select id="getArticleList" resultType="com.bbs.domain.Article" parameterType="com.bbs.domain.PageParameters">
     SELECT
-        article.*, user.account
+        article.*, user.account, IFNULL(file.id, FALSE) AS fileAttached
     FROM
         article
+        LEFT OUTER JOIN
+            file ON article.id = file.article_id
         INNER JOIN
             user ON article.user_id = user.id
     WHERE
         board_id = #{boardId}
+        AND article_deleted = 0
         <if test="searchKeyword != null">
           <bind name="keyword" value="'%' + searchKeyword + '%'" />
           AND title LIKE #{keyword}
@@ -120,6 +125,17 @@
         file_attached = 1
     WHERE
         id = #{value}
+  </update>
+
+  <!--  게시물 수정 -->
+  <update id="editArticle" parameterType="com.bbs.domain.Article">
+    UPDATE
+        article
+    SET
+        title = #{title},
+        content = #{content}
+    WHERE
+        id = #{id}
   </update>
 
 </mapper>

@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.properties.AdminCommands" %>
+<%@ page import="com.bbs.command.AdminCommands" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--  Created by IntelliJ IDEA.
@@ -16,11 +16,9 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/templates/css/item-list.css">
 </head>
 <body>
+<jsp:include page="sideMenu.jsp"></jsp:include>
 <div align ="center">
-    <hr width="70%">
     <h1>유저 목록</h1>
-    <hr width="70%">
-
     <table border="1" style="width: 70%;">
         <tr>
             <th width="7%">번호</th>

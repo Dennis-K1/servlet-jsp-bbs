@@ -9,11 +9,6 @@
   Time: 오전 1:23
   To change this template use File | Settings | File Templates.
 --%>
-<%
-
-    Article article = (Article) request.getAttribute("article");
-	request.setAttribute("articleId", article.getId());
-%>
 <html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
@@ -22,6 +17,7 @@
             src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
 </head>
 <body>
+<jsp:include page="../sideMenu.jsp"></jsp:include>
 <c:choose>
     <c:when test="${article.boardId == 1}">
         <table>
@@ -42,9 +38,14 @@
 </c:choose>
 
 <button onclick="location.href=`<%=AdminCommands.NOTICE_EDIT_FORM.getPath()%>?articleId=${article.id}`">수정</button>
-<button onclick="location.href=`<%=AdminCommands.NOTICE_DETAIL.getPath()%>`">삭제</button>
+<button onclick="deleteArticleById(${article.id})">삭제</button>
 <button>목록</button>
 </body>
 <script>
+  const deleteArticleById = (articleId) => {
+    const parameterObject = {'articleId':articleId}
+    const method = 'post'
+    const action = '<%=AdminCommands.ARTICLE_DELETE.getPath()%>'
+    sendFormWithParameter(parameterObject, method, action)}
 </script>
 </html>

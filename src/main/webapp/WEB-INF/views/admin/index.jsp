@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.properties.AdminCommands" %>
+<%@ page import="com.bbs.command.AdminCommands" %>
 <%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
   User: bw120
@@ -13,13 +13,5 @@
 </head>
 <body>
 <jsp:include page="sideMenu.jsp"></jsp:include>
-
-<% Iterator pathIterator = AdminCommands.getMap().keySet().iterator();
-    String path = null;
-    while (pathIterator.hasNext()) {
-        path = pathIterator.next().toString();
-    %>
-<a href="<%=path%>"><%=path%></a><br>
-<%}%>
 </body>
 </html>

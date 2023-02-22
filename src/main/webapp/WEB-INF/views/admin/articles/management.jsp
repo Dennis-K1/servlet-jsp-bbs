@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.properties.AdminCommands" %>
+<%@ page import="com.bbs.command.AdminCommands" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--  Created by IntelliJ IDEA.
@@ -13,14 +13,14 @@
     <title>Title</title>
     <script type="text/javascript"
             src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/templates/css/item-list.css">
+    <link rel="stylesheet" type="text/css"
+          href="<%=request.getContextPath()%>/templates/css/item-list.css">
 </head>
 
 <body>
+<jsp:include page="../sideMenu.jsp"></jsp:include>
 <div align="center">
-    <hr width="70%">
     <h1>공지사항 관리</h1>
-    <hr width="70%">
 
     <table border="1" style="width: 70%;">
         <tr>
@@ -30,43 +30,20 @@
             <th width="15%">조회수</th>
             <th width="15%">등록일</th>
             <th width="3%">이미지</th>
-            <th width="3%">삭제여부</th>
-            <th width="5%">삭제일</th>
             <th width="3%">게시글 삭제</th>
-            <th width="3%">게시글 복구</th>
         </tr>
-        <c:forEach items="${noticeList}" var="notice">
+        <c:forEach items="${articleList}" var="article">
             <tr>
-                <td>${notice.id}</td>
-                <td>${notice.account}</td>
+                <td>${article.id}</td>
+                <td>${article.account}</td>
                 <td>
-                    <a href="<%=AdminCommands.NOTICE_DETAIL.getPath()%>?articleId=${notice.id}">${notice.title}</a>
+                    <a href="<%=AdminCommands.NOTICE_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
                 </td>
-                <td>${notice.views}</td>
-                <td>${notice.dateRegistered }</td>
-                <td>${notice.fileAttached }</td>
-                <td>${notice.articleDeleted }</td>
-                <td>${notice.dateDeleted }</td>
-                <c:choose>
-                    <c:when test="${notice.articleDeleted == 0}">
-                        <td>
-                            <button onclick="deleteArticleById(${notice.id})">X</button>
-                        </td>
-                    </c:when>
-                    <c:otherwise>
-                        <td></td>
-                    </c:otherwise>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${notice.articleDeleted == 0}">
-                        <td></td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>
-                            <button onclick="recoverArticleById(${notice.id})">X</button>
-                        </td>
-                    </c:otherwise>
-                </c:choose>
+                <td>${article.views}</td>
+                <td>${article.dateRegistered }</td>
+                <td>${article.fileAttached }</td>
+                <td><button onclick="deleteArticleById(${article.id})">X</button></td>
+
             </tr>
         </c:forEach>
     </table>
@@ -120,7 +97,7 @@
         <button onclick="searchKeyword()">검색</button>
     </div>
 </div>
-<button onclick="location.href=`<%=AdminCommands.NOTICE_INPUT.getPath()%>`">글 등록</button>
+<button onclick="location.href=`<%=AdminCommands.NOTICE_INPUT_FORM.getPath()%>`">글 등록</button>
 </body>
 <script>
   const searchKeyword = () => {
@@ -132,22 +109,15 @@
     linkTo("<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>", parameterObject)
   }
   const toPageOf = (pageNumber) => {
-    let parameterObject = {'pageNumber':pageNumber}
+    let parameterObject = {'pageNumber': pageNumber}
     let searchKeyword = `${pageParameters.searchKeyword}`
     if (searchKeyword.length > 0) {
       parameterObject.searchKeyword = searchKeyword
     }
     linkTo("<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>", parameterObject)
   }
-
-  const recoverArticleById = (articleId) => {
-    const parameterObject = {'articleId':articleId}
-    const method = 'post'
-    const action = '<%=AdminCommands.ARTICLE_RECOVERY.getPath()%>'
-    sendFormWithParameter(parameterObject, method, action)
-  }
   const deleteArticleById = (articleId) => {
-    const parameterObject = {'articleId':articleId}
+    const parameterObject = {'articleId': articleId}
     const method = 'post'
     const action = '<%=AdminCommands.ARTICLE_DELETE.getPath()%>'
     sendFormWithParameter(parameterObject, method, action)

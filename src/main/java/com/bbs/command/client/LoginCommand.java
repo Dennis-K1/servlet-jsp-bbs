@@ -1,5 +1,6 @@
 package com.bbs.command.client;
 
+import com.bbs.command.AdminCommands;
 import com.bbs.command.ClientCommands;
 import com.bbs.command.Command;
 import com.bbs.domain.View;
@@ -38,6 +39,11 @@ public class LoginCommand implements Command {
 
 		session.setAttribute(SessionKeys.LOGIN_CLIENT, user.getAccount());
 
-		return View.redirectTo(ClientCommands.INDEX.getPath());
+		String redirectURL = request.getParameter("redirectURL");
+
+		if (CommandUtil.isStringEmpty(redirectURL)) {
+			return View.redirectTo(ClientCommands.INDEX.getPath());
+		}
+		return View.redirectTo(redirectURL);
 	}
 }

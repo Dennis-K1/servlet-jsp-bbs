@@ -1,8 +1,12 @@
 package com.bbs.util;
 
-import com.bbs.properties.AdminCommands;
+import com.bbs.command.AdminCommands;
+import com.oreilly.servlet.MultipartRequest;
+import com.sun.tools.javac.util.StringUtils;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 /**
  * 커맨드, 요청, 응답에 공통적으로 사용되는 util 모음
@@ -81,5 +85,31 @@ public class CommandUtil {
 		String requestURI = request.getRequestURI();
 		String requestPath = requestURI.split("/")[2];
 		return AdminCommands.getBoardIdMap().get(requestPath);
+	}
+
+	/**
+	 * 파일 첨부 여부 확인
+	 *
+	 * @param multipartRequest
+	 * @return
+	 */
+	public static Boolean isFileUploaded(MultipartRequest multipartRequest) {
+		if (Objects.equals(null, multipartRequest.getFilesystemName("file"))) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 빈 문자열인지 확인
+	 *
+	 * @param parameter
+	 * @return
+	 */
+	public static Boolean isStringEmpty(String parameter) {
+		if (Objects.equals(null, parameter) || "".equals(parameter)) {
+			return true;
+		}
+		return false;
 	}
 }

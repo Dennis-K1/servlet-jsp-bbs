@@ -1,4 +1,5 @@
-<%@ page import="com.bbs.properties.JSPUtilRoutes" %><%--
+<%@ page import="com.bbs.properties.JSPUtilRoutes" %>
+<%@ page import="com.bbs.command.ClientCommands" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-06
@@ -12,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<form name="loginForm" action="/login" method="post">
+<form name="loginForm" action="<%=ClientCommands.LOGIN.getPath()%>?redirectURL=${param.redirectURL}" method="post">
     <table>
         <tr>
             <td>

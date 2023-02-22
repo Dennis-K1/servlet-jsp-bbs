@@ -9,6 +9,7 @@ import com.bbs.service.UserService;
 import com.bbs.util.CommandUtil;
 import com.bbs.properties.SessionKeys;
 import java.io.IOException;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,11 @@ public class LoginCommand implements Command {
 
 		session.setAttribute(SessionKeys.LOGIN_ADMIN, admin.getAccount());
 
-		return View.redirectTo(AdminCommands.INDEX.getPath());
+		String redirectURL = request.getParameter("redirectURL");
+
+		if (CommandUtil.isStringEmpty(redirectURL)) {
+			return View.redirectTo(AdminCommands.INDEX.getPath());
+		}
+		return View.redirectTo(redirectURL);
 	}
 }

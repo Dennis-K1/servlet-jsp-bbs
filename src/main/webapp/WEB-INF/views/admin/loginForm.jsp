@@ -1,4 +1,5 @@
-<%@ page import="com.bbs.properties.JSPUtilRoutes" %><%--
+<%@ page import="com.bbs.properties.JSPUtilRoutes" %>
+<%@ page import="com.bbs.command.AdminCommands" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-03
@@ -7,17 +8,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="redirectURL" scope="request" value="${param.redirectURL}"/>
+<%
+    request.setAttribute("redirectURL", request.getParameter("redirectURL"));
+%>
 <html>
 <head>
     <title>어드민 로그인</title>
 <jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
 </head>
 <body>
-<form name="loginForm" action="/admin/login" method="post">
+<form name="loginForm" action="<%=AdminCommands.LOGIN.getPath()%>?redirectURL=${param.redirectURL}" method="post">
     <table>
         <tr>
             <td>
                 <h1>어드민 로그인 페이지</h1>
+                ${param.redirectURL}
             </td>
         </tr>
         <tr>

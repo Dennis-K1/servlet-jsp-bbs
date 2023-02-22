@@ -19,7 +19,7 @@ public class LoginFormCommand implements Command {
 
 		HttpSession session = request.getSession();
 
-			if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
+		if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
 				return View.redirectTo(AdminCommands.INDEX.getPath());
 			}
 		return View.forwardTo(AdminCommands.LOGIN_FORM.getPath());

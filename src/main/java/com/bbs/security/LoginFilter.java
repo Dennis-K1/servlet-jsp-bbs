@@ -1,5 +1,7 @@
 package com.bbs.security;
 
+import com.bbs.command.AdminCommands;
+import com.bbs.command.ClientCommands;
 import com.bbs.properties.SessionKeys;
 import com.bbs.util.CommandUtil;
 import java.io.IOException;
@@ -55,7 +57,11 @@ public class LoginFilter implements Filter {
 				chain.doFilter(request, response);
 				return;
 			}
-			httpServletResponse.sendRedirect("/admin/loginForm");
+			if (requestURI.equals(AdminCommands.INDEX.getPath())) {
+				httpServletResponse.sendRedirect(AdminCommands.LOGIN_FORM.getPath());
+				return;
+			}
+			httpServletResponse.sendRedirect(AdminCommands.LOGIN_FORM.getPath() + "?redirectURL=" + requestURI);
 			return;
 		}
 

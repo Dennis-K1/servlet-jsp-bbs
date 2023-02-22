@@ -72,7 +72,8 @@ public class Article {
 	/**
 	 * 파일 첨부 여부
 	 */
-	private Byte fileAttached;
+	@Setter
+	private Boolean fileAttached;
 
 	/**
 	 * 게시글 조회수
@@ -100,7 +101,8 @@ public class Article {
 	 * @param content 게시글 내용
 	 */
 	@Builder
-	public Article(Long boardId, Long userId, String account, String title, String content) {
+	public Article(Long id, Long boardId, Long userId, String account, String title, String content) {
+		this.id = id;
 		this.boardId = boardId;
 		this.userId = userId;
 		this.account = account;

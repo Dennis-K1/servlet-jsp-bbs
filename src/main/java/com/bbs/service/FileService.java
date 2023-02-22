@@ -76,6 +76,15 @@ public class FileService {
 		}
 	}
 
+	public int deleteDirectory(File previousFile) throws IOException {
+		Files.deleteIfExists(Paths.get(previousFile.getDirectory() + "\\"+ previousFile.getSaveName()));
+		Files.deleteIfExists(Paths.get(previousFile.getDirectory()));
+		try(SqlSession session = sqlSessionFactory.openSession(true)){
+			FileMapper fileMapper = session.getMapper(FileMapper.class);
+			return fileMapper.deleteFile(previousFile);
+		}
+	}
+
 	/**
 	 * 업로드 파일 temp 폴더에 저장하며 MultipartRequest 생성
 	 * @param request 요청 객체

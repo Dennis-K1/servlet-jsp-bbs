@@ -125,4 +125,11 @@ public class ArticleService {
 			return articleMapper.increaseArticleViewsById(id);
 		}
 	}
+
+	public int editArticle(Article article) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)){
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.editArticle(article);
+		}
+	}
 }

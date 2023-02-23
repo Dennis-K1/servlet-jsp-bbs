@@ -1,4 +1,5 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.properties.SessionKeys" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -73,9 +74,9 @@
         </ul>
         <hr>
         <div id="profile">
-            <span>
-                ${user.account}
-            </span>
-                <a href="#"><span>로그아웃</span></a>
+            <p>
+                <%=session.getAttribute(SessionKeys.LOGIN_ADMIN)%>
+            </p>
+            <a href="<%=AdminCommands.LOGOUT.getPath()%>" class="text-decoration-none text-light"><span>로그아웃</span></a>
         </div>
     </div>

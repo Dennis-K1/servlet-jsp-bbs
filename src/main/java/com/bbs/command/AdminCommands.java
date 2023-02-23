@@ -1,6 +1,7 @@
 package com.bbs.command;
 
 import com.bbs.command.admin.LoginFormCommand;
+import com.bbs.command.admin.LogoutCommand;
 import com.bbs.command.admin.article.EditCommand;
 import com.bbs.command.admin.article.EditFormCommand;
 import com.bbs.command.admin.article.DetailCommand;
@@ -33,6 +34,11 @@ public enum AdminCommands {
 	 * 로그인
 	 */
 	LOGIN("/admin/login"),
+
+	/**
+	 * 로그아웃
+	 */
+	LOGOUT("/admin/logout"),
 
 	/**
 	 * 로그인 화면
@@ -133,6 +139,8 @@ public enum AdminCommands {
 	 */
 	NOTICE_EDIT_FORM("/admin/notices/editForm"),
 
+
+
 	/*
 	편의를 위한 enum 끝 표시 //TODO THE_END_OF_ENUM 삭제
 	 */
@@ -149,6 +157,7 @@ public enum AdminCommands {
 		map.put(AdminCommands.INDEX.path, new AdminIndexCommand());
 		map.put(AdminCommands.LOGIN.path, new LoginCommand());
 		map.put(AdminCommands.LOGIN_FORM.path, new LoginFormCommand());
+		map.put(AdminCommands.LOGOUT.path, new LogoutCommand());
 		map.put(AdminCommands.USER_MANAGEMENT.path, new com.bbs.command.admin.user.ManagementCommand());
 		map.put(AdminCommands.USER_DELETE.path, new DeleteCommand());
 		map.put(AdminCommands.USER_RECOVERY.path, new RecoveryCommand());

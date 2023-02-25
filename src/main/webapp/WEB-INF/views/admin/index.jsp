@@ -10,6 +10,10 @@
 <html>
 <head>
     <title>어드민 인덱스</title>
+    <script type="text/javascript"
+            src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="<%=request.getContextPath()%>/templates/css/table.css">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -22,12 +26,14 @@
 
 </head>
 <body>
+<%--  탑 네브 바    --%>
+<jsp:include page="util/topNav.jsp"></jsp:include>
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-primary">
-            <jsp:include page="sideMenu.jsp"></jsp:include>
-        </div>
-        <div class="col py-3">
+        <jsp:include page="util/sideMenu.jsp"></jsp:include>
+
+        <div class="col py-3" style="background-color: #f5f5f5">
             Content area...
         </div>
     </div>

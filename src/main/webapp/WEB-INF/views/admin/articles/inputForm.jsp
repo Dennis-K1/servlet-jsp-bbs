@@ -14,9 +14,10 @@
 <head>
     <title>Title</title>
     <jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
+
 </head>
 <body>
-<jsp:include page="../sideMenu.jsp"></jsp:include>
+<jsp:include page="../util/sideMenu.jsp"></jsp:include>
 <c:choose>
     <c:when test="${boardId == 1}">
         <form action="<%=AdminCommands.NOTICE_INPUT.getPath()%>" method="post" enctype="multipart/form-data">

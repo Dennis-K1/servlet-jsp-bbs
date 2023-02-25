@@ -17,7 +17,7 @@
             src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
 </head>
 <body>
-<jsp:include page="../sideMenu.jsp"></jsp:include>
+<jsp:include page="../util/sideMenu.jsp"></jsp:include>
 <c:choose>
     <c:when test="${article.boardId == 1}">
         <table>

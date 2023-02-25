@@ -15,7 +15,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="../sideMenu.jsp"></jsp:include>
+<jsp:include page="../util/sideMenu.jsp"></jsp:include>
 <c:choose>
 
     <c:when test="${article.boardId == 1}">

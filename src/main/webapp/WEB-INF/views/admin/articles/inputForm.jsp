@@ -1,5 +1,5 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
-<%@ page import="com.bbs.properties.JSPUtilRoutes" %>
+<%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -13,7 +13,7 @@
 <html>
 <head>
     <title>Title</title>
-    <jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
+    <jsp:include page="<%=JspComponents.ERROR_MESSAGE.getPath()%>"/>
 
 </head>
 <body>

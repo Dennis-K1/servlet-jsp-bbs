@@ -1,5 +1,6 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
-<%@ page import="java.util.Iterator" %><%--
+<%@ page import="java.util.Iterator" %>
+<%@ page import="com.bbs.properties.JspComponents" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-03
@@ -27,11 +28,15 @@
 
 </head>
 <body>
+<%--  탑 네브 바    --%>
+<jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
+
+<%-- 센터 --%>
 <div class="container-fluid">
   <div class="row flex-nowrap">
-    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-primary">
-      <jsp:include page="sideMenu.jsp"></jsp:include>
-    </div>
+    <%--        사이드 메뉴      --%>
+    <jsp:include page="<%=JspComponents.SIDE_MENU.getPath()%>"></jsp:include>
+    <%--         메인 콘텐츠      --%>
     <div class="col py-3" style="background-color: #f5f5f5">
       Content area...
     </div>

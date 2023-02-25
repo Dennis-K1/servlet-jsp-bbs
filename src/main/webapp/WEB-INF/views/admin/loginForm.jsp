@@ -1,4 +1,4 @@
-<%@ page import="com.bbs.properties.JSPUtilRoutes" %>
+<%@ page import="com.bbs.properties.JspComponents" %>
 <%@ page import="com.bbs.command.AdminCommands" %><%--
   Created by IntelliJ IDEA.
   User: bw120
@@ -24,7 +24,7 @@
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
     <title>어드민 로그인</title>
-    <jsp:include page="<%=JSPUtilRoutes.ERROR_MESSAGE.getPath()%>"/>
+    <jsp:include page="<%=JspComponents.ERROR_MESSAGE.getPath()%>"/>
 </head>
 <body class="text-center">
 <div class="form-login">

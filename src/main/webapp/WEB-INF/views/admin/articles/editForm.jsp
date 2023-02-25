@@ -1,4 +1,5 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -15,7 +16,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="../util/sideMenu.jsp"></jsp:include>
+<jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
 <c:choose>
 
     <c:when test="${article.boardId == 1}">

@@ -1,4 +1,5 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--  Created by IntelliJ IDEA.
@@ -27,11 +28,11 @@
 </head>
 <body>
 <%--  탑 네브 바    --%>
-<jsp:include page="util/topNav.jsp"></jsp:include>
+<jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
 
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <jsp:include page="util/sideMenu.jsp"></jsp:include>
+        <jsp:include page="<%=JspComponents.SIDE_MENU.getPath()%>"></jsp:include>
 
         <div class="col" style="background-color: #f5f5f5">
             <div class="fs-3 fw-bold mt-4 text-secondary">
@@ -39,7 +40,7 @@
             </div>
 
             <div class="card bg-white  p-4 mt-3" id="component">
-                <jsp:include page="util/searchBar.jsp"></jsp:include>
+                <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
 
                 <table class="mt-5 table text-center table-borderless">
                     <tr class="text-xs font-weight-bold text-primary">
@@ -91,7 +92,7 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <jsp:include page="util/pagination.jsp"></jsp:include>
+                <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
             </div>
         </div>
     </div>

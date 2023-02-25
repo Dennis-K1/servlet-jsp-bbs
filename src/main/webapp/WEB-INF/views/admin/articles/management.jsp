@@ -1,5 +1,6 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
 <%@ page import="com.bbs.properties.SessionKeys" %>
+<%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--  Created by IntelliJ IDEA.
@@ -31,13 +32,13 @@
 
 <body>
 <%--  탑 네브 바    --%>
-<jsp:include page="../util/topNav.jsp"></jsp:include>
+<jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
 
 <%-- 센터 --%>
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <%--        사이드바     --%>
-        <jsp:include page="../util/sideMenu.jsp"></jsp:include>
+        <jsp:include page="<%=JspComponents.SIDE_MENU.getPath()%>"></jsp:include>
 
 
         <%--      메인 콘텐츠   --%>
@@ -46,7 +47,7 @@
                 공지사항 관리
             </div>
             <div class="card bg-white p-4 mt-3" id="component">
-                <jsp:include page="../util/searchBar.jsp"></jsp:include>
+                <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
 
                 <table class="mt-3 table text-center table-borderless">
                     <tr class="text-xs font-weight-bold text-primary">
@@ -77,7 +78,7 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <jsp:include page="../util/pagination.jsp"></jsp:include>
+                <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
                 <button class="btn btn-primary" style="width: 10%"
                         onclick="location.href=`<%=AdminCommands.NOTICE_INPUT_FORM.getPath()%>`">등록
                 </button>

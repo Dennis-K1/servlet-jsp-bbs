@@ -2,6 +2,7 @@ package com.bbs.mapper;
 
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
+import com.bbs.domain.User;
 import java.util.List;
 
 public interface ArticleMapper {
@@ -15,7 +16,7 @@ public interface ArticleMapper {
 	int inputArticle(Article article);
 	Article getArticleById(Long id);
 	int increaseArticleViewsById(Long id);
-	int updateFileAttachedByArticleId(Long id);
-
 	int editArticle(Article article);
+
+	List<Article> getArticleListByUser(User user);
 }

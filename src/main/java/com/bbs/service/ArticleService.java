@@ -59,6 +59,10 @@ public class ArticleService {
 			if (articleMapper.deleteArticleById(id) == 1) {
 				return articleMapper.updateDateDeleted(id);
 			}
+			Article article = articleMapper.getArticleById(id);
+
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+			userMapper.decreaseArticleCountByAccount(article.getAccount());
 		}
 		return 0;
 	}
@@ -81,6 +85,7 @@ public class ArticleService {
 
 	/**
 	 * 게시글 등록 (회원 아이디 조회, 게시글 등록)
+	 * -- 등록 시 유저 count_article (게시 게시글 수) 증가
 	 *
 	 * @param article 게시글 정보 객체
 	 * @return
@@ -91,6 +96,8 @@ public class ArticleService {
 			UserMapper userMapper = session.getMapper(UserMapper.class);
 
 			User user = userMapper.getUserByAccount(article.getAccount());
+			userMapper.increaseArticleCount(user);
+
 			article.setUserId(user.getId());
 			return articleMapper.inputArticle(article);
 		}
@@ -130,6 +137,13 @@ public class ArticleService {
 		try (SqlSession session = sqlSessionFactory.openSession(true)){
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
 			return articleMapper.editArticle(article);
+		}
+	}
+
+	public List<Article> getArticleListByUser(User user) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)){
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.getArticleListByUser(user);
 		}
 	}
 }

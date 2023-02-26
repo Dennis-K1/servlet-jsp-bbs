@@ -62,11 +62,17 @@
                 <span class="nav-item-heading">게시판 관리</span>
                 <ul>
                     <li class="nav-item" id="<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>">
-                        <a href="<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>"><span
-                                class="nav-item-text ps-4 p-2">공지사항 관리</span></a>
+                        <a href="<%=AdminCommands.NOTICE_MANAGEMENT.getPath()%>">
+                            <span class="nav-item-text ps-4 p-2">공지사항 관리</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="#"><span class="nav-item-text ps-4 p-2">자유게시판 관리</span></a>
+                    </li>
+                    <li class="nav-item" id="<%=AdminCommands.INQUIRY_MANAGEMENT.getPath()%>">
+                        <a href="<%=AdminCommands.INQUIRY_MANAGEMENT.getPath()%>">
+                            <span class="nav-item-text ps-4 p-2">1:1문의 관리</span>
+                        </a>
                     </li>
                 </ul>
             </li>

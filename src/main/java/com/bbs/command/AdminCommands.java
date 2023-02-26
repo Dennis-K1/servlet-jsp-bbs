@@ -60,7 +60,6 @@ public enum AdminCommands {
 	 */
 	USER_RECOVERY("/admin/users/recovery"),
 
-	//TODO 유저 상세페이지
 	/**
 	 * 유저 상세페이지
 	 */
@@ -118,17 +117,14 @@ public enum AdminCommands {
 
 	/**
 	 * 공지사항 관리
-	 * - GET : 공지사항 리스트
 	 */
 	NOTICE_MANAGEMENT("/admin/notices"),
-
 
 	/**
 	 * 공지사항 상세페이지 (articles/detail 으로 forward)
 	 */
 	NOTICE_DETAIL("/admin/notices/detail"),
 
-	//TODO 수정 진행
 	/**
 	 * 공지사항 수정 등록
 	 */
@@ -138,6 +134,16 @@ public enum AdminCommands {
 	 * 공지사항 수정 화면 (articles/editForm 으로 forward)
 	 */
 	NOTICE_EDIT_FORM("/admin/notices/editForm"),
+
+	/**
+	 * 1:1 문의 관리
+	 */
+	INQUIRY_MANAGEMENT("/admin/inquiries"),
+
+	/**
+	 * 1:1 문의 상세페이지 (articles/detail 으로 forward)
+	 */
+	INQUIRY_DETAIL("/admin/inquiries/detail"),
 
 
 
@@ -159,6 +165,7 @@ public enum AdminCommands {
 		map.put(AdminCommands.LOGIN_FORM.path, new LoginFormCommand());
 		map.put(AdminCommands.LOGOUT.path, new LogoutCommand());
 		map.put(AdminCommands.USER_MANAGEMENT.path, new com.bbs.command.admin.user.ManagementCommand());
+		map.put(AdminCommands.USER_DETAIL.path, new com.bbs.command.admin.user.DetailCommand());
 		map.put(AdminCommands.USER_DELETE.path, new DeleteCommand());
 		map.put(AdminCommands.USER_RECOVERY.path, new RecoveryCommand());
 		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new ManagementCommand());
@@ -169,6 +176,8 @@ public enum AdminCommands {
 		map.put(AdminCommands.NOTICE_DETAIL.path, new DetailCommand());
 		map.put(AdminCommands.ARTICLE_EDIT.path, new EditCommand());
 		map.put(AdminCommands.NOTICE_EDIT_FORM.path, new EditFormCommand());
+		map.put(AdminCommands.INQUIRY_MANAGEMENT.path, new ManagementCommand());
+		map.put(AdminCommands.INQUIRY_DETAIL.path, new DetailCommand());
 	}
 
 	@Getter
@@ -178,8 +187,9 @@ public enum AdminCommands {
 	 * DB 게시판(board)테이블 PK 및 해당 경로 Map
 	 */
 	static {
-		boardIdMap.put("notices", 1L);
-		boardIdMap.put("community", 2L);
+		boardIdMap.put("/admin/notices", 1L);
+		boardIdMap.put("/admin/community", 2L);
+		boardIdMap.put("/admin/inquiries", 3L);
 	}
 }
 

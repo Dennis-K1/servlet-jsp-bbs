@@ -1,5 +1,4 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
-<%@ page import="com.bbs.properties.SessionKeys" %>
 <%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -43,46 +42,96 @@
 
         <%--      메인 콘텐츠   --%>
         <div class="col" style="background-color: #f5f5f5">
-            <div class="fs-3 fw-bold mt-4 text-secondary">
-                공지사항 관리
-            </div>
-            <div class="card bg-white p-4 mt-3" id="component">
-                <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
+            <c:choose>
+                <c:when test="${pageParameters.boardId == 1}">
+                    <div class="fs-3 fw-bold mt-4 text-secondary">
+                        공지사항 관리
+                    </div>
+                    <div class="card bg-white p-4 mt-3" id="component">
+                        <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
 
-                <table class="mt-3 table text-center table-borderless">
-                    <tr class="text-xs font-weight-bold text-primary">
-                        <th scope="col">번호</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">조회수</th>
-                        <th scope="col">등록일</th>
-                        <th scope="col">이미지</th>
-                        <th scope="col">게시글 삭제</th>
-                    </tr>
-                    <c:forEach items="${articleList}" var="article">
-                        <tr scope="row">
-                            <td>${article.id}</td>
-                            <td>${article.account}</td>
-                            <td>
-                                <a href="<%=AdminCommands.NOTICE_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
-                            </td>
-                            <td>${article.views}</td>
-                            <td>${article.dateRegistered }</td>
-                            <td>${article.fileAttached }</td>
-                            <td>
-                                <button class="btn btn-primary"
-                                        onclick="deleteArticleById(${article.id})">X
-                                </button>
-                            </td>
+                        <table class="mt-3 table text-center table-borderless">
+                            <tr class="font-weight-bold text-primary">
+                                <th scope="col">번호</th>
+                                <th scope="col">작성자</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">조회수</th>
+                                <th scope="col">등록일</th>
+                                <th scope="col">이미지</th>
+                                <th scope="col">게시글 삭제</th>
+                            </tr>
+                            <c:forEach items="${articleList}" var="article">
+                                <tr scope="row">
+                                    <td>${article.id}</td>
+                                    <td>${article.account}</td>
+                                    <td>
+                                        <a href="<%=AdminCommands.NOTICE_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
+                                    </td>
+                                    <td>${article.views}</td>
+                                    <td>${article.dateRegistered }</td>
+                                    <td>${article.fileAttached }</td>
+                                    <td>
+                                        <button class="btn btn-primary"
+                                                onclick="deleteArticleById(${article.id})">X
+                                        </button>
+                                    </td>
 
-                        </tr>
-                    </c:forEach>
-                </table>
-                <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
-                <button class="btn btn-primary" style="width: 10%"
-                        onclick="location.href=`<%=AdminCommands.NOTICE_INPUT_FORM.getPath()%>`">등록
-                </button>
-            </div>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                        <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
+                        <button class="btn btn-primary" style="width: 10%"
+                                onclick="location.href=`<%=AdminCommands.NOTICE_INPUT_FORM.getPath()%>`">
+                            등록
+                        </button>
+                    </div>
+                </c:when>
+                <c:when test="${pageParameters.boardId == 3}">
+                    <div class="fs-3 fw-bold mt-4 text-secondary">
+                        1:1문의 관리
+                    </div>
+                    <div class="card bg-white p-4 mt-3">
+                        <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
+
+                        <table class="mt-3 table text-center table-borderless">
+                            <tr class="font-weight-bold text-primary">
+                                <th scope="col">번호</th>
+                                <th scope="col">작성자</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">등록일</th>
+                                <th scope="col">게시글 답변 여부</th>
+                                <th scope="col">게시글 삭제</th>
+                            </tr>
+                            <c:forEach items="${articleList}" var="article">
+                                <tr scope="row">
+                                    <td>${article.id}</td>
+                                    <td>${article.account}</td>
+                                    <td>
+                                        <a href="<%=AdminCommands.INQUIRY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
+                                    </td>
+                                    <td>${article.dateRegistered }</td>
+                                    <c:choose>
+                                        <c:when test="${article.numberOfReplies > 0}">
+                                            <td>답변 완료</td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>미답변</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <td>
+                                        <button class="btn btn-primary"
+                                                onclick="deleteArticleById(${article.id})">X
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </c:forEach>
+                        </table>
+                        <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
+                    </div>
+                </c:when>
+            </c:choose>
+
         </div>
     </div>
 </div>

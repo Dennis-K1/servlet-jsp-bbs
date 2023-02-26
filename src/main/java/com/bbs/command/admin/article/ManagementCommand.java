@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 공지사항 관리 목록 페이지 관련 커맨드
  */
-public class AdminNoticeManagementCommand implements Command {
+public class ManagementCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
@@ -25,6 +25,7 @@ public class AdminNoticeManagementCommand implements Command {
 		ArticleService articleService = new ArticleService();
 
 		Long boardId = CommandUtil.getBoardIdByRequest(request);
+
 		String searchKeyword = request.getParameter("searchKeyword");
 		String requestedPageNumber = request.getParameter("pageNumber");
 
@@ -37,11 +38,11 @@ public class AdminNoticeManagementCommand implements Command {
 
 		pageParameters.setPaginationElements(requestedPageNumber, numberOfItems);
 
-		List<Article> noticeList = articleService.getArticleList(pageParameters);
+		List<Article> articleList = articleService.getArticleList(pageParameters);
 
-		request.setAttribute("noticeList", noticeList);
+		request.setAttribute("articleList", articleList);
 		request.setAttribute("pageParameters", pageParameters);
 
-		return View.forwardTo(AdminCommands.NOTICE_MANAGEMENT.getPath());
+		return View.forwardTo(AdminCommands.ARTICLE_MANAGEMENT.getPath());
 	}
 }

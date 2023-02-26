@@ -23,7 +23,10 @@
         ** 파일 테이블에 각 게시글에 종속된 파일이 없을 경우 Article VO의 fileAttached 필드 false 처리 -->
   <select id="getArticleList" resultType="com.bbs.domain.Article" parameterType="com.bbs.domain.PageParameters">
     SELECT
-        article.*, user.account, IFNULL(file.id, FALSE) AS fileAttached
+        article.*,
+        user.account,
+        IFNULL(file.id, FALSE) AS fileAttached,
+        (SELECT COUNT(*) FROM reply WHERE article_id = article.id) AS numberOfReplies
     FROM
         article
         LEFT OUTER JOIN
@@ -83,7 +86,7 @@
       id = #{value}
   </update>
 
-  <!--inputArticle-->
+  <!--  게시글 등록   -->
   <insert id="inputArticle" parameterType="com.bbs.domain.Article">
     INSERT INTO
         article (board_id, user_id, title, content)
@@ -107,6 +110,16 @@
       id = #{value}
   </select>
 
+<!--  해당 유저가 작성한 게시글 목록 반환 -->
+  <select id="getArticleListByUser" resultType="com.bbs.domain.Article" parameterType="com.bbs.domain.User">
+    SELECT
+        *
+    FROM
+        article
+    WHERE
+        user_id = #{id}
+  </select>
+
   <!--  대상 게시글 조회수 증가 -->
   <update id="increaseArticleViewsById" parameterType="long">
     UPDATE
@@ -117,15 +130,6 @@
         id = #{value}
   </update>
 
-  <!-- 해당 게시글 파일 첨부 표시 업데이트 -->
-  <update id="updateFileAttachedByArticleId" parameterType="long">
-    UPDATE
-        article
-    SET
-        file_attached = 1
-    WHERE
-        id = #{value}
-  </update>
 
   <!--  게시물 수정 -->
   <update id="editArticle" parameterType="com.bbs.domain.Article">

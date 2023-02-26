@@ -2,11 +2,11 @@ package com.bbs.util;
 
 import com.bbs.command.AdminCommands;
 import com.oreilly.servlet.MultipartRequest;
-import com.sun.tools.javac.util.StringUtils;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 /**
  * 커맨드, 요청, 응답에 공통적으로 사용되는 util 모음
@@ -83,7 +83,8 @@ public class CommandUtil {
 	 */
 	public static Long getBoardIdByRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
-		String requestPath = requestURI.split("/")[2];
+		String[] requestPaths = requestURI.split("/");
+		String requestPath = "/" + requestPaths[1] + "/" + requestPaths[2];
 		return AdminCommands.getBoardIdMap().get(requestPath);
 	}
 
@@ -111,5 +112,21 @@ public class CommandUtil {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 게시판 번호에 해당하는 경로 반환 일치하지 않는 경우 인덱스 경로 반환
+	 *
+	 * @param boardId 게시판 번호
+	 * @return
+	 */
+	public static String getPathByBoardId(Long boardId) {
+		Map<String, Long> boardIdMap = AdminCommands.getBoardIdMap();
+		for (Entry<String, Long> entry: boardIdMap.entrySet()) {
+			if (entry.getValue() == boardId){
+				return entry.getKey();
+			}
+		}
+		return AdminCommands.INDEX.getPath();
 	}
 }

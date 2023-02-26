@@ -76,6 +76,12 @@ public class Article {
 	private Boolean fileAttached;
 
 	/**
+	 * 답글(댓글) 갯수
+	 */
+	@Setter
+	private Integer numberOfReplies;
+
+	/**
 	 * 게시글 조회수
 	 */
 	private Integer Views;

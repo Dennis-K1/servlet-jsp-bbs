@@ -21,4 +21,6 @@ public interface ArticleMapper {
 	List<Article> getArticleListByUser(User user);
 
 	List<Reply> getReplyListById(Long id);
+
+	int inputReply(Reply reply);
 }

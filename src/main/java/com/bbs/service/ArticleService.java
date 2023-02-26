@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import com.bbs.config.MybatisSqlSessionFactory;
+import com.bbs.domain.Reply;
 import com.bbs.mapper.ArticleMapper;
 import com.bbs.mapper.UserMapper;
 import com.bbs.domain.Article;
@@ -144,6 +145,17 @@ public class ArticleService {
 		try (SqlSession session = sqlSessionFactory.openSession(true)){
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
 			return articleMapper.getArticleListByUser(user);
+		}
+	}
+
+	public int inputReply(Reply reply) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+
+			User user = userMapper.getUserByAccount(reply.getUser().getAccount());
+			reply.setUser(user);
+			return articleMapper.inputReply(reply);
 		}
 	}
 }

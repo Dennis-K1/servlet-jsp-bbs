@@ -119,6 +119,16 @@
     </selectKey>
   </insert>
 
+  <!-- 답글 등록 -->
+  <insert id="inputReply" parameterType="com.bbs.domain.Reply">
+    INSERT INTO
+        reply (article_id, user_id, content)
+    VALUES
+        (#{articleId},
+         #{user.id},
+         #{content})
+  </insert>
+
   <!--  유저 아이디로 유저 조회 -->
   <select id="getArticleById" parameterType="long" resultMap="articleResultMap">
     SELECT

@@ -10,8 +10,10 @@ import com.bbs.command.admin.LoginCommand;
 import com.bbs.command.admin.article.InputCommand;
 import com.bbs.command.admin.article.ManagementCommand;
 import com.bbs.command.admin.article.InputFormCommand;
+import com.bbs.command.admin.reply.ReplyCommand;
 import com.bbs.command.admin.user.DeleteCommand;
 import com.bbs.command.admin.user.RecoveryCommand;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -145,6 +147,7 @@ public enum AdminCommands {
 	 */
 	INQUIRY_DETAIL("/admin/inquiries/detail"),
 
+	INQUIRY_REPLY("/admin/inquiries/reply"),
 
 
 	/*
@@ -178,6 +181,7 @@ public enum AdminCommands {
 		map.put(AdminCommands.NOTICE_EDIT_FORM.path, new EditFormCommand());
 		map.put(AdminCommands.INQUIRY_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.INQUIRY_DETAIL.path, new DetailCommand());
+		map.put(AdminCommands.INQUIRY_REPLY.path, new ReplyCommand());
 	}
 
 	@Getter

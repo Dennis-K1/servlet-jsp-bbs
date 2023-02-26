@@ -20,7 +20,14 @@ public class RegisterCommand implements Command {
 	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
+		UserService userService = new UserService();
+
 		String account = request.getParameter("account");
+
+		if (userService.getUserByAccount(account) != null) {
+			return View.redirectTo(ClientCommands.REGISTER_FORM.getPath(), "이미 사용중인 아이디입니다.");
+		}
+
 		String password = request.getParameter("password");
 
 		User user = User.builder()
@@ -29,7 +36,6 @@ public class RegisterCommand implements Command {
 			.password(password)
 			.build();
 
-		UserService userService = new UserService();
 		userService.registerUser(user);
 
 		return View.redirectTo(ClientCommands.LOGIN_FORM.getPath());

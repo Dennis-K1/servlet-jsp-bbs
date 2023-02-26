@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import com.bbs.config.MybatisSqlSessionFactory;
+import com.bbs.domain.PageParameters;
 import com.bbs.mapper.UserMapper;
 import com.bbs.domain.User;
 import com.bbs.domain.Role;
@@ -74,13 +75,13 @@ public class UserService {
 	/**
 	 * 검색조건 기반 클라이언트 조회
 	 *
-	 * @param pageNumberOffset 조회 시작 인덱스
+	 * @param pageParameters 검색 정보
 	 * @return
 	 */
-	public List<User> getUserList(int pageNumberOffset) {
+	public List<User> getUserList(PageParameters pageParameters) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			UserMapper userMapper = session.getMapper(UserMapper.class);
-			return userMapper.getUserList(pageNumberOffset);
+			return userMapper.getUserList(pageParameters);
 		}
 	}
 
@@ -89,10 +90,10 @@ public class UserService {
 	 *
 	 * @return
 	 */
-	public int getNumberOfUsers() {
+	public int getNumberOfUsersBySearch(PageParameters pageParameters) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			UserMapper userMapper = session.getMapper(UserMapper.class);
-			return userMapper.getNumberOfUsers();
+			return userMapper.getNumberOfUsersBySearch(pageParameters);
 		}
 	}
 
@@ -125,6 +126,45 @@ public class UserService {
 				return userMapper.recoverDateDeleted(id);
 			}
 			return 0;
+		}
+	}
+
+	/**
+	 * 유저 접속시 방문횟수 증가
+	 *
+	 * @param user 유저 정보 객체
+	 * @return DB 수행 결과
+	 */
+	public int increaseVisitCount(User user) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+			return userMapper.increaseVisitCount(user);
+		}
+	}
+
+	/**
+	 * 유저 접속시 마지막 접속시간 업데이트
+	 *
+	 * @param user 유저 정보 객체
+	 * @return DB 수행 결과
+	 */
+	public int updateLastLogin(User user) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+			return userMapper.updateLastLogin(user);
+		}
+	}
+
+	/**
+	 * 유저 아이디로 유저 정보 조회
+	 *
+	 * @param account 유저 아이디
+	 * @return 유저 정보 객체
+	 */
+	public User getUserByAccount(String account) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+			return userMapper.getUserByAccount(account);
 		}
 	}
 }

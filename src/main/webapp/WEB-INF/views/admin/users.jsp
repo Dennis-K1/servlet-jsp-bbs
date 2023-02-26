@@ -58,7 +58,9 @@
                     <c:forEach items="${userList}" var="user">
                         <tr scope="row">
                             <td>${user.id}</td>
-                            <td>${user.account}</td>
+                            <td>
+                                <a href="<%=AdminCommands.USER_DETAIL.getPath()%>?account=${user.account}">${user.account}</a>
+                            </td>
                             <td>${user.countArticle}</td>
                             <td>${user.countVisit}</td>
                             <td>${user.dateLastLogin}</td>

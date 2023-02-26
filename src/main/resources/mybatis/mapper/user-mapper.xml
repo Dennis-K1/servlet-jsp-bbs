@@ -37,25 +37,34 @@
   </insert>
 
 <!--  페이지 번호 기반 유저 리스트 반환 *** 최대 10개까지 *** -->
-  <select id="getUserList" resultType="com.bbs.domain.User" parameterType="int">
+  <select id="getUserList" resultType="com.bbs.domain.User" parameterType="com.bbs.domain.PageParameters">
     SELECT
         *
     FROM
         user
     WHERE
         role_id = 2
-    LIMIT 10
-    OFFSET #{value}
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND account LIKE #{keyword}
+        </if>
+        ORDER BY id DESC
+        LIMIT 10
+        OFFSET #{pageNumberOffset}
   </select>
 
 <!--  총 유저 수 반환-->
-  <select id="getNumberOfUsers" resultType="int">
+  <select id="getNumberOfUsersBySearch" resultType="int">
     SELECT
         COUNT(*)
     FROM
         user
     WHERE
         role_id = 2
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND account LIKE #{keyword}
+        </if>
   </select>
 
 <!--  id(PK)에 해당하는 유저 삭제 처리-->
@@ -95,5 +104,46 @@
       date_deleted = NULL
     WHERE
       id = #{value} AND role_id = 2
+  </update>
+
+
+<!--  사이트 방문 (로그인) 횟수 증가 -->
+  <update id="increaseVisitCount" parameterType="com.bbs.domain.User">
+    UPDATE
+        user
+    SET
+        count_visit = count_visit + 1
+    WHERE
+        account = #{account}
+  </update>
+
+<!--  마지막 접속 시간 업데이트  -->
+  <update id="updateLastLogin" parameterType="com.bbs.domain.User">
+    UPDATE
+      user
+    SET
+      date_last_login = CURRENT_TIMESTAMP()
+    WHERE
+      account = #{account}
+  </update>
+
+<!--  유저 게시글 수 증가 -->
+  <update id="increaseArticleCount" parameterType="com.bbs.domain.User">
+    UPDATE
+      user
+    SET
+      count_article = count_article + 1
+    WHERE
+      account = #{account}
+  </update>
+
+  <!--  유저 게시글 수 감소 -->
+  <update id="decreaseArticleCountByAccount" parameterType="com.bbs.domain.User">
+    UPDATE
+      user
+    SET
+      count_article = count_article - 1
+    WHERE
+      account = #{account}
   </update>
 </mapper>

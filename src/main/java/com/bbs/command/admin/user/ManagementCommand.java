@@ -24,22 +24,23 @@ public class ManagementCommand implements Command {
 
 		UserService userService = new UserService();
 
-		if (CommandUtil.isGETMethod(request)) {
 
-			PageParameters pageParameters = new PageParameters();
+		String searchKeyword = request.getParameter("searchKeyword");
+		String requestedPageNumber = request.getParameter("pageNumber");
 
-			int numberOfItems = userService.getNumberOfUsers();
-			String requestedPageNumber = request.getParameter("pageNumber");
+		PageParameters pageParameters = PageParameters.builder()
+			.searchKeyword(searchKeyword)
+			.build();
 
-			 pageParameters.setPaginationElements(requestedPageNumber, numberOfItems);
+		int numberOfItems = userService.getNumberOfUsersBySearch(pageParameters);
 
-			List<User> userList = userService.getUserList(pageParameters.getPageNumberOffset());
-			request.setAttribute("userList", userList);
-			request.setAttribute("PageParameters", pageParameters);
-			return View.forwardTo(AdminCommands.USER_MANAGEMENT.getPath());
-		}
-		return null;
+		pageParameters.setPaginationElements(requestedPageNumber, numberOfItems);
+
+		List<User> userList = userService.getUserList(pageParameters);
+
+		request.setAttribute("userList", userList);
+		request.setAttribute("pageParameters", pageParameters);
+
+		return View.forwardTo(AdminCommands.USER_MANAGEMENT.getPath());
 	}
-
-
 }

@@ -39,6 +39,9 @@ public class LoginCommand implements Command {
 
 		session.setAttribute(SessionKeys.LOGIN_ADMIN, admin.getAccount());
 
+		userService.increaseVisitCount(admin);
+		userService.updateLastLogin(admin);
+
 		String redirectURL = request.getParameter("redirectURL");
 
 		if (CommandUtil.isStringEmpty(redirectURL)) {

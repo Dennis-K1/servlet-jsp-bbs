@@ -1,25 +1,34 @@
 package com.bbs.mapper;
 
+import com.bbs.domain.PageParameters;
 import com.bbs.domain.User;
 import java.util.List;
 
 public interface UserMapper {
 
-	public String getRoleName(Long roleId);
+	String getRoleName(Long roleId);
 
-	public int registerUser(User user);
+	int registerUser(User user);
 
-	public User getUserByAccount(String account);
+	User getUserByAccount(String account);
 
-	public List<User> getUserList(int pageNumberOffset);
+	List<User> getUserList(PageParameters pageParameters);
 
-	public int getNumberOfUsers();
+	int getNumberOfUsersBySearch(PageParameters pageParameters);
 
-	public int deleteUserById(int id);
+	int deleteUserById(int id);
 
-	public int updateDateDeleted(int id);
+	int updateDateDeleted(int id);
 
-	public int recoverUserById(int id);
+	int recoverUserById(int id);
 
-	public int recoverDateDeleted(int id);
+	int recoverDateDeleted(int id);
+
+	int increaseVisitCount(User user);
+
+	int updateLastLogin(User user);
+
+	int increaseArticleCount(User user);
+
+	int decreaseArticleCountByAccount(String account);
 }

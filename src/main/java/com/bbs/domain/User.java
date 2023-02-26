@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
  * 사용자 정보 객체
  * DB
  * 	  PK 		: 	Long 타입
- *    TINYINT	:	BYTE 타입
+ *    TINYINT	:	Byte 타입
+ *    INT 		: 	Integer 타입
  *    DATE		:   java.util.Date 타입
  */
 @Getter
@@ -50,6 +51,21 @@ public class User {
 	 * 회원삭제일
 	 */
 	private Date dateDeleted;
+
+	/**
+	 * 접속 횟수
+	 */
+	private Integer countVisit;
+
+	/**
+	 * 게시중인 게시글 수
+	 */
+	private Integer countArticle;
+
+	/**
+	 * 마지막 접속일
+	 */
+	private Date dateLastLogin;
 
 
 	@Builder

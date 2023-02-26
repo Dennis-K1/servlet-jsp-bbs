@@ -11,6 +11,7 @@ public interface UserMapper {
 	int registerUser(User user);
 
 	User getUserByAccount(String account);
+	User getUserById(Long id);
 
 	List<User> getUserList(PageParameters pageParameters);
 
@@ -28,7 +29,7 @@ public interface UserMapper {
 
 	int updateLastLogin(User user);
 
-	int increaseArticleCount(User user);
+	int increaseArticleCountById(Long id);
 
-	int decreaseArticleCountByAccount(String account);
+	int decreaseArticleCountById(Long id);
 }

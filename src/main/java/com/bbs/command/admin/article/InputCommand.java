@@ -3,9 +3,11 @@ package com.bbs.command.admin.article;
 import com.bbs.domain.Errors;
 import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.User;
 import com.bbs.domain.View;
 import com.bbs.domain.Article;
 import com.bbs.domain.File;
+import com.bbs.properties.FileProperties;
 import com.bbs.service.ArticleService;
 import com.bbs.service.FileService;
 import com.bbs.util.CommandUtil;
@@ -16,6 +18,7 @@ import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.FileUtils;
 
 /**
  * 게시글 등록 커맨드
@@ -32,7 +35,6 @@ public class InputCommand implements
 		FileService fileService = new FileService();
 		ArticleService articleService = new ArticleService();
 
-
 		MultipartRequest multipartRequest = fileService.getMultipartRequest(request);
 
 		String title = multipartRequest.getParameter("title");
@@ -43,9 +45,13 @@ public class InputCommand implements
 				Errors.VALIDATION_ERROR.getMessage());
 		}
 
+		User userInfo = User.builder()
+			.account(CommandUtil.getUserAccountFromSession(request, SessionKeys.LOGIN_ADMIN))
+			.build();
+
 		Article article = Article.builder()
 			.boardId(boardId)
-			.account(CommandUtil.getUserAccountFromSession(request, SessionKeys.LOGIN_ADMIN))
+			.user(userInfo)
 			.title(multipartRequest.getParameter("title"))
 			.content(multipartRequest.getParameter("content"))
 			.build();
@@ -54,6 +60,7 @@ public class InputCommand implements
 		int insertResult = (articleService.inputArticle(article));
 
 		if (insertResult != 1) {
+			FileUtils.cleanDirectory(new java.io.File(FileProperties.tempDirectory));
 			throw new RuntimeException("게시글 등록 실패");
 		}
 

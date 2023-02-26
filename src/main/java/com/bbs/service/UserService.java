@@ -157,9 +157,8 @@ public class UserService {
 
 	/**
 	 * 유저 아이디로 유저 정보 조회
-	 *
 	 * @param account 유저 아이디
-	 * @return 유저 정보 객체
+	 * @return
 	 */
 	public User getUserByAccount(String account) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {

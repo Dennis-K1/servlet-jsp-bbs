@@ -62,7 +62,7 @@ public class ArticleService {
 			Article article = articleMapper.getArticleById(id);
 
 			UserMapper userMapper = session.getMapper(UserMapper.class);
-			userMapper.decreaseArticleCountByAccount(article.getAccount());
+			userMapper.decreaseArticleCountById(article.getUser().getId());
 		}
 		return 0;
 	}
@@ -95,10 +95,10 @@ public class ArticleService {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
 			UserMapper userMapper = session.getMapper(UserMapper.class);
 
-			User user = userMapper.getUserByAccount(article.getAccount());
-			userMapper.increaseArticleCount(user);
+			User user = userMapper.getUserByAccount(article.getUser().getAccount());
+			userMapper.increaseArticleCountById(user.getId());
 
-			article.setUserId(user.getId());
+			article.setUser(user);
 			return articleMapper.inputArticle(article);
 		}
 	}

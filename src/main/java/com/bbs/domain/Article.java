@@ -1,6 +1,7 @@
 package com.bbs.domain;
 
 import java.util.Date;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Article {
 	/**
 	 * 게시글 PK
 	 */
+	@Setter
 	private Long id;
 
 	/**
@@ -35,10 +37,6 @@ public class Article {
 	@Setter
 	private Long userId;
 
-	/**
-	 * 사용자 아이디
-	 */
-	private String account;
 	/**
 	 * 게시글 제목
 	 */
@@ -76,12 +74,6 @@ public class Article {
 	private Boolean fileAttached;
 
 	/**
-	 * 답글(댓글) 갯수
-	 */
-	@Setter
-	private Integer numberOfReplies;
-
-	/**
 	 * 게시글 조회수
 	 */
 	private Integer Views;
@@ -99,20 +91,30 @@ public class Article {
 	private String image;
 
 	/**
+	 * 작성자 정보
+	 */
+	@Setter
+	private User user;
+
+	/**
+	 * 답글(댓글) 목록
+	 */
+	@Setter
+	private List<Reply> replyList;
+
+	/**
 	 * 게시글 등록 객체를 위한 빌더
 	 * @param boardId 게시판 번호
-	 * @param userId 유저 번호
-	 * @param account 유저 아아디
 	 * @param title 게시글 제목
-	 * @param content 게시글 내용
+	 * @param content 게시글
+	 * @param user 유저 정보
 	 */
 	@Builder
-	public Article(Long id, Long boardId, Long userId, String account, String title, String content) {
+	public Article(Long id, Long boardId, String title, String content, User user) {
 		this.id = id;
 		this.boardId = boardId;
-		this.userId = userId;
-		this.account = account;
 		this.title = title;
 		this.content = content;
+		this.user = user;
 	}
 }

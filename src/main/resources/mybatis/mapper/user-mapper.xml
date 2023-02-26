@@ -67,7 +67,16 @@
         </if>
   </select>
 
-<!--  id(PK)에 해당하는 유저 삭제 처리-->
+  <select id="getUserById" resultType="com.bbs.domain.User">
+    SELECT
+        *
+    FROM
+        user
+    WHERE
+        id = #{value}
+  </select>
+
+  <!--  id(PK)에 해당하는 유저 삭제 처리-->
   <update id="deleteUserById" parameterType="int">
     UPDATE
         user
@@ -128,22 +137,22 @@
   </update>
 
 <!--  유저 게시글 수 증가 -->
-  <update id="increaseArticleCount" parameterType="com.bbs.domain.User">
+  <update id="increaseArticleCountById" parameterType="long">
     UPDATE
       user
     SET
       count_article = count_article + 1
     WHERE
-      account = #{account}
+      id = #{value}
   </update>
 
   <!--  유저 게시글 수 감소 -->
-  <update id="decreaseArticleCountByAccount" parameterType="com.bbs.domain.User">
+  <update id="decreaseArticleCountById" parameterType="long">
     UPDATE
       user
     SET
       count_article = count_article - 1
     WHERE
-      account = #{account}
+      id = #{value}
   </update>
 </mapper>

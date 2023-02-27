@@ -36,7 +36,7 @@ public class View {
 	 *
 	 * @param requestURI 요청 경로
 	 */
-	public void resolveView(String requestURI) {
+	public void resolvePath(String requestURI) {
 
 		//어드민 경로인 경우
 		if (CommandUtil.isAdminRequest(requestURI)) {
@@ -70,6 +70,8 @@ public class View {
 	 */
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+		response.setContentType("text/html;charset=UTF-8");
+
 		if (isRedirect) {
 			if (errorMessage != null) {
 				request.getSession().setAttribute("error", errorMessage);

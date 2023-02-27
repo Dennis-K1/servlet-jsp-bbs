@@ -27,13 +27,15 @@ public class Controller extends HttpServlet {
 	protected void handleRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
+		request.setCharacterEncoding("UTF-8");
+
 		String requestURI = getRequestURI(request);
 
 		Command command = CommandFactory.getCommand(requestURI);
 
 		View view = command.execute(request, response);
 
-		view.resolveView(requestURI);
+		view.resolvePath(requestURI);
 
 		view.render(request, response);
 	}

@@ -63,7 +63,7 @@
                             <c:forEach items="${articleList}" var="article">
                                 <tr scope="row">
                                     <td>${article.id}</td>
-                                    <td>${article.account}</td>
+                                    <td>${article.user.account}</td>
                                     <td>
                                         <a href="<%=AdminCommands.NOTICE_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
                                     </td>
@@ -86,6 +86,47 @@
                         </button>
                     </div>
                 </c:when>
+                <c:when test="${pageParameters.boardId == 2}">
+                    <div class="fs-3 fw-bold mt-4 text-secondary">
+                        자유게시판 관리
+                    </div>
+                    <div class="card bg-white p-4 mt-3">
+                        <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
+
+                        <table class="mt-3 table text-center table-borderless">
+                            <tr class="font-weight-bold text-primary">
+                                <th scope="col">번호</th>
+                                <th scope="col">작성자</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">댓글수</th>
+                                <th scope="col">조회수</th>
+                                <th scope="col">등록일</th>
+                                <th scope="col">파일</th>
+                                <th scope="col">게시글 삭제</th>
+                            </tr>
+                            <c:forEach items="${articleList}" var="article">
+                                <tr scope="row">
+                                    <td>${article.id}</td>
+                                    <td>${article.user.account}</td>
+                                    <td>
+                                        <a href="<%=AdminCommands.COMMUNITY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
+                                    </td>
+                                    <td>${fn:length(article.replyList)}</td>
+                                    <td>${article.views}</td>
+                                    <td>${article.dateRegistered }</td>
+                                    <td>${article.fileAttached }</td>
+                                    <td>
+                                        <button class="btn btn-primary"
+                                                onclick="deleteArticleById(${article.id})">X
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </c:forEach>
+                        </table>
+                        <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
+                    </div>
+                </c:when>
                 <c:when test="${pageParameters.boardId == 3}">
                     <div class="fs-3 fw-bold mt-4 text-secondary">
                         1:1문의 관리
@@ -105,13 +146,13 @@
                             <c:forEach items="${articleList}" var="article">
                                 <tr scope="row">
                                     <td>${article.id}</td>
-                                    <td>${article.account}</td>
+                                    <td>${article.user.account}</td>
                                     <td>
                                         <a href="<%=AdminCommands.INQUIRY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a>
                                     </td>
                                     <td>${article.dateRegistered }</td>
                                     <c:choose>
-                                        <c:when test="${article.numberOfReplies > 0}">
+                                        <c:when test="${fn:length(article.replyList)> 0}">
                                             <td>답변 완료</td>
                                         </c:when>
                                         <c:otherwise>

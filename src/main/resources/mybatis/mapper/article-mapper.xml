@@ -18,6 +18,16 @@
     <collection property="nestedReplyList" column="{id=id, article_id=article_id}" javaType="java.util.ArrayList" ofType="com.bbs.domain.NestedReply" select="getNestedReplyListById"></collection>
   </resultMap>
 
+<!--  댓글 삭제 처리-->
+  <update id="deleteReplyById" parameterType="long">
+    UPDATE
+        reply
+    SET
+        reply_deleted = 1
+    WHERE
+        id = #{value}
+  </update>
+
   <!--  대댓글 (원댓글의 댓글) 목록 조회 -->
   <select id="getNestedReplyListById" parameterType="java.util.Map" resultType="com.bbs.domain.NestedReply">
     SELECT
@@ -161,6 +171,16 @@
         user_id = #{id}
   </select>
 
+<!--  해당 게시글의 게시판 번호 조회 -->
+  <select id="getBoardIdById" parameterType="long" resultType="java.lang.Long">
+    SELECT
+        board_id
+    FROM
+        article
+    WHERE
+        id = #{value}
+  </select>
+
   <!--  대상 게시글 조회수 증가 -->
   <update id="increaseArticleViewsById" parameterType="long">
     UPDATE
@@ -181,6 +201,16 @@
         content = #{content}
     WHERE
         id = #{id}
+  </update>
+
+<!--  삭제된 댓글 복구 처리 -->
+  <update id="recoverReplyById" parameterType="long">
+    UPDATE
+        reply
+    SET
+        reply_deleted = 0
+    WHERE
+        id = #{value}
   </update>
 
 </mapper>

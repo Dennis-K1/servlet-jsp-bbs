@@ -13,7 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ReplyCommand implements Command {
+/**
+ *  답글 등록 커맨드
+ */
+public class InputCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)

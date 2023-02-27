@@ -85,8 +85,7 @@ public class ArticleService {
 	}
 
 	/**
-	 * 게시글 등록 (회원 아이디 조회, 게시글 등록)
-	 * -- 등록 시 유저 count_article (게시 게시글 수) 증가
+	 * 게시글 등록 (회원 아이디 조회, 게시글 등록) -- 등록 시 유저 count_article (게시 게시글 수) 증가
 	 *
 	 * @param article 게시글 정보 객체
 	 * @return
@@ -135,14 +134,14 @@ public class ArticleService {
 	}
 
 	public int editArticle(Article article) {
-		try (SqlSession session = sqlSessionFactory.openSession(true)){
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
 			return articleMapper.editArticle(article);
 		}
 	}
 
 	public List<Article> getArticleListByUser(User user) {
-		try (SqlSession session = sqlSessionFactory.openSession(true)){
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
 			return articleMapper.getArticleListByUser(user);
 		}
@@ -156,6 +155,27 @@ public class ArticleService {
 			User user = userMapper.getUserByAccount(reply.getUser().getAccount());
 			reply.setUser(user);
 			return articleMapper.inputReply(reply);
+		}
+	}
+
+	public int deleteReplyById(Long replyId) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.deleteReplyById(replyId);
+		}
+	}
+
+	public Long getBoardIdById(Long articleId) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.getBoardIdById(articleId);
+		}
+	}
+
+	public int recoverReplyById(Long replyId) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.recoverReplyById(replyId);
 		}
 	}
 }

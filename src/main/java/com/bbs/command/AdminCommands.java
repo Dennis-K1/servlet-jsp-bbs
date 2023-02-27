@@ -7,13 +7,11 @@ import com.bbs.command.admin.article.EditFormCommand;
 import com.bbs.command.admin.article.DetailCommand;
 import com.bbs.command.admin.AdminIndexCommand;
 import com.bbs.command.admin.LoginCommand;
-import com.bbs.command.admin.article.InputCommand;
 import com.bbs.command.admin.article.ManagementCommand;
 import com.bbs.command.admin.article.InputFormCommand;
-import com.bbs.command.admin.reply.ReplyCommand;
+import com.bbs.command.admin.reply.InputCommand;
 import com.bbs.command.admin.user.DeleteCommand;
 import com.bbs.command.admin.user.RecoveryCommand;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -113,17 +111,17 @@ public enum AdminCommands {
 	NOTICE_INPUT("/admin/notices/input"),
 
 	/**
-	 * 공지사항 작성 화면 (articles/inputForm 으로 forward)
+	 * 공지사항 작성 화면 (articles/inputForm 공통 커맨드에서 해당하는 View 로 forward)
 	 */
 	NOTICE_INPUT_FORM("/admin/notices/inputForm"),
 
 	/**
-	 * 공지사항 관리
+	 * 공지사항 관리 (admin/articles/management 공통 커맨드에서 해당하는 View 로 forward)
 	 */
 	NOTICE_MANAGEMENT("/admin/notices"),
 
 	/**
-	 * 공지사항 상세페이지 (articles/detail 으로 forward)
+	 * 공지사항 상세페이지 (articles/detail 공통 커맨드에서 해당하는 View 로 forward)
 	 */
 	NOTICE_DETAIL("/admin/notices/detail"),
 
@@ -133,21 +131,36 @@ public enum AdminCommands {
 	NOTICE_EDIT("/admin/notices/edit"),
 
 	/**
-	 * 공지사항 수정 화면 (articles/editForm 으로 forward)
+	 * 공지사항 수정 화면 (articles/editForm 공통 커맨드에서 해당하는 View 로 forward)
 	 */
 	NOTICE_EDIT_FORM("/admin/notices/editForm"),
 
 	/**
-	 * 1:1 문의 관리
+	 * 1:1 문의 관리 (admin/articles/management 공통 커맨드에서 해당하는 View 로 forward)
 	 */
 	INQUIRY_MANAGEMENT("/admin/inquiries"),
 
 	/**
-	 * 1:1 문의 상세페이지 (articles/detail 으로 forward)
+	 * 1:1 문의 상세페이지 (articles/detail 공통 커맨드에서 해당하는 View 로 forward)
 	 */
 	INQUIRY_DETAIL("/admin/inquiries/detail"),
 
+	/**
+	 * 1:1 문의 답글 등록
+	 */
 	INQUIRY_REPLY("/admin/inquiries/reply"),
+	REPLY_DELETE("/admin/replies/delete"),
+	REPLY_RECOVERY("/admin/replies/recovery"),
+
+	/**
+	 * 자유게시판 관리 (admin/articles/management 공통 커맨드에서 해당하는 View 로 forward)
+	 */
+	COMMUNITY_MANAGEMENT("/admin/community"),
+
+	/**
+	 * 자유게시판 상세페이지 (admin/articles/detail 공통 커맨드에서 해당하는 View 로 forward)
+	 */
+	COMMUNITY_DETAIL("/admin/community/detail"),
 
 
 	/*
@@ -174,14 +187,18 @@ public enum AdminCommands {
 		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.ARTICLE_DELETE.path, new com.bbs.command.admin.article.DeleteCommand());
 		map.put(AdminCommands.ARTICLE_RECOVERY.path, new com.bbs.command.admin.article.RecoveryCommand());
-		map.put(AdminCommands.NOTICE_INPUT.path, new InputCommand());
+		map.put(AdminCommands.NOTICE_INPUT.path, new com.bbs.command.admin.article.InputCommand());
 		map.put(AdminCommands.NOTICE_INPUT_FORM.path, new InputFormCommand());
 		map.put(AdminCommands.NOTICE_DETAIL.path, new DetailCommand());
 		map.put(AdminCommands.ARTICLE_EDIT.path, new EditCommand());
 		map.put(AdminCommands.NOTICE_EDIT_FORM.path, new EditFormCommand());
 		map.put(AdminCommands.INQUIRY_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.INQUIRY_DETAIL.path, new DetailCommand());
-		map.put(AdminCommands.INQUIRY_REPLY.path, new ReplyCommand());
+		map.put(AdminCommands.INQUIRY_REPLY.path, new InputCommand());
+		map.put(AdminCommands.COMMUNITY_MANAGEMENT.path, new ManagementCommand());
+		map.put(AdminCommands.COMMUNITY_DETAIL.path, new DetailCommand());
+		map.put(AdminCommands.REPLY_DELETE.path, new com.bbs.command.admin.reply.DeleteCommand());
+		map.put(AdminCommands.REPLY_RECOVERY.path, new com.bbs.command.admin.reply.RecoveryCommand());
 	}
 
 	@Getter

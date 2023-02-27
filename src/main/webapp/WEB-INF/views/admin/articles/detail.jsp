@@ -156,10 +156,12 @@
                                                 <c:choose>
                                                     <c:when test="${reply.replyDeleted != 1}">
                                                         <p>${reply.content}</p>
-                                                        <button onclick="deleteReply(${reply.id}, ${reply.articleId})" class="btn btn-primary">삭제</button>
+                                                        <textarea id="nestedReply"></textarea>
+                                                        <button onclick="showReplyBox()" class="btn btn-primary">댓글 쓰기</button>
+                                                        <button onclick="deleteReply(${reply.id}, ${reply.articleId})" class="btn btn-danger">삭제</button>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <p>(숨김 처리된 댓글)${reply.content}</p>
+                                                        <p>(숨김 처리된 댓글)<del>${reply.content}</del></p>
                                                         <button onclick="recoverReply(${reply.id}, ${reply.articleId})" class="btn btn-primary">복구</button>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -177,10 +179,10 @@
                                                             <c:choose>
                                                                 <c:when test="${nestedReply.replyDeleted != 1}">
                                                                     <p>${nestedReply.content}</p>
-                                                                    <button onclick="deleteReply(${nestedReply.id}, ${nestedReply.articleId})" class="btn btn-primary">삭제</button>
+                                                                    <button onclick="deleteReply(${nestedReply.id}, ${nestedReply.articleId})" class="btn btn-danger">삭제</button>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <p>(숨김 처리된 댓글)${nestedReply.content}</p>
+                                                                    <p>(숨김 처리된 댓글)<del>${nestedReply.content}</del></p>
                                                                     <button onclick="recoverReply(${nestedReply.id}, ${nestedReply.articleId})" class="btn btn-primary">복구</button>
                                                                 </c:otherwise>
                                                             </c:choose>

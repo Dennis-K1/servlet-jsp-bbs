@@ -23,4 +23,10 @@ public interface ArticleMapper {
 	List<Reply> getReplyListById(Long id);
 
 	int inputReply(Reply reply);
+
+	int deleteReplyById(Long replyId);
+
+	Long getBoardIdById(Long articleId);
+
+	int recoverReplyById(Long replyId);
 }

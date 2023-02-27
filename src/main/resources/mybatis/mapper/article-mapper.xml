@@ -15,16 +15,28 @@
   <resultMap id="replyResultMap" type="com.bbs.domain.Reply">
     <id column="id" property="id"></id>
     <association property="user" column="user_id" select="com.bbs.mapper.UserMapper.getUserById"></association>
+    <collection property="nestedReplyList" column="{id=id, article_id=article_id}" javaType="java.util.ArrayList" ofType="com.bbs.domain.NestedReply" select="getNestedReplyListById"></collection>
   </resultMap>
 
-<!--  댓글 목록 조회 -->
+  <!--  대댓글 (원댓글의 댓글) 목록 조회 -->
+  <select id="getNestedReplyListById" parameterType="java.util.Map" resultType="com.bbs.domain.NestedReply">
+    SELECT
+      reply.*, user.account as account
+    FROM
+      reply
+      INNER JOIN user ON user_id = user.id
+    WHERE
+      article_id = #{article_id} AND reply_id = #{id}
+  </select>
+
+<!--  원댓글 목록 조회 -->
   <select id="getReplyListById" parameterType="long" resultMap="replyResultMap">
     SELECT
         *
     FROM
         reply
     WHERE
-        article_id = #{value}
+        article_id = #{value} AND reply_id IS NULL
   </select>
 
   <!-- 검색 키워드 및 대상 게시판 기반 총 게시글 수 반환-->

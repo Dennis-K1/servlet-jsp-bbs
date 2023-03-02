@@ -86,7 +86,14 @@
                                 <c:forEach items="${articleList}" var="article">
                                     <tr scope="row">
                                         <td>${article.id}</td>
-                                        <td>${article.title}</td>
+                                        <c:choose>
+                                            <c:when test="${article.boardId == 2}">
+                                                <td><a href="<%=AdminCommands.COMMUNITY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a></td>
+                                            </c:when>
+                                            <c:when test="${article.boardId == 3}">
+                                                <td><a href="<%=AdminCommands.INQUIRY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a></td>
+                                            </c:when>
+                                        </c:choose>
                                         <td>${article.views}</td>
                                         <td>${article.dateRegistered }</td>
                                     </tr>

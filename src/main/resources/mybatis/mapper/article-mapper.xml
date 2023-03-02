@@ -58,18 +58,38 @@
     WHERE
           board_id = #{boardId}
           AND article_deleted = 0
-        <trim prefix="and" prefixOverrides="and|or">
-          <if test="startDate != null">
-            #{startDate} &lt; date_registered
-          </if>
-          <if test="endDate != null">
-            AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
-          </if>
-          <if test="searchKeyword != null">
-            <bind name="keyword" value="'%' + searchKeyword + '%'" />
-            AND title LIKE #{keyword}
-          </if>
-        </trim>
+    <trim prefix="and" prefixOverrides="and|or">
+      <if test="startDate != null">
+        #{startDate} &lt; date_registered
+      </if>
+      <if test="endDate != null">
+        AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
+      </if>
+      <if test="searchCategory == 0">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND (title LIKE #{keyword} OR content LIKE #{keyword})
+        </if>
+      </if>
+      <if test="searchCategory == 1">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND title LIKE #{keyword}
+        </if>
+      </if>
+      <if test="searchCategory == 2">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND account LIKE #{keyword}
+        </if>
+      </if>
+      <if test="searchCategory == 3">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND content LIKE #{keyword}
+        </if>
+      </if>
+    </trim>
   </select>
 
   <!--  페이지 번호 및 검색 키워드 기반 유저 리스트 반환 *** 최대 10개까지 ***
@@ -77,11 +97,14 @@
   <select id="getArticleList" resultMap="articleResultMap" parameterType="com.bbs.domain.PageParameters">
     SELECT
         article.*,
-        IFNULL(file.id, FALSE) AS fileAttached
+        IFNULL(file.id, FALSE) AS fileAttached,
+        user.account as account
     FROM
         article
         LEFT OUTER JOIN
             file ON article.id = file.article_id
+        INNER JOIN
+            user ON article.user_id = user.id
     WHERE
         board_id = #{boardId}
         AND article_deleted = 0
@@ -92,9 +115,29 @@
           <if test="endDate != null">
             AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
           </if>
-          <if test="searchKeyword != null">
-            <bind name="keyword" value="'%' + searchKeyword + '%'" />
-            AND title LIKE #{keyword}
+          <if test="searchCategory == 0">
+            <if test="searchKeyword != null">
+              <bind name="keyword" value="'%' + searchKeyword + '%'" />
+              AND (title LIKE #{keyword} OR content LIKE #{keyword})
+            </if>
+          </if>
+          <if test="searchCategory == 1">
+            <if test="searchKeyword != null">
+              <bind name="keyword" value="'%' + searchKeyword + '%'" />
+              AND title LIKE #{keyword}
+            </if>
+          </if>
+          <if test="searchCategory == 2">
+            <if test="searchKeyword != null">
+              <bind name="keyword" value="'%' + searchKeyword + '%'" />
+              AND account LIKE #{keyword}
+            </if>
+          </if>
+          <if test="searchCategory == 3">
+            <if test="searchKeyword != null">
+              <bind name="keyword" value="'%' + searchKeyword + '%'" />
+              AND content LIKE #{keyword}
+            </if>
           </if>
         </trim>
         ORDER BY article.id DESC

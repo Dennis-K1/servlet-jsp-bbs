@@ -2,6 +2,7 @@ package com.bbs.domain;
 
 import com.bbs.util.CommandUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,9 @@ public class PageParameters {
 	 * 조회 대상 페이지 번호
 	 */
 	private int pageNumber;
+	private String startDate;
+	private String endDate;
+	private String searchCategory;
 
 	/**
 	 * 검색 조건 기반 총 item 수
@@ -111,8 +115,11 @@ public class PageParameters {
 	 * @param searchKeyword 검색 키워드
 	 */
 	@Builder
-	public PageParameters(Long boardId, String searchKeyword) {
+	public PageParameters(Long boardId, String searchKeyword, String startDate, String endDate, String searchCategory) {
 		this.boardId = boardId;
 		this.searchKeyword = searchKeyword;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.searchCategory = searchCategory;
 	}
 }

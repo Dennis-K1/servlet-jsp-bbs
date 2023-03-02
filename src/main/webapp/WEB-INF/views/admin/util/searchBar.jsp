@@ -15,6 +15,7 @@
         let searchKeyword = document.getElementById('searchKeyword').value;
         let startDate = document.getElementById('startDate').value;
         let endDate = document.getElementById('endDate').value;
+        let searchCategory = document.getElementById('searchCategory').value;
         let parameterObject = {};
         if (searchKeyword.length > 0) {
           parameterObject.searchKeyword = searchKeyword
@@ -24,6 +25,9 @@
         }
         if (endDate != '') {
           parameterObject.endDate = endDate
+        }
+        if (searchCategory != "0") {
+          parameterObject.searchCategory = searchCategory
         }
         linkTo(searchPath, parameterObject)
       }
@@ -49,6 +53,29 @@
         </c:when>
         <c:otherwise>
             <input class="form-control" style="width: 10%;" type="date" id="endDate" name="endDate">
+        </c:otherwise>
+    </c:choose>
+
+    <c:choose>
+        <c:when test="${pageParameters.searchCategory != null}">
+            <select id="searchCategory" name="searchCategory" class="form-select form-select-sm" style="width: 10%" aria-label=".form-select-sm example">
+                <option value="0" selected>모두 선택</option>
+                <option value="1">제목</option>
+                <option value="2">작성자</option>
+                <option value="3">내용</option>
+                <script>
+                  let category = document.getElementById("searchCategory");
+                  category.value = "${pageParameters.searchCategory}"
+                </script>
+            </select>
+        </c:when>
+        <c:otherwise>
+            <select id="searchCategory" name="searchCategory" class="form-select form-select-sm" style="width: 10%" aria-label=".form-select-sm example">
+                <option value="0" selected>모두 선택</option>
+                <option value="1">제목</option>
+                <option value="2">작성자</option>
+                <option value="3">내용</option>
+            </select>
         </c:otherwise>
     </c:choose>
 

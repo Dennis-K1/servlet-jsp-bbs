@@ -143,6 +143,14 @@
                                     <tr>
                                         <td>등록된 댓글이 없습니다.</td>
                                     </tr>
+                                    <tr>
+                                        <td class="reply">
+                                            <textarea id="reply" class="form-control"></textarea>
+                                            <button onclick="replyArticle(${article.id})"
+                                                    class="btn btn-primary float-end mt-2">댓글 등록
+                                            </button>
+                                        </td>
+                                    </tr>
                                 </c:when>
                                 <c:otherwise>
                                     <hr>
@@ -188,7 +196,6 @@
                                                             </c:choose>
                                                         </div>
                                                     </div>
-
                                                     <hr>
                                                 </c:forEach>
                                             </c:if>

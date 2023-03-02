@@ -11,7 +11,10 @@ import com.bbs.command.admin.article.ManagementCommand;
 import com.bbs.command.admin.article.InputFormCommand;
 import com.bbs.command.admin.reply.InputCommand;
 import com.bbs.command.admin.user.DeleteCommand;
+import com.bbs.command.admin.user.IdAvailabilityCheckCommand;
 import com.bbs.command.admin.user.RecoveryCommand;
+import com.bbs.command.admin.user.RegisterCommand;
+import com.bbs.command.admin.user.RegisterFormCommand;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -64,6 +67,21 @@ public enum AdminCommands {
 	 * 유저 상세페이지
 	 */
 	USER_DETAIL("/admin/users/detail"),
+
+	/**
+	 * 유저 등록
+	 */
+	USER_REGISTER("/admin/users/register"),
+
+	/**
+	 * 유저 등록 페이지
+	 */
+	USER_REGISTER_FORM("/admin/users/registerForm"),
+
+	/**
+	 * 회원 등록시 아이디 중복 검사
+	 */
+	USER_ID_AVAILABILITY_CHECK("/admin/users/idAvailabilityCheck"),
 
 	/**
 	 * (공통) 게시글 목록 관리
@@ -184,6 +202,9 @@ public enum AdminCommands {
 		map.put(AdminCommands.USER_DETAIL.path, new com.bbs.command.admin.user.DetailCommand());
 		map.put(AdminCommands.USER_DELETE.path, new DeleteCommand());
 		map.put(AdminCommands.USER_RECOVERY.path, new RecoveryCommand());
+		map.put(AdminCommands.USER_REGISTER.path, new RegisterCommand());
+		map.put(AdminCommands.USER_REGISTER_FORM.path, new RegisterFormCommand());
+		map.put(AdminCommands.USER_ID_AVAILABILITY_CHECK.path, new IdAvailabilityCheckCommand());
 		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.ARTICLE_DELETE.path, new com.bbs.command.admin.article.DeleteCommand());
 		map.put(AdminCommands.ARTICLE_RECOVERY.path, new com.bbs.command.admin.article.RecoveryCommand());

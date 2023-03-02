@@ -1,5 +1,4 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
-<%@ page import="com.bbs.properties.SessionKeys" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -66,8 +65,8 @@
                             <span class="nav-item-text ps-4 p-2">공지사항 관리</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#"><span class="nav-item-text ps-4 p-2">자유게시판 관리</span></a>
+                    <li class="nav-item" id="<%=AdminCommands.COMMUNITY_MANAGEMENT.getPath()%>">
+                        <a href="<%=AdminCommands.COMMUNITY_MANAGEMENT.getPath()%>"><span class="nav-item-text ps-4 p-2">자유게시판 관리</span></a>
                     </li>
                     <li class="nav-item" id="<%=AdminCommands.INQUIRY_MANAGEMENT.getPath()%>">
                         <a href="<%=AdminCommands.INQUIRY_MANAGEMENT.getPath()%>">
@@ -80,18 +79,12 @@
         </ul>
     </div>
 </div>
-<style>
-  /* cdn import */
-  @import url('https://fonts.googleapis.com/css2?family=Gothic A1:wght@300&display=swap');
 
-  /* 폰트 적용 */
-  body {
-    font-family: 'Gothic A1', sans-serif;
-  }
-</style>
 <script>
 
-  const navItem = document.getElementById(window.location.pathname);
+  let mainPath = window.location.pathname.split('/', 3).join('/')
+
+  const navItem = document.getElementById(mainPath);
   navItem.classList.toggle('nav-item-selected');
   navItem.getElementsByTagName('span')[0].classList.toggle('text-light');
 </script>

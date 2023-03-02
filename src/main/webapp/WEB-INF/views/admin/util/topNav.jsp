@@ -20,6 +20,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+<style>
+  /* cdn import */
+  @import url('https://fonts.googleapis.com/css2?family=Gothic A1:wght@300&display=swap');
+
+  /* 폰트 적용 */
+  body {
+    font-family: 'Gothic A1', sans-serif;
+  }
+</style>
 
 
 <nav class="navbar navbar-dark" style="background-color: #0c3d9f">

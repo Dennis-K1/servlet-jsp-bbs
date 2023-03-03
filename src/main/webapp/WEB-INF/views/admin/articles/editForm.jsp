@@ -1,4 +1,3 @@
-<%@ page import="com.bbs.command.AdminCommands" %>
 <%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -13,75 +12,31 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <c:choose>
+        <c:when test="${article.boardId == 1}">
+            <title>공지사항 수정</title>
+        </c:when>
+    </c:choose>
 </head>
 <body>
-<jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
-<c:choose>
-
-    <c:when test="${article.boardId == 1}">
-
-        <form name="articleForm" action="<%=AdminCommands.ARTICLE_EDIT.getPath()%>" method="post"
-              enctype="multipart/form-data">
-
-            <h1>게시글 수정 페이지</h1>
-
-
-            <input type="hidden" name="articleId" id="articleId" value="${article.id}">
-
-
-            <label for="title">제목 : </label>
-            <input type="text" name="title" id="title" autocomplete="off"
-                   value="${article.title}">
-
-
-            <label for="content">내용 : </label>
-            <textarea name="content" id="content"
-                      autocomplete="off">${article.content}</textarea>
-
-
-            </div>
+<%--  탑 네브 바    --%>
+<jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"/>
+<%-- 센터 --%>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <%--        사이드 메뉴      --%>
+        <jsp:include page="<%=JspComponents.SIDE_MENU.getPath()%>"/>
+        <%--         메인 콘텐츠      --%>
+        <div class="col py-3" style="background-color: #f5f5f5">
             <c:choose>
-                <c:when test="${article.image != null}">
-                    <div id="uploadedImageDiv">
-                        <img id="uploadedImage" src="data:image/jpg;base64,${article.image}"
-                             width="240" height="300"/>
-                        <button type="button" id="removeUploadedImageButton"
-                                onclick="removeUploadedImage()">이미지 삭제
-                        </button>
-                        <input type="hidden" name="fileStatus" value="previous">
-                    </div>
-                    <div id="uploadImage" style="display:none;">
-                        <label for="file">파일 업로드</label>
-                        <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png"
-                               onchange="setImagePreview(event)">
-                        <img id="preview">
-                        <button type="button" id="removePreviewButton" onclick="removePreview()"
-                                style="display: none">삭제
-                        </button>
-                    </div>
+                <%--  공지사항  --%>
+                <c:when test="${article.boardId == 1}">
+                    <jsp:include page="<%=JspComponents.ADMIN_NOTICE_EDIT_FORM.getPath()%>"/>
                 </c:when>
-                <c:otherwise>
-                    <label for="file">파일 업로드2</label>
-                    <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png"
-                           onchange="setImagePreview(event)">
-                    <input type="hidden" name="fileStatus" value="new">
-                    <img id="preview">
-                    <button type="button" id="removePreviewButton" onclick="removePreview()"
-                            style="display: none">삭제
-                    </button>
-                </c:otherwise>
             </c:choose>
-
-            <button type="submit">수정하기</button>
-        </form>
-    </c:when>
-    <c:otherwise>
-        nothing
-    </c:otherwise>
-</c:choose>
-
-<button>뒤로가기</button>
+        </div>
+    </div>
+</div>
 </body>
 <script>
 

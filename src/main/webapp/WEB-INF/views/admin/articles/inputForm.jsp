@@ -12,7 +12,7 @@
 <html>
 <head>
     <c:choose>
-        <c:when test="${article.boardId == 1}">
+        <c:when test="${boardId == 1}">
             <title>공지사항 등록</title>
         </c:when>
     </c:choose>

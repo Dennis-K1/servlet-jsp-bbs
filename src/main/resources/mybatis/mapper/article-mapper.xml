@@ -6,16 +6,16 @@
 
 <!--  유저, 답글 정보가 담긴 게시글 정보 객체  -->
   <resultMap id="articleResultMap" type="com.bbs.domain.Article">
-    <id column="id" property="id"></id>
-    <association property="user" column="user_id" select="com.bbs.mapper.UserMapper.getUserById"></association>
-    <collection property="replyList" column="id" javaType="java.util.ArrayList" ofType="com.bbs.domain.Reply" select="getReplyListById"></collection>
+    <id column="id" property="id"/>
+    <association property="user" column="user_id" select="com.bbs.mapper.UserMapper.getUserById"/>
+    <collection property="replyList" column="id" javaType="java.util.ArrayList" ofType="com.bbs.domain.Reply" select="getReplyListById"/>
   </resultMap>
 
 <!--  유저 정보가 담긴 댓글 정보 객체  -->
   <resultMap id="replyResultMap" type="com.bbs.domain.Reply">
     <id column="id" property="id"></id>
-    <association property="user" column="user_id" select="com.bbs.mapper.UserMapper.getUserById"></association>
-    <collection property="nestedReplyList" column="{id=id, article_id=article_id}" javaType="java.util.ArrayList" ofType="com.bbs.domain.NestedReply" select="getNestedReplyListById"></collection>
+    <association property="user" column="user_id" select="com.bbs.mapper.UserMapper.getUserById"/>
+    <collection property="nestedReplyList" column="{id=id, article_id=article_id}" javaType="java.util.ArrayList" ofType="com.bbs.domain.NestedReply" select="getNestedReplyListById"/>
   </resultMap>
 
 <!--  댓글 삭제 처리-->
@@ -58,38 +58,7 @@
     WHERE
           board_id = #{boardId}
           AND article_deleted = 0
-    <trim prefix="and" prefixOverrides="and|or">
-      <if test="startDate != null">
-        #{startDate} &lt; date_registered
-      </if>
-      <if test="endDate != null">
-        AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
-      </if>
-      <if test="searchCategory == 0">
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND (title LIKE #{keyword} OR content LIKE #{keyword})
-        </if>
-      </if>
-      <if test="searchCategory == 1">
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND title LIKE #{keyword}
-        </if>
-      </if>
-      <if test="searchCategory == 2">
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND account LIKE #{keyword}
-        </if>
-      </if>
-      <if test="searchCategory == 3">
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND content LIKE #{keyword}
-        </if>
-      </if>
-    </trim>
+          <include refid="searchParameters"/>
   </select>
 
   <!--  페이지 번호 및 검색 키워드 기반 유저 리스트 반환 *** 최대 10개까지 ***
@@ -108,38 +77,7 @@
     WHERE
         board_id = #{boardId}
         AND article_deleted = 0
-        <trim prefix="and" prefixOverrides="and|or">
-          <if test="startDate != null">
-            #{startDate} &lt; date_registered
-          </if>
-          <if test="endDate != null">
-            AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
-          </if>
-          <if test="searchCategory == 0">
-            <if test="searchKeyword != null">
-              <bind name="keyword" value="'%' + searchKeyword + '%'" />
-              AND (title LIKE #{keyword} OR content LIKE #{keyword})
-            </if>
-          </if>
-          <if test="searchCategory == 1">
-            <if test="searchKeyword != null">
-              <bind name="keyword" value="'%' + searchKeyword + '%'" />
-              AND title LIKE #{keyword}
-            </if>
-          </if>
-          <if test="searchCategory == 2">
-            <if test="searchKeyword != null">
-              <bind name="keyword" value="'%' + searchKeyword + '%'" />
-              AND account LIKE #{keyword}
-            </if>
-          </if>
-          <if test="searchCategory == 3">
-            <if test="searchKeyword != null">
-              <bind name="keyword" value="'%' + searchKeyword + '%'" />
-              AND content LIKE #{keyword}
-            </if>
-          </if>
-        </trim>
+        <include refid="searchParameters"/>
         ORDER BY article.id DESC
         LIMIT 10
         OFFSET
@@ -272,4 +210,40 @@
         id = #{value}
   </update>
 
+
+  <!--   게시판 관리 검색용 검색값 -->
+  <sql id="searchParameters">
+    <trim prefix="and" prefixOverrides="and|or">
+      <if test="startDate != null">
+        #{startDate} &lt; date_registered
+      </if>
+      <if test="endDate != null">
+        AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
+      </if>
+      <if test="searchCategory == 0">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND (title LIKE #{keyword} OR content LIKE #{keyword})
+        </if>
+      </if>
+      <if test="searchCategory == 1">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND title LIKE #{keyword}
+        </if>
+      </if>
+      <if test="searchCategory == 2">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND account LIKE #{keyword}
+        </if>
+      </if>
+      <if test="searchCategory == 3">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND content LIKE #{keyword}
+        </if>
+      </if>
+    </trim>
+  </sql>
 </mapper>

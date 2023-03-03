@@ -4,17 +4,17 @@
 
 <mapper namespace="com.bbs.mapper.UserMapper">
 
-<!--  유저 아이디로 유저 조회 -->
+  <!--  유저 아이디로 유저 조회 -->
   <select id="getUserByAccount" parameterType="string" resultType="com.bbs.domain.User">
     SELECT
-      *
+        *
     FROM
-      user
+        user
     WHERE
-      account = #{value}
+        account = #{value}
   </select>
 
-<!--  유저 권한명 조회 -->
+  <!--  유저 권한명 조회 -->
   <select id="getRoleName" parameterType="Long" resultType="String">
     SELECT
         name
@@ -24,36 +24,37 @@
         id = #{value}
   </select>
 
-<!--  유저 DB 등록 -->
+  <!--  유저 DB 등록 -->
   <insert id="registerUser" parameterType="com.bbs.domain.User">
     INSERT INTO
         user (role_id,
               account,
               password)
     VALUES
-            (#{roleId},
-            #{account},
-            #{password})
+        (#{roleId},
+        #{account},
+        #{password})
   </insert>
 
-<!--  페이지 번호 기반 유저 리스트 반환 *** 최대 10개까지 *** -->
-  <select id="getUserList" resultType="com.bbs.domain.User" parameterType="com.bbs.domain.PageParameters">
+  <!--  페이지 번호 기반 유저 리스트 반환 *** 최대 10개까지 *** -->
+  <select id="getUserList" resultType="com.bbs.domain.User"
+    parameterType="com.bbs.domain.PageParameters">
     SELECT
         *
     FROM
         user
     WHERE
         role_id = 2
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND account LIKE #{keyword}
-        </if>
-        ORDER BY id DESC
-        LIMIT 10
-        OFFSET #{pageNumberOffset}
+        <include refid="searchParameters"/>
+        ORDER BY
+            id DESC
+        LIMIT
+            10
+        OFFSET
+            #{pageNumberOffset}
   </select>
 
-<!--  총 유저 수 반환-->
+  <!--  총 유저 수 반환-->
   <select id="getNumberOfUsersBySearch" resultType="int">
     SELECT
         COUNT(*)
@@ -61,10 +62,7 @@
         user
     WHERE
         role_id = 2
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND account LIKE #{keyword}
-        </if>
+        <include refid="searchParameters"/>
   </select>
 
   <select id="getUserById" resultType="com.bbs.domain.User">
@@ -83,40 +81,48 @@
     SET
         user_deleted = 1
     WHERE
-        id = #{value} AND role_id = 2
+        id = #{value}
+      AND
+        role_id = 2
   </update>
 
-<!--  유저 삭제일 갱신 -->
+  <!--  유저 삭제일 갱신 -->
   <update id="updateDateDeleted" parameterType="int">
     UPDATE
         user
     SET
         date_deleted = CURRENT_TIMESTAMP()
     WHERE
-        id = #{value} AND role_id = 2
+        id = #{value}
+      AND
+        role_id = 2
   </update>
 
-<!--  id(PK)에 해당하는 유저 복구 -->
+  <!--  id(PK)에 해당하는 유저 복구 -->
   <update id="recoverUserById" parameterType="int">
     UPDATE
-      user
+        user
     SET
-      user_deleted = 0
+        user_deleted = 0
     WHERE
-      id = #{value} AND role_id = 2
+        id = #{value}
+      AND
+        role_id = 2
   </update>
-<!--  유저 삭제일 복구 -->
+  <!--  유저 삭제일 복구 -->
   <update id="recoverDateDeleted" parameterType="int">
     UPDATE
-      user
+        user
     SET
-      date_deleted = NULL
+        date_deleted = NULL
     WHERE
-      id = #{value} AND role_id = 2
+        id = #{value}
+      AND
+        role_id = 2
   </update>
 
 
-<!--  사이트 방문 (로그인) 횟수 증가 -->
+  <!--  사이트 방문 (로그인) 횟수 증가 -->
   <update id="increaseVisitCount" parameterType="com.bbs.domain.User">
     UPDATE
         user
@@ -126,33 +132,49 @@
         account = #{account}
   </update>
 
-<!--  마지막 접속 시간 업데이트  -->
+  <!--  마지막 접속 시간 업데이트  -->
   <update id="updateLastLogin" parameterType="com.bbs.domain.User">
     UPDATE
-      user
+        user
     SET
-      date_last_login = CURRENT_TIMESTAMP()
+        date_last_login = CURRENT_TIMESTAMP()
     WHERE
-      account = #{account}
+        account = #{account}
   </update>
 
-<!--  유저 게시글 수 증가 -->
+  <!--  유저 게시글 수 증가 -->
   <update id="increaseArticleCountById" parameterType="long">
     UPDATE
-      user
+        user
     SET
-      count_article = count_article + 1
+        count_article = count_article + 1
     WHERE
-      id = #{value}
+        id = #{value}
   </update>
 
   <!--  유저 게시글 수 감소 -->
   <update id="decreaseArticleCountById" parameterType="long">
     UPDATE
-      user
+        user
     SET
-      count_article = count_article - 1
+        count_article = count_article - 1
     WHERE
-      id = #{value}
+        id = #{value}
   </update>
+
+<!--  유저 관리 검색용 검색값  -->
+  <sql id="searchParameters">
+    <trim prefix="and" prefixOverrides="and|or">
+      <if test="startDate != null">
+        #{startDate} &lt; date_registered
+      </if>
+      <if test="endDate != null">
+        AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
+      </if>
+      <if test="searchKeyword != null">
+        <bind name="keyword" value="'%' + searchKeyword + '%'"/>
+        AND account LIKE #{keyword}
+      </if>
+    </trim>
+  </sql>
 </mapper>

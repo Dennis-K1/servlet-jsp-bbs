@@ -15,7 +15,10 @@
         let searchKeyword = document.getElementById('searchKeyword').value;
         let startDate = document.getElementById('startDate').value;
         let endDate = document.getElementById('endDate').value;
-        let searchCategory = document.getElementById('searchCategory').value;
+        let searchCategory;
+        if (document.getElementById('searchCategory') != undefined){
+            searchCategory = document.getElementById('searchCategory').value;
+        }
         let parameterObject = {};
         if (searchKeyword.length > 0) {
           parameterObject.searchKeyword = searchKeyword
@@ -26,7 +29,7 @@
         if (endDate != '') {
           parameterObject.endDate = endDate
         }
-        if (searchCategory != "0") {
+        if (searchCategory != "0" && searchCategory != undefined) {
           parameterObject.searchCategory = searchCategory
         }
         linkTo(searchPath, parameterObject)

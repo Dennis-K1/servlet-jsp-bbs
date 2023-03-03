@@ -24,12 +24,16 @@ public class ManagementCommand implements Command {
 
 		UserService userService = new UserService();
 
-
+		//TODO 유효성 검사 (형태, 자료값 등)
 		String searchKeyword = request.getParameter("searchKeyword");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
 		String requestedPageNumber = request.getParameter("pageNumber");
 
 		PageParameters pageParameters = PageParameters.builder()
 			.searchKeyword(searchKeyword)
+			.startDate(startDate)
+			.endDate(endDate)
 			.build();
 
 		int numberOfItems = userService.getNumberOfUsersBySearch(pageParameters);

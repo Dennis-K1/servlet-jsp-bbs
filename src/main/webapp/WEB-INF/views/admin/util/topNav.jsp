@@ -1,5 +1,7 @@
 <%@ page import="com.bbs.command.AdminCommands" %>
-<%@ page import="com.bbs.properties.SessionKeys" %><%--
+<%@ page import="com.bbs.properties.SessionKeys" %>
+<%@ page import="org.apache.commons.io.FileUtils" %>
+<%@ page import="java.util.Base64" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-02-25
@@ -32,13 +34,17 @@
 
 
 <nav class="navbar navbar-dark" style="background-color: #0c3d9f">
-  <div class="container-fluid">
-    <a href="<%=AdminCommands.INDEX.getPath()%>"><span class="navbar-brand mb-0 h1">HOME</span></a>
-    <div class="d-flex justify-content-end" id="profile">
-            <span>
+    <div class="container-fluid">
+        <a href="<%=AdminCommands.INDEX.getPath()%>"><span
+                class="navbar-brand mb-0 h1">관리자 페이지</span></a>
+        <div class="d-flex justify-content-end" id="profile">
+            <span class="text-light me-5">
+            <img style="width: 30px; border-radius: 7px; height: 30px"
+                 src="https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg">
                 <%=session.getAttribute(SessionKeys.LOGIN_ADMIN)%>
             </span>
-      <a href="<%=AdminCommands.LOGOUT.getPath()%>"><span class="nav-item-text">로그아웃</span></a>
+            <a href="<%=AdminCommands.LOGOUT.getPath()%>"><span
+                    class="text-light fs-5">로그아웃</span></a>
+        </div>
     </div>
-  </div>
 </nav>

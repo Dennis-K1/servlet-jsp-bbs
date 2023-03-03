@@ -38,41 +38,5 @@
     </div>
 </div>
 </body>
-<script>
 
-  const removeUploadedImage = () => {
-    let uploadedImageDiv = document.getElementById("uploadedImageDiv");
-    let uploadImage = document.getElementById("uploadImage");
-    uploadedImageDiv.remove();
-    uploadImage.style.display = "block";
-    let input = document.createElement("input")
-    input.setAttribute("type", "hidden");
-    input.setAttribute('name', "fileStatus");
-    input.setAttribute("value", "new");
-    uploadImage.appendChild(input);
-  }
-
-  const removePreview = () => {
-    let preview = document.getElementById("preview");
-    let removePreview = document.getElementById("removePreviewButton");
-    let file = document.getElementById("file");
-    file.value = "";
-    delete preview.src;
-    preview.style.display = "none";
-    removePreview.style.display = "none";
-  }
-
-  const setImagePreview = (event) => {
-    let preview = document.getElementById("preview");
-    let removePreviewButton = document.getElementById("removePreviewButton");
-    if (event.target.files.length > 0) {
-      let src = URL.createObjectURL(event.target.files[0]);
-      preview.src = src;
-      preview.style.display = "block";
-      removePreviewButton.style.display = "block";
-    } else {
-      removePreview();
-    }
-  }
-</script>
 </html>

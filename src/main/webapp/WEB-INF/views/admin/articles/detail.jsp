@@ -28,6 +28,11 @@
                 1:1문의 정보
             </title>
         </c:when>
+        <c:when test="${article.boardId == 4}">
+            <title>
+                갤러리 정보
+            </title>
+        </c:when>
     </c:choose>
 </head>
 <body>
@@ -53,6 +58,10 @@
                 <%--         1:1문의     --%>
                 <c:when test="${article.boardId == 3}">
                     <jsp:include page="<%=JspComponents.ADMIN_INQUIRY_DETAIL.getPath()%>"/>
+                </c:when>
+                <%--         갤러리     --%>
+                <c:when test="${article.boardId == 4}">
+                    <jsp:include page="<%=JspComponents.ADMIN_GALLERY_DETAIL.getPath()%>"/>
                 </c:when>
             </c:choose>
         </div>

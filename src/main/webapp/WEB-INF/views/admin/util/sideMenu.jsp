@@ -76,11 +76,18 @@
                         </a>
                     </li>
                     <li class="nav-item" id="<%=AdminCommands.COMMUNITY_MANAGEMENT.getPath()%>">
-                        <a href="<%=AdminCommands.COMMUNITY_MANAGEMENT.getPath()%>"><span class="nav-item-text ps-4 p-2">자유게시판 관리</span></a>
+                        <a href="<%=AdminCommands.COMMUNITY_MANAGEMENT.getPath()%>">
+                            <span class="nav-item-text ps-4 p-2">자유게시판 관리</span>
+                        </a>
                     </li>
                     <li class="nav-item" id="<%=AdminCommands.INQUIRY_MANAGEMENT.getPath()%>">
                         <a href="<%=AdminCommands.INQUIRY_MANAGEMENT.getPath()%>">
                             <span class="nav-item-text ps-4 p-2">1:1문의 관리</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="<%=AdminCommands.GALLERY_MANAGEMENT.getPath()%>">
+                        <a href="<%=AdminCommands.GALLERY_MANAGEMENT.getPath()%>">
+                            <span class="nav-item-text ps-4 p-2">갤러리 관리</span>
                         </a>
                     </li>
                 </ul>

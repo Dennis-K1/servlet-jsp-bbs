@@ -2,14 +2,17 @@ package com.bbs.command.admin.article;
 
 import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.File;
 import com.bbs.domain.View;
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
 import com.bbs.service.ArticleService;
+import com.bbs.service.FileService;
 import com.bbs.util.CommandUtil;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +50,14 @@ public class ManagementCommand implements Command {
 		pageParameters.setPaginationElements(requestedPageNumber, numberOfItems);
 
 		List<Article> articleList = articleService.getArticleList(pageParameters);
+
+		for (Article article: articleList) {
+			FileService fileService = new FileService();
+			File file = fileService.getFileByArticleId(article.getId());
+			if (!Objects.equals(file,null)){
+				article.setImage(fileService.getEncodedImageFromFile(file));
+			}
+		}
 
 		request.setAttribute("articleList", articleList);
 		request.setAttribute("pageParameters", pageParameters);

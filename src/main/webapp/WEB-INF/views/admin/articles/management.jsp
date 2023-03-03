@@ -27,6 +27,11 @@
                 1:1문의 관리
             </title>
         </c:when>
+        <c:when test="${pageParameters.boardId == 4}">
+            <title>
+                갤러리 관리
+            </title>
+        </c:when>
     </c:choose>
 </head>
 
@@ -52,6 +57,10 @@
                 <%--      1:1문의   --%>
                 <c:when test="${pageParameters.boardId == 3}">
                     <jsp:include page="<%=JspComponents.ADMIN_INQUIRY_MANAGEMENT.getPath()%>"/>
+                </c:when>
+                <%--      갤러리    --%>
+                <c:when test="${pageParameters.boardId == 4}">
+                    <jsp:include page="<%=JspComponents.ADMIN_GALLERY_MANAGEMENT.getPath()%>"/>
                 </c:when>
             </c:choose>
         </div>

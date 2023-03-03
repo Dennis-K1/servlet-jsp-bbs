@@ -27,8 +27,8 @@ public class DeleteCommand implements Command {
 		ArticleService articleService = new ArticleService();
 		FileService fileService = new FileService();
 
-		Long boardId = CommandUtil.getBoardIdByRequest(request);
 		Long id = Long.valueOf(request.getParameter("articleId"));
+		Long boardId = articleService.getBoardIdById(id);
 
 		articleService.deleteArticleById(id);
 

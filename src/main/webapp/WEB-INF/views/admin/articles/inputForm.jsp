@@ -15,6 +15,9 @@
         <c:when test="${boardId == 1}">
             <title>공지사항 등록</title>
         </c:when>
+        <c:when test="${boardId == 4}">
+            <title>갤러리 등록</title>
+        </c:when>
     </c:choose>
 </head>
 <body>
@@ -32,6 +35,10 @@
                 <%--  공지사항  --%>
                 <c:when test="${boardId == 1}">
                     <jsp:include page="<%=JspComponents.ADMIN_NOTICE_INPUT_FORM.getPath()%>"/>
+                </c:when>
+                <%--  갤러리 --%>
+                <c:when test="${boardId == 4}">
+                    <jsp:include page="<%=JspComponents.ADMIN_GALLERY_INPUT_FORM.getPath()%>"/>
                 </c:when>
             </c:choose>
         </div>

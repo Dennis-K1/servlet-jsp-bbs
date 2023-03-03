@@ -164,10 +164,18 @@ public enum AdminCommands {
 	INQUIRY_DETAIL("/admin/inquiries/detail"),
 
 	/**
-	 * 1:1 문의 답글 등록
+	 * 1:1 문의 답글 및 일반 댓글, 대댓글 통합 등록
 	 */
-	INQUIRY_REPLY("/admin/inquiries/reply"),
+	REPLY_INPUT("/admin/replies/input"),
+
+	/**
+	 * 답글(댓글) 삭제
+	 */
 	REPLY_DELETE("/admin/replies/delete"),
+
+	/**
+	 * 답글(댓글) 복구
+	 */
 	REPLY_RECOVERY("/admin/replies/recovery"),
 
 	/**
@@ -180,6 +188,10 @@ public enum AdminCommands {
 	 */
 	COMMUNITY_DETAIL("/admin/community/detail"),
 
+	GALLERY_MANAGEMENT("/admin/gallery"),
+	GALLERY_DETAIL("/admin/gallery/detail"),
+	GALLERY_INPUT("/admin/gallery/input"),
+	GALLERY_INPUT_FORM("/admin/gallery/inputForm"),
 
 	/*
 	편의를 위한 enum 끝 표시 //TODO THE_END_OF_ENUM 삭제
@@ -208,18 +220,22 @@ public enum AdminCommands {
 		map.put(AdminCommands.NOTICE_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.ARTICLE_DELETE.path, new com.bbs.command.admin.article.DeleteCommand());
 		map.put(AdminCommands.ARTICLE_RECOVERY.path, new com.bbs.command.admin.article.RecoveryCommand());
+		map.put(AdminCommands.ARTICLE_EDIT.path, new EditCommand());
 		map.put(AdminCommands.NOTICE_INPUT.path, new com.bbs.command.admin.article.InputCommand());
 		map.put(AdminCommands.NOTICE_INPUT_FORM.path, new InputFormCommand());
 		map.put(AdminCommands.NOTICE_DETAIL.path, new DetailCommand());
-		map.put(AdminCommands.ARTICLE_EDIT.path, new EditCommand());
 		map.put(AdminCommands.NOTICE_EDIT_FORM.path, new EditFormCommand());
 		map.put(AdminCommands.INQUIRY_MANAGEMENT.path, new ManagementCommand());
 		map.put(AdminCommands.INQUIRY_DETAIL.path, new DetailCommand());
-		map.put(AdminCommands.INQUIRY_REPLY.path, new InputCommand());
-		map.put(AdminCommands.COMMUNITY_MANAGEMENT.path, new ManagementCommand());
-		map.put(AdminCommands.COMMUNITY_DETAIL.path, new DetailCommand());
+		map.put(AdminCommands.REPLY_INPUT.path, new InputCommand());
 		map.put(AdminCommands.REPLY_DELETE.path, new com.bbs.command.admin.reply.DeleteCommand());
 		map.put(AdminCommands.REPLY_RECOVERY.path, new com.bbs.command.admin.reply.RecoveryCommand());
+		map.put(AdminCommands.COMMUNITY_MANAGEMENT.path, new ManagementCommand());
+		map.put(AdminCommands.COMMUNITY_DETAIL.path, new DetailCommand());
+		map.put(AdminCommands.GALLERY_MANAGEMENT.path, new ManagementCommand());
+		map.put(AdminCommands.GALLERY_DETAIL.path, new DetailCommand());
+		map.put(AdminCommands.GALLERY_INPUT.path, new com.bbs.command.admin.article.InputCommand());
+		map.put(AdminCommands.GALLERY_INPUT_FORM.path, new InputFormCommand());
 	}
 
 	@Getter
@@ -232,6 +248,7 @@ public enum AdminCommands {
 		boardIdMap.put("/admin/notices", 1L);
 		boardIdMap.put("/admin/community", 2L);
 		boardIdMap.put("/admin/inquiries", 3L);
+		boardIdMap.put("/admin/gallery", 4L);
 	}
 }
 

@@ -36,56 +36,59 @@
 <div id="searchBar" class="d-flex justify-content-end">
     <c:choose>
         <c:when test="${pageParameters.startDate != null}">
-            기간 : <input class="form-control" style="width: 10%;" type="date" id="startDate"
+           <span class="mt-2"> 기간 : </span><input class="form-control ms-2" style="width: 10%;" type="date" id="startDate"
                         name="startDate"
-                        value="${pageParameters.startDate}"> ~
+                        value="${pageParameters.startDate}">
         </c:when>
         <c:otherwise>
-            기간 : <input class="form-control" style="width: 10%;" type="date" id="startDate"
-                        name="startDate"> ~
+           <span class="mt-2"> 기간 : </span><input class="form-control ms-2" style="width: 10%;" type="date" id="startDate"
+                        name="startDate">
         </c:otherwise>
     </c:choose>
 
     <c:choose>
         <c:when test="${pageParameters.endDate != null}">
-            <input class="form-control" style="width: 10%;" type="date" id="endDate" name="endDate"
+            <span class="mt-2 ms-2"> ~ </span><input class="form-control ms-2" style="width: 10%;" type="date" id="endDate" name="endDate"
                    value="${pageParameters.endDate}">
         </c:when>
         <c:otherwise>
-            <input class="form-control" style="width: 10%;" type="date" id="endDate" name="endDate">
+            <span class="mt-2 ms-2"> ~ </span><input class="form-control ms-2" style="width: 10%;" type="date" id="endDate" name="endDate">
         </c:otherwise>
     </c:choose>
 
-    <c:choose>
-        <c:when test="${pageParameters.searchCategory != null}">
-            <select id="searchCategory" name="searchCategory" class="form-select form-select-sm" style="width: 10%" aria-label=".form-select-sm example">
-                <option value="0" selected>모두 선택</option>
-                <option value="1">제목</option>
-                <option value="2">작성자</option>
-                <option value="3">내용</option>
-                <script>
-                  let category = document.getElementById("searchCategory");
-                  category.value = "${pageParameters.searchCategory}"
-                </script>
-            </select>
-        </c:when>
-        <c:otherwise>
-            <select id="searchCategory" name="searchCategory" class="form-select form-select-sm" style="width: 10%" aria-label=".form-select-sm example">
-                <option value="0" selected>모두 선택</option>
-                <option value="1">제목</option>
-                <option value="2">작성자</option>
-                <option value="3">내용</option>
-            </select>
-        </c:otherwise>
-    </c:choose>
+    <%--    유저 목록 페이지에서 페이지 스코프 변수로 설정한 userManagement 가 참이 아닐 경우에만 카테고리 검색 태그 노출 --%>
+    <c:if test="${userManagement != true}">
+        <c:choose>
+            <c:when test="${pageParameters.searchCategory != null}">
+                <select id="searchCategory" name="searchCategory" class="form-select form-select-sm ms-2" style="width: 10%" aria-label=".form-select-sm example">
+                    <option value="0" selected>모두 선택</option>
+                    <option value="1">제목</option>
+                    <option value="2">작성자</option>
+                    <option value="3">내용</option>
+                    <script>
+                      let category = document.getElementById("searchCategory");
+                      category.value = "${pageParameters.searchCategory}"
+                    </script>
+                </select>
+            </c:when>
+            <c:otherwise>
+                <select id="searchCategory" name="searchCategory" class="form-select form-select-sm ms-2" style="width: 10%" aria-label=".form-select-sm example">
+                    <option value="0" selected>모두 선택</option>
+                    <option value="1">제목</option>
+                    <option value="2">작성자</option>
+                    <option value="3">내용</option>
+                </select>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
 
     <c:choose>
         <c:when test="${pageParameters.searchKeyword != null}">
-            <input class="form-control w-25" type="text" id="searchKeyword"
+            <input class="form-control w-25 ms-2" type="text" id="searchKeyword"
                    value="${pageParameters.searchKeyword}">
         </c:when>
         <c:otherwise>
-            <input class="form-control w-25" type="text" id="searchKeyword" placeholder="키워드 입력">
+            <input class="form-control w-25 ms-2" type="text" id="searchKeyword" placeholder="키워드 입력">
         </c:otherwise>
     </c:choose>
 

@@ -27,6 +27,8 @@
             </div>
 
             <div class="card bg-white  p-4 mt-3" id="component">
+                <%--       게시판 목록이 아닌 유저 목록임을 표시하기 위한 변수         --%>
+                <c:set var = "userManagement" scope = "request" value = "${true}"/>
                 <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
 
                 <table class="mt-5 table text-center table-borderless">

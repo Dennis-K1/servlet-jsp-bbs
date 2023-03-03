@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>회원 정보</title>
 </head>
 <body>
 <%--  탑 네브 바    --%>
@@ -77,27 +77,41 @@
                             </tr>
                         </c:when>
                         <c:otherwise>
-                                <tr class="font-weight-bold text-primary">
-                                    <th scope="col">번호</th>
-                                    <th scope="col">제목</th>
-                                    <th scope="col">조회수</th>
-                                    <th scope="col">등록일</th>
+                            <tr class="font-weight-bold text-primary">
+                                <th scope="col">번호</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">조회수</th>
+                                <th scope="col">등록일</th>
+                            </tr>
+                            <c:forEach items="${articleList}" var="article">
+                                <tr scope="row">
+                                    <td>${article.id}</td>
+                                    <c:choose>
+                                        <c:when test="${article.boardId == 2}">
+                                            <td>
+                                                <a href="<%=AdminCommands.COMMUNITY_DETAIL.getPath()%>?articleId=${article.id}">
+                                                        <c:if test="${article.articleDeleted == 1}">
+                                                            <span class="text-danger">(삭제된 게시글)</span>
+                                                        </c:if>
+                                                        ${article.title}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${article.boardId == 3}">
+                                            <td>
+                                                <a href="<%=AdminCommands.INQUIRY_DETAIL.getPath()%>?articleId=${article.id}">
+                                                    <c:if test="${article.articleDeleted == 1}">
+                                                        <span class="text-danger">(삭제된 게시글)</span>
+                                                    </c:if>
+                                                        ${article.title}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                    </c:choose>
+                                    <td>${article.views}</td>
+                                    <td>${article.dateRegistered }</td>
                                 </tr>
-                                <c:forEach items="${articleList}" var="article">
-                                    <tr scope="row">
-                                        <td>${article.id}</td>
-                                        <c:choose>
-                                            <c:when test="${article.boardId == 2}">
-                                                <td><a href="<%=AdminCommands.COMMUNITY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a></td>
-                                            </c:when>
-                                            <c:when test="${article.boardId == 3}">
-                                                <td><a href="<%=AdminCommands.INQUIRY_DETAIL.getPath()%>?articleId=${article.id}">${article.title}</a></td>
-                                            </c:when>
-                                        </c:choose>
-                                        <td>${article.views}</td>
-                                        <td>${article.dateRegistered }</td>
-                                    </tr>
-                                </c:forEach>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
                 </table>

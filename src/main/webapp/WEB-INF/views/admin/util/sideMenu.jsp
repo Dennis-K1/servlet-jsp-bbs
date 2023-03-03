@@ -48,11 +48,21 @@
         <ul class="navbar-nav d-flex flex-column mt-1 w-100">
             <hr class="nav-item-border">
             <li class="w-100">
+                <span class="nav-item-heading">대시보드</span>
+                <ul>
+                    <li class="nav-item" id="<%=AdminCommands.INDEX.getPath()%>">
+                        <a href="<%=AdminCommands.INDEX.getPath()%>"><span
+                                class="nav-item-text ps-4 p-2">통계</span></a>
+                    </li>
+                </ul>
+            </li>
+            <hr class="nav-item-border">
+            <li class="w-100">
                 <span class="nav-item-heading">유저 관리</span>
                 <ul>
                     <li class="nav-item" id="<%=AdminCommands.USER_MANAGEMENT.getPath()%>">
                         <a href="<%=AdminCommands.USER_MANAGEMENT.getPath()%>"><span
-                                class="nav-item-text ps-4 p-2">유저 목록</span></a>
+                                class="nav-item-text ps-4 p-2">회원 목록</span></a>
                     </li>
                 </ul>
             </li>

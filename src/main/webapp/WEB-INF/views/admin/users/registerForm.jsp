@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>회원 등록</title>
 </head>
 <body>
 <%--  탑 네브 바    --%>

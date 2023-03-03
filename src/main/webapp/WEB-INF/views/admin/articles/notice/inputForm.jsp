@@ -45,7 +45,7 @@
                                         name="file" id="file"
                                         accept=".jpg, .jpeg, .png"
                                         onchange="setImagePreview(event)"></td>
-                <td class="w-25"><img id="preview"></td>
+                <td class="w-25"><img id="preview" style="max-width: 200px; max-height: 200px"></td>
                 <td>
                     <button class="btn btn-primary" type="button"
                             id="removePreviewButton"

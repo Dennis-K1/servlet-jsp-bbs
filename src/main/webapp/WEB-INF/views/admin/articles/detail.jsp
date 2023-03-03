@@ -164,13 +164,37 @@
                                                 <c:choose>
                                                     <c:when test="${reply.replyDeleted != 1}">
                                                         <p>${reply.content}</p>
-                                                        <textarea id="nestedReply"></textarea>
-                                                        <button onclick="showReplyBox()" class="btn btn-primary">댓글 쓰기</button>
-                                                        <button onclick="deleteReply(${reply.id}, ${reply.articleId})" class="btn btn-danger">삭제</button>
+                                                            <div style="position: relative" id="nestedReplyDiv${reply.id}"
+                                                                 class="collapse">
+                                                                <textarea class="form-control"
+                                                                          id="nestedReply${reply.id}" rows="5"></textarea>
+                                                                <button class="btn btn-primary"
+                                                                        onclick="nestedReply(${reply.id},${reply.articleId})"
+                                                                        style="position: absolute; right:0; bottom:0">
+                                                                    등록
+                                                                </button>
+                                                            </div>
+                                                            <button type="button"
+                                                                    class="btn btn-primary"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#nestedReplyDiv${reply.id}"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="nestedReplyDiv${reply.id}">
+                                                                <span class="collapsed">대댓글 등록</span>
+                                                                <span class="expanded">접기</span>
+                                                            </button>
+                                                            <button onclick="deleteReply(${reply.id}, ${reply.articleId})"
+                                                                    class="btn btn-danger">댓글 삭제
+                                                            </button>
+
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <p>(숨김 처리된 댓글)<del>${reply.content}</del></p>
-                                                        <button onclick="recoverReply(${reply.id}, ${reply.articleId})" class="btn btn-primary">복구</button>
+                                                        <p>(숨김 처리된 댓글)
+                                                            <del>${reply.content}</del>
+                                                        </p>
+                                                        <button onclick="recoverReply(${reply.id}, ${reply.articleId})"
+                                                                class="btn btn-primary">댓글 복구
+                                                        </button>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
@@ -187,11 +211,19 @@
                                                             <c:choose>
                                                                 <c:when test="${nestedReply.replyDeleted != 1}">
                                                                     <p>${nestedReply.content}</p>
-                                                                    <button onclick="deleteReply(${nestedReply.id}, ${nestedReply.articleId})" class="btn btn-danger">삭제</button>
+                                                                    <button onclick="deleteReply(${nestedReply.id}, ${nestedReply.articleId})"
+                                                                            class="btn btn-danger">
+                                                                        삭제
+                                                                    </button>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <p>(숨김 처리된 댓글)<del>${nestedReply.content}</del></p>
-                                                                    <button onclick="recoverReply(${nestedReply.id}, ${nestedReply.articleId})" class="btn btn-primary">복구</button>
+                                                                    <p>(숨김 처리된 댓글)
+                                                                        <del>${nestedReply.content}</del>
+                                                                    </p>
+                                                                    <button onclick="recoverReply(${nestedReply.id}, ${nestedReply.articleId})"
+                                                                            class="btn btn-primary">
+                                                                        복구
+                                                                    </button>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </div>
@@ -203,7 +235,7 @@
                                     </c:forEach>
                                     <tr>
                                         <td class="reply">
-                                            <textarea id="reply" class="form-control"></textarea>
+                                            <textarea id="reply" class="form-control" rows="5"></textarea>
                                             <button onclick="replyArticle(${article.id})"
                                                     class="btn btn-primary float-end mt-2">댓글 등록
                                             </button>
@@ -273,6 +305,12 @@
     </div>
 </div>
 </body>
+<style>
+  [aria-expanded="false"] > .expanded,
+  [aria-expanded="true"] > .collapsed {
+    display: none;
+  }
+</style>
 <script>
   const deleteArticleById = (articleId) => {
     const parameterObject = {'articleId': articleId}
@@ -290,17 +328,26 @@
   }
 
   const deleteReply = (replyId, articleId) => {
-    const parameterObject = {'replyId': replyId, 'articleId':articleId}
+    const parameterObject = {'replyId': replyId, 'articleId': articleId}
     const method = 'post'
     const action = '<%=AdminCommands.REPLY_DELETE.getPath()%>'
     sendFormWithParameter(parameterObject, method, action)
   }
 
   const recoverReply = (replyId, articleId) => {
-    const parameterObject = {'replyId': replyId, 'articleId':articleId}
+    const parameterObject = {'replyId': replyId, 'articleId': articleId}
     const method = 'post'
     const action = '<%=AdminCommands.REPLY_RECOVERY.getPath()%>'
     sendFormWithParameter(parameterObject, method, action)
   }
+
+  const nestedReply = (replyId, articleId) => {
+    let content = document.getElementById(`nestedReply\${replyId}`).value
+    const parameterObject = {'replyId': replyId, 'articleId': articleId, 'content': content}
+    const method = 'post'
+    const action = '<%=AdminCommands.INQUIRY_REPLY.getPath()%>'
+    sendFormWithParameter(parameterObject, method, action)
+  }
+
 </script>
 </html>

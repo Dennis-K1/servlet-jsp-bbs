@@ -8,20 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<head>
-  <script>
-    let paginationPath = window.location.pathname
-    const toPageOf = (pageNumber) => {
-      let parameterObject = {'pageNumber': pageNumber}
-      let searchKeyword = `${pageParameters.searchKeyword}`
-      if (searchKeyword.length > 0) {
-        parameterObject.searchKeyword = searchKeyword
-      }
-      linkTo(paginationPath, parameterObject)
-    }
-  </script>
-</head>
 
+<%-- 각 목록에 표시되는 페지네이션 공통 컴포넌트 --%>
 <div id="pagination" class="d-flex justify-content-center">
   <c:if test="${pageParameters.pageNumber <= fn:length(pageParameters.displayedPageNumbers)}">
     <button onclick="toPageOf(${pageParameters.startPage})" class="pageButton">
@@ -65,3 +53,15 @@
     </button>
   </c:if>
 </div>
+
+<script>
+  let paginationPath = window.location.pathname
+  const toPageOf = (pageNumber) => {
+    let parameterObject = {'pageNumber': pageNumber}
+    let searchKeyword = `${pageParameters.searchKeyword}`
+    if (searchKeyword.length > 0) {
+      parameterObject.searchKeyword = searchKeyword
+    }
+    linkTo(paginationPath, parameterObject)
+  }
+</script>

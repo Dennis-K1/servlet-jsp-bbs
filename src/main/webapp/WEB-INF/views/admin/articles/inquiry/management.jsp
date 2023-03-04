@@ -10,9 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-
 <%-- 1:1문의 관리 목록 페이지 컴포넌트 --%>
-
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -49,7 +47,6 @@
                   onclick="deleteArticleById(${article.id})">X
           </button>
         </td>
-
       </tr>
     </c:forEach>
   </table>

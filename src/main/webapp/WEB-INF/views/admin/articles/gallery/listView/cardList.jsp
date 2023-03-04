@@ -24,7 +24,7 @@
             <div class="card">
                 <a href="<%=AdminCommands.GALLERY_DETAIL.getPath()%>?articleId=${article.id}">
                     <img src="data:image/jpg;base64,${article.image}"
-                         class="card-img-top m-auto pt-2"
+                         class="card-img-top m-auto pt-3 ps-3"
                          alt="...">
                 </a>
                 <div class="card-body">

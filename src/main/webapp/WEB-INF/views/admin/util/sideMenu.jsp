@@ -9,40 +9,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<head>
-    <style>
-      .nav-item-selected {
-        background-color: cornflowerblue;
-      }
 
-      .nav-item-heading {
-        padding: 0 1rem;
-        font-weight: 800;
-        font-size: 0.8rem;
-        text-align: left;
-        color: #98b9fd;
-      }
-
-      .nav-item-border {
-        border-top: 1px solid #eaecf4;
-      }
-
-      .nav-item {
-        margin-top: 10px;
-        padding: 10px;
-      }
-
-      .nav-item-text {
-        color: #abd5ff;
-      }
-
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-    </style>
-
-</head>
+<%-- 로그인 페이지 제외 모든 어드민 페이지에서 노출되는 사이드 메뉴 --%>
 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-primary">
     <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 text-white min-vh-100">
         <ul class="navbar-nav d-flex flex-column mt-1 w-100">
@@ -97,10 +65,41 @@
     </div>
 </div>
 
+<style>
+  .nav-item-selected {
+    background-color: cornflowerblue;
+  }
+
+  .nav-item-heading {
+    padding: 0 1rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-align: left;
+    color: #98b9fd;
+  }
+
+  .nav-item-border {
+    border-top: 1px solid #eaecf4;
+  }
+
+  .nav-item {
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .nav-item-text {
+    color: #abd5ff;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+</style>
+
 <script>
-
+    <%-- 현재 경로를 파악하여 해당하는 사이드 바 메뉴를 selected로 표시  --%>
   let mainPath = window.location.pathname.split('/', 3).join('/')
-
   const navItem = document.getElementById(mainPath);
   navItem.classList.toggle('nav-item-selected');
   navItem.getElementsByTagName('span')[0].classList.toggle('text-light');

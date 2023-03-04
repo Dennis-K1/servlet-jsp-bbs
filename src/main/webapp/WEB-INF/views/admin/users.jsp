@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>회원 목록</title>
 </head>
 <body>
 <%--  탑 네브 바    --%>
@@ -23,11 +23,11 @@
 
         <div class="col" style="background-color: #f5f5f5">
             <div class="fs-3 fw-bold mt-4 text-secondary">
-                유저 목록
+                회원 목록
             </div>
 
             <div class="card bg-white  p-4 mt-3" id="component">
-                <%--       게시판 목록이 아닌 유저 목록임을 표시하기 위한 변수         --%>
+                <%--게시판 목록이 아닌 유저 목록임을 표시하기 위한 변수 (검색 바에서 카테고리 드롭다운 제외하기 위함)--%>
                 <c:set var = "userManagement" scope = "request" value = "${true}"/>
                 <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"></jsp:include>
 
@@ -44,6 +44,7 @@
                         <th scope="col">유저 삭제</th>
                         <th scope="col">유저 복구</th>
                     </tr>
+
                     <c:forEach items="${userList}" var="user">
                         <tr scope="row">
                             <td>${user.id}</td>
@@ -56,6 +57,9 @@
                             <td>${user.dateRegistered }</td>
                             <td>${user.userDeleted }</td>
                             <td>${user.dateDeleted }</td>
+
+
+                            <%-- 유저가 삭제되지 않았다면 삭제 버튼, 삭제되었다면 복구 버튼 표시--%>
                             <c:choose>
                                 <c:when test="${user.userDeleted == 0}">
                                     <td>
@@ -83,6 +87,7 @@
                         </tr>
                     </c:forEach>
                 </table>
+
                 <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"></jsp:include>
                 <button class="btn btn-primary" style="width: 10%"
                         onclick="location.href=`<%=AdminCommands.USER_REGISTER_FORM.getPath()%>`">

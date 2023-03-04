@@ -7,6 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%-- 회원 등록 form--%>
 <html>
 <head>
     <title>회원 등록</title>
@@ -55,6 +57,9 @@
             </div>
         </div>
 </body>
+
+
+<%--AJAX를 활용한 아이디 중복 검사--%>
 <script>
   window.onload = function () {
     let httpRequest;

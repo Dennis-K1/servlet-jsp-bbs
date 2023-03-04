@@ -49,7 +49,6 @@
           <td>이미지 없음</td>
         </c:otherwise>
       </c:choose>
-
     </tr>
   </table>
   <div class="d-flex justify-content-start" name="buttons">

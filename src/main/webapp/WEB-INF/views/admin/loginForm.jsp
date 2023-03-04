@@ -8,10 +8,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%-- 이전 페이지에서 로그인이 안되어 로그인 페이지로 넘어올 경우 redirectURL 설정 --%>
 <c:set var="redirectURL" scope="request" value="${param.redirectURL}"/>
 <%
     request.setAttribute("redirectURL", request.getParameter("redirectURL"));
 %>
+
 <html>
 <head>
     <!-- CSS only -->
@@ -24,8 +27,11 @@
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
     <title>어드민 로그인</title>
+
+    <%--  백엔드에서 에러가 날라 올 경우 Alert  --%>
     <jsp:include page="<%=JspComponents.ERROR_MESSAGE.getPath()%>"/>
 </head>
+
 <body class="text-center">
 <div class="form-login">
     <form name="loginForm" action="<%=AdminCommands.LOGIN.getPath()%>?redirectURL=${param.redirectURL}"

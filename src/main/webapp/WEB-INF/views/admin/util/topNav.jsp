@@ -9,6 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <script type="text/javascript"
         src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
 <link rel="stylesheet" type="text/css"
@@ -33,6 +34,8 @@
 </style>
 
 
+<%-- 로그인 페이지를 제외한 모든 관리자 페이지에 노출되는 상단 네비 컴포넌트
+     Bootstrap css,js 밑 기타 css 경로는 해당 파일에서 통합 관리 --%>
 <nav class="navbar navbar-dark" style="background-color: #0c3d9f">
     <div class="container-fluid">
         <a href="<%=AdminCommands.INDEX.getPath()%>"><span
@@ -40,7 +43,7 @@
         <div class="d-flex justify-content-end" id="profile">
             <span class="text-light me-5">
             <img style="width: 30px; border-radius: 7px; height: 30px"
-                 src="https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg">
+                 src="<%=request.getContextPath()%>/templates/img/profile.png">
                 <%=session.getAttribute(SessionKeys.LOGIN_ADMIN)%>
             </span>
             <a href="<%=AdminCommands.LOGOUT.getPath()%>"><span

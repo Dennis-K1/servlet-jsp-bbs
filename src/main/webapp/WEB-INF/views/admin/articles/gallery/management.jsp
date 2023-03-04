@@ -10,9 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-
 <%-- 갤러리 관리 목록 페이지 컴포넌트 --%>
-
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="fs-3 fw-bold mt-4 text-secondary">
@@ -20,10 +18,10 @@
 </div>
 <div class="card bg-white p-4 mt-3" id="component">
     <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"/>
-    <div class="viewButtons">
-        <button class="btn btn-primary m-2">리스트</button>
-        <button class="btn btn-primary m-2">갤러리</button>
-        <button class="btn btn-primary m-2">웹진</button>
+    <div class="viewButtons d-flex justify-content-end mt-2 mb-2">
+        <button onclick="changeButtonColor(this)" class="btn btn-outline-primary ms-2">리스트 뷰</button>
+        <button onclick="changeButtonColor(this)" class="btn btn-primary ms-2">갤러리 뷰</button>
+        <button onclick="changeButtonColor(this)" class="btn btn-primary ms-2">웹진 뷰</button>
     </div>
     <div id="listViews">
         <div id="simpleList">
@@ -44,6 +42,8 @@
 </div>
 <script>
 
+
+<%--  각 리스트 뷰 밑 뷰 표시를 위한 이벤트 리스너 함수 --%>
   const btnGroup = document.querySelector('.viewButtons');
   const buttons = btnGroup.querySelectorAll('button');
   const divs = document.querySelectorAll('#listViews > div');
@@ -55,5 +55,16 @@
       });
     });
   });
+
+    function changeButtonColor(button) {
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('btn-outline-primary');
+        if (!buttons[i].classList.contains('btn-primary')){
+            buttons[i].classList.add('btn-primary');
+        }
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+      }
+    }
 </script>
 

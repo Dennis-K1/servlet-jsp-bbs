@@ -13,7 +13,6 @@
 
 <%-- 공지사항 관리 목록 페이지 컴포넌트 --%>
 
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="fs-3 fw-bold mt-4 text-secondary">
     공지사항 관리
@@ -45,7 +44,6 @@
                             onclick="deleteArticleById(${article.id})">X
                     </button>
                 </td>
-
             </tr>
         </c:forEach>
     </table>

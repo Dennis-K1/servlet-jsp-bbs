@@ -9,6 +9,9 @@
   Time: 오전 1:23
   To change this template use File | Settings | File Templates.
 --%>
+
+
+<%-- 각 게시판 상세 페이지 공통 관리 파일--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

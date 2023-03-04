@@ -8,34 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<head>
-    <script>
-      let searchPath = window.location.pathname
-      const searchKeyword = () => {
-        let searchKeyword = document.getElementById('searchKeyword').value;
-        let startDate = document.getElementById('startDate').value;
-        let endDate = document.getElementById('endDate').value;
-        let searchCategory;
-        if (document.getElementById('searchCategory') != undefined){
-            searchCategory = document.getElementById('searchCategory').value;
-        }
-        let parameterObject = {};
-        if (searchKeyword.length > 0) {
-          parameterObject.searchKeyword = searchKeyword
-        }
-        if (startDate != '') {
-          parameterObject.startDate = startDate
-        }
-        if (endDate != '') {
-          parameterObject.endDate = endDate
-        }
-        if (searchCategory != "0" && searchCategory != undefined) {
-          parameterObject.searchCategory = searchCategory
-        }
-        linkTo(searchPath, parameterObject)
-      }
-    </script>
-</head>
+
+<%-- 각 목록에 표시되는 검색 바 공통 컴포넌트 --%>
 <div id="searchBar" class="d-flex justify-content-end">
     <c:choose>
         <c:when test="${pageParameters.startDate != null}">
@@ -94,7 +68,40 @@
             <input class="form-control w-25 ms-2" type="text" id="searchKeyword" placeholder="키워드 입력">
         </c:otherwise>
     </c:choose>
-
-
     <button class="btn btn-primary ms-2" style="width: 10%" onclick="searchKeyword()">검색</button>
 </div>
+
+
+<script>
+
+    <%--  각 입력값의 유효성 검증 후 검색 실행 --%>
+  let searchPath = window.location.pathname
+  const searchKeyword = () => {
+
+    let searchKeyword = document.getElementById('searchKeyword').value;
+    let startDate = document.getElementById('startDate').value;
+    let endDate = document.getElementById('endDate').value;
+    let searchCategory;
+
+    if (document.getElementById('searchCategory') != undefined){
+      searchCategory = document.getElementById('searchCategory').value;
+    }
+
+    let parameterObject = {};
+
+    if (searchKeyword.length > 0) {
+      parameterObject.searchKeyword = searchKeyword
+    }
+    if (startDate != '') {
+      parameterObject.startDate = startDate
+    }
+    if (endDate != '') {
+      parameterObject.endDate = endDate
+    }
+    if (searchCategory != "0" && searchCategory != undefined) {
+      parameterObject.searchCategory = searchCategory
+    }
+
+    linkTo(searchPath, parameterObject)
+  }
+</script>

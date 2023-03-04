@@ -97,7 +97,7 @@
                                          class="collapse">
                                         <textarea class="form-control"
                                                   id="nestedReply${reply.id}"
-                                                  rows="5"/>
+                                                  rows="5"></textarea>
                                         <button class="btn btn-primary"
                                                 onclick="nestedReply(${reply.id},${reply.articleId})"
                                                 style="position: absolute; right:0; bottom:0">
@@ -116,7 +116,6 @@
                                     <button onclick="deleteReply(${reply.id}, ${reply.articleId})"
                                             class="btn btn-danger">댓글 삭제
                                     </button>
-
                                 </c:when>
                                 <c:otherwise>
                                     <p>(숨김 처리된 댓글)
@@ -175,3 +174,4 @@
         </c:choose>
     </table>
 </div>
+

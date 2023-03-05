@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 /**
- * 게시글 관련 서비스
+ * 게시글,답글(댓글) 관련 서비스
  */
 public class ArticleService {
 
@@ -133,6 +133,12 @@ public class ArticleService {
 		}
 	}
 
+	/**
+	 * 게시글 수정
+	 *
+	 * @param article 수정할 정보 및 대상 게시글 번호가 든 객체
+	 * @return
+	 */
 	public int editArticle(Article article) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
@@ -140,6 +146,12 @@ public class ArticleService {
 		}
 	}
 
+	/**
+	 * 대상 사용자가 작성한 게시글 목록 반환
+	 *
+	 * @param user 대상 사용자 정보 객체
+	 * @return
+	 */
 	public List<Article> getArticleListByUser(User user) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
@@ -147,6 +159,12 @@ public class ArticleService {
 		}
 	}
 
+	/**
+	 * 답글(댓글) 등록
+	 *
+	 * @param reply 답글(댓글) 정보 객체
+	 * @return
+	 */
 	public int inputReply(Reply reply) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
@@ -158,6 +176,12 @@ public class ArticleService {
 		}
 	}
 
+	/**
+	 * 대상 답글(댓글) 삭제
+	 *
+	 * @param replyId 대상 답글(댓글) 번호
+	 * @return
+	 */
 	public int deleteReplyById(Long replyId) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
@@ -165,6 +189,12 @@ public class ArticleService {
 		}
 	}
 
+	/**
+	 * 게시글 번호로 게시판 번호 조회
+	 *
+	 * @param articleId 대상 게시글 번호
+	 * @return
+	 */
 	public Long getBoardIdById(Long articleId) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
@@ -172,6 +202,12 @@ public class ArticleService {
 		}
 	}
 
+	/**
+	 * 답글(댓글) 복구
+	 *
+	 * @param replyId 대상 답글(댓글) 번호
+	 * @return
+	 */
 	public int recoverReplyById(Long replyId) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);

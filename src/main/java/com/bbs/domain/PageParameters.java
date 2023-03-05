@@ -34,8 +34,20 @@ public class PageParameters {
 	 * 조회 대상 페이지 번호
 	 */
 	private int pageNumber;
+
+	/**
+	 * 검색 범위 시작일
+	 */
 	private String startDate;
+
+	/**
+	 * 검색 범위 종료일
+	 */
 	private String endDate;
+
+	/**
+	 * 검색 카테고리 번호
+	 */
 	private String searchCategory;
 
 	/**
@@ -69,6 +81,12 @@ public class PageParameters {
 	private List<Integer> displayedPageNumbers = new ArrayList<>();
 
 
+	/**
+	 * '사용자 요청 페이지 번호' 및 '검색값 기반 총 아이템 수'를 이용하여 페이지네이션 관련 변수 초기화
+	 *
+	 * @param requestedPageNumber 사용자 요청 페이지 번호
+	 * @param numberOfItems 검색값 기반 총 아이템 수
+	 */
 	public void setPaginationElements (String requestedPageNumber, int numberOfItems) {
 		this.numberOfItems = numberOfItems;
 		this.pageNumber = validatePageNumber(requestedPageNumber);

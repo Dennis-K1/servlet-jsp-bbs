@@ -11,7 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * frontController
+ * 모든 요청이 시작되는 frontController
+ *
+ * 1. request 경로 정보를 이용하여 해당하는 Command 객체를 CommandFactory 에서 생성
+ * 2. Command 객체가 요청 정보를 이용하여 로직 실행 후 해당하는 View 객체 생성 반환
+ * 3. View.resolverPath 를 통해 redirect 나 forward 에 맞는 경로 resolve,
+ * 4. View.render 를 통해 해당 JSP (프론트) 클라이언트 반환
  */
 @WebServlet("/")
 public class Controller extends HttpServlet {

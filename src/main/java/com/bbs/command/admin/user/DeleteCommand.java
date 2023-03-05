@@ -17,9 +17,15 @@ public class DeleteCommand implements Command {
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+
 		UserService userService = new UserService();
+
 		int id = Integer.parseInt(request.getParameter("userId"));
-		userService.deleteUserById(id);
+
+		if (userService.deleteUserById(id) == 0){
+			throw new RuntimeException();
+		}
+
 		return View.redirectTo(AdminCommands.USER_MANAGEMENT.getPath());
 	}
 }

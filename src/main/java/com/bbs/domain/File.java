@@ -4,6 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 파일 정보 객체
+ */
 @Getter
 @NoArgsConstructor
 public class File {

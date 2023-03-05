@@ -20,6 +20,7 @@ public abstract class MybatisSqlSessionFactory {
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 	}
 

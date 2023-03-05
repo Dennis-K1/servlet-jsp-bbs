@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 답글(댓글) 정보
+ */
 @Getter
 @NoArgsConstructor
 public class Reply {
@@ -34,12 +37,24 @@ public class Reply {
 	private String content;
 
 	/**
+	 * 대댓글 등록 대상 댓글 PK
+	 */
+	@Setter
+	private Long replyId;
+
+	/**
 	 * 작성일
 	 */
 	private Date dateRegistered;
 
+	/**
+	 * 답글(댓글) 삭제 여부
+	 */
 	private Byte replyDeleted;
 
+	/**
+	 * 대댓글 목록
+	 */
 	@Setter
 	private List<NestedReply> nestedReplyList;
 

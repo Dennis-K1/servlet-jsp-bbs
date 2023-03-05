@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 어드민 인덱스(메인)페이지 관련 커맨드
+ *
+ * 1. 로그인된 사용자 정보 확인후 아이디 ("account") 프론트로 전달 (topNav 아이디 표시용)
  */
 public class AdminIndexCommand implements Command {
 

@@ -49,6 +49,7 @@ public class PasswordEncryptionWrapper extends HttpServletRequestWrapper {
 			messageDigest = MessageDigest.getInstance("SHA-512");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 
 		byte[] bytes = password.getBytes(Charset.forName("UTF-8"));

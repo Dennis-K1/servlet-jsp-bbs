@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * 로그인 화면 커맨드
+ *
+ * 이미 로그인 되어있는 사용자가 해당 경로 접속 시 홈페이지로 이동
+ */
 public class LoginFormCommand implements Command {
 
 	@Override
@@ -22,6 +27,7 @@ public class LoginFormCommand implements Command {
 		if (CommandUtil.isUserLoggedIn(session, SessionKeys.LOGIN_ADMIN)) {
 				return View.redirectTo(AdminCommands.INDEX.getPath());
 			}
+
 		return View.forwardTo(AdminCommands.LOGIN_FORM.getPath());
 	}
 }

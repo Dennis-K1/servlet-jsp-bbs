@@ -166,4 +166,40 @@ public class UserService {
 			return userMapper.getUserByAccount(account);
 		}
 	}
+
+	/**
+	 * 유효한 사용자 여부 확인 (사용자 아이디, 비밀번호 검증)
+	 *
+	 * @param user 대상 사용자 정보 객체
+	 */
+	public boolean isUserValid(User user){
+		if (login(user) == null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 아이디 사용 가능 여부 확인
+	 *
+	 * @param account 대상 아이디
+	 */
+	public boolean isAccountAvailable(String account){
+		if (getUserByAccount(account) != null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 아이디 유효성 검증
+	 *
+	 * @param account 대상 아이디
+	 */
+	public boolean isAccountValid(String account){
+		if (getUserByAccount(account) != null) {
+			return true;
+		}
+		return false;
+	}
 }

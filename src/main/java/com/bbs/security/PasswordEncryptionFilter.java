@@ -10,6 +10,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 해당 경로 접속 시 PasswordEncryptionWrapper 로 Request 를 감싸 비밀번호 hash 처리
+ */
 @WebFilter({"/register", "/login", "/admin/login", "/admin/register"})
 public class PasswordEncryptionFilter implements Filter {
 

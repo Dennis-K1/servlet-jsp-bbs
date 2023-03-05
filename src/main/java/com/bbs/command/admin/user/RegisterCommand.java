@@ -3,6 +3,7 @@ package com.bbs.command.admin.user;
 import com.bbs.command.AdminCommands;
 import com.bbs.command.ClientCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.Errors;
 import com.bbs.domain.Role;
 import com.bbs.domain.User;
 import com.bbs.domain.View;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 회원 등록 커맨드
+ *
+ * 1. 아이디 중복 확인, 중복이라면 에러메시지와 함께 등록화면 redirect
+ * 2. 사용자 등록 후 유저 관리 목록 페이지 redirect
  */
 public class RegisterCommand implements Command {
 
@@ -25,8 +29,8 @@ public class RegisterCommand implements Command {
 
 		String account = request.getParameter("account");
 
-		if (userService.getUserByAccount(account) != null) {
-			return View.forwardTo(AdminCommands.USER_REGISTER_FORM.getPath(), "이미 사용중인 아이디입니다.");
+		if (!userService.isAccountAvailable(account)) {
+			return View.redirectTo(AdminCommands.USER_REGISTER_FORM.getPath(), Errors.ACCOUNT_NOT_AVAILABLE.getMessage());
 		}
 
 		String password = request.getParameter("password");

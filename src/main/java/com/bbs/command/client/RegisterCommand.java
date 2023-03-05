@@ -2,6 +2,7 @@ package com.bbs.command.client;
 
 import com.bbs.command.ClientCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.Errors;
 import com.bbs.domain.View;
 import com.bbs.domain.User;
 import com.bbs.service.UserService;
@@ -25,7 +26,7 @@ public class RegisterCommand implements Command {
 		String account = request.getParameter("account");
 
 		if (userService.getUserByAccount(account) != null) {
-			return View.redirectTo(ClientCommands.REGISTER_FORM.getPath(), "이미 사용중인 아이디입니다.");
+			return View.redirectTo(ClientCommands.REGISTER_FORM.getPath(), Errors.ACCOUNT_NOT_AVAILABLE.getMessage());
 		}
 
 		String password = request.getParameter("password");

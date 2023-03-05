@@ -21,18 +21,18 @@ public class LoginFilter implements Filter {
 	/**
 	 * 로그인 필터가 적용되지 않는 요청 경로 모음
 	 */
-	private static final String[] whiteList = {"/","/login","/login/","/loginForm", "/loginForm/",
-												"/register", "/register/","/registerForm", "/registerForm/",
-												"/admin/login/","/admin/login","/admin/loginForm", "/admin/loginForm/",
-												".css", ".js"};
+	private static final String[] whiteList = {"/", "/login", "/login/", "/loginForm",
+		"/loginForm/",
+		"/register", "/register/", "/registerForm", "/registerForm/",
+		"/admin/login/", "/admin/login", "/admin/loginForm", "/admin/loginForm/",
+		".css", ".js", ".png", ".jpg"};
 
 	/**
-	 * whiteList 에 해당하는 요청 경로일 경우 pass
-	 * 아닌 경우 로그인 여부 확인 후 로그인 되어있을 경우 진행, 아닐 경우 로그인 페이지 이동
+	 * whiteList 에 해당하는 요청 경로일 경우 pass 아닌 경우 로그인 여부 확인 후 로그인 되어있을 경우 진행, 아닐 경우 로그인 페이지 이동
 	 *
-	 * @param request the <code>ServletRequest</code> object contains the client's request
+	 * @param request  the <code>ServletRequest</code> object contains the client's request
 	 * @param response the <code>ServletResponse</code> object contains the filter's response
-	 * @param chain the <code>FilterChain</code> for invoking the next filter or the resource
+	 * @param chain    the <code>FilterChain</code> for invoking the next filter or the resource
 	 * @throws IOException
 	 * @throws ServletException
 	 */
@@ -43,8 +43,8 @@ public class LoginFilter implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String requestURI = httpServletRequest.getRequestURI();
+		String queryStrings = httpServletRequest.getQueryString();
 		HttpSession session = httpServletRequest.getSession();
-
 
 		if (isWhiteListPath(requestURI, whiteList)) {
 			chain.doFilter(request, response);
@@ -61,7 +61,13 @@ public class LoginFilter implements Filter {
 				httpServletResponse.sendRedirect(AdminCommands.LOGIN_FORM.getPath());
 				return;
 			}
-			httpServletResponse.sendRedirect(AdminCommands.LOGIN_FORM.getPath() + "?redirectURL=" + requestURI);
+			if (queryStrings != null) {
+				httpServletResponse.sendRedirect(
+					AdminCommands.LOGIN_FORM.getPath() + "?redirectURL=" + requestURI + "?" + queryStrings);
+				return;
+			}
+			httpServletResponse.sendRedirect(
+				AdminCommands.LOGIN_FORM.getPath() + "?redirectURL=" + requestURI);
 			return;
 		}
 
@@ -76,8 +82,9 @@ public class LoginFilter implements Filter {
 
 	/**
 	 * 화이트리스트 경로에 해당하는지 확인
+	 *
 	 * @param requestURI 요청 경로
-	 * @param whiteList 화이트리스트
+	 * @param whiteList  화이트리스트
 	 * @return boolean
 	 */
 	private boolean isWhiteListPath(String requestURI, String[] whiteList) {
@@ -85,8 +92,9 @@ public class LoginFilter implements Filter {
 			if (requestURI.equals(whiteListPath)) {
 				return true;
 			}
-			if (requestURI.contains(".") && requestURI.substring(requestURI.lastIndexOf(".")).equals(whiteListPath)){
-					return true;
+			if (requestURI.contains(".") && requestURI.substring(requestURI.lastIndexOf("."))
+				.equals(whiteListPath)) {
+				return true;
 			}
 		}
 		return false;

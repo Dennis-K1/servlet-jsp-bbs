@@ -56,8 +56,20 @@ public enum JspComponents {
 	 * 갤러리 목록
 	 */
 	ADMIN_GALLERY_MANAGEMENT("/WEB-INF/views/admin/articles/gallery/management.jsp"),
+
+	/**
+	 * 갤러리 목록 리스트 뷰 (심플리스트 뷰)
+	 */
 	ADMIN_GALLERY_MANAGEMENT_SIMPLE("/WEB-INF/views/admin/articles/gallery/listView/simpleList.jsp"),
+
+	/**
+	 * 갤러리 목록 웹진 뷰 (이미지리스트 뷰)
+	 */
 	ADMIN_GALLERY_MANAGEMENT_IMAGE("/WEB-INF/views/admin/articles/gallery/listView/imageList.jsp"),
+
+	/**
+	 * 갤러리 목록 갤러리 뷰 (카드리스트 뷰)
+	 */
 	ADMIN_GALLERY_MANAGEMENT_CARD("/WEB-INF/views/admin/articles/gallery/listView/cardList.jsp"),
 
 	/**
@@ -68,6 +80,9 @@ public enum JspComponents {
 	 * 공지사항 등록
 	 */
 	ADMIN_GALLERY_INPUT_FORM("/WEB-INF/views/admin/articles/gallery/inputForm.jsp"),
+
+
+
 
 
 	// 전체 유틸 컴포넌트 모음

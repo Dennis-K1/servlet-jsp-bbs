@@ -19,7 +19,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Article {
 
-
 	/**
 	 * 게시글 PK
 	 */

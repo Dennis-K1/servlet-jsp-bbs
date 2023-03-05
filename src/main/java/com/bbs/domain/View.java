@@ -95,6 +95,18 @@ public class View {
 	}
 
 	/**
+	 * 에러메세지 포함하여 path 로 forward
+	 *
+	 * @param path 경로명
+	 * @return
+	 */
+	public static View forwardTo(String path, String errorMessage) {
+		return View.builder()
+			.path(path)
+			.errorMessage(errorMessage)
+			.build();
+	}
+	/**
 	 * path 로 단순 redirect
 	 *
 	 * @param path 경로명

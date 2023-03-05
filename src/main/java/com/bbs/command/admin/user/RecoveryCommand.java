@@ -17,9 +17,13 @@ public class RecoveryCommand implements Command {
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+
 		UserService userService = new UserService();
+
 		int id = Integer.parseInt(request.getParameter("userId"));
+
 		userService.recoverUserById(id);
+
 		return View.redirectTo(AdminCommands.USER_MANAGEMENT.getPath());
 	}
 }

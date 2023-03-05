@@ -1,7 +1,6 @@
 package com.bbs.service;
 
 import com.bbs.config.MybatisSqlSessionFactory;
-import com.bbs.mapper.ArticleMapper;
 import com.bbs.mapper.FileMapper;
 import com.bbs.domain.File;
 import com.bbs.properties.FileProperties;
@@ -48,7 +47,12 @@ public class FileService {
 	 * @throws IOException
 	 */
 	public String getEncodedImageFromFile(File file) throws IOException {
-		String filePath = file.getDirectory() + "//" + file.getSaveName();
+
+		//개발용
+		String filePath = file.getDirectory() + "\\" + file.getSaveName();
+
+		// 서버용
+//		String filePath = file.getDirectory() + "/" + file.getSaveName();
 		byte[] fileContent = FileUtils.readFileToByteArray(new java.io.File(filePath));
 		String encodedString = Base64.getEncoder().encodeToString(fileContent);
 		return encodedString;
@@ -62,22 +66,34 @@ public class FileService {
 	public int inputFile(File file) {
 		try(SqlSession session = sqlSessionFactory.openSession(true)){
 			FileMapper fileMapper = session.getMapper(FileMapper.class);
-			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
-			articleMapper.updateFileAttachedByArticleId(file.getArticleId());
 			return fileMapper.inputFile(file);
 		}
 	}
 
+	/**
+	 * 서버 파일 및 DB 파일 정보 삭제
+	 *
+	 * @param previousFile 게시물 파일 정보 객체
+	 * @return
+	 * @throws IOException
+	 */
 	public int deleteFile(File previousFile) throws IOException {
-		Files.delete(Paths.get(previousFile.getDirectory() + "\\"+ previousFile.getSaveName()));
+		Files.delete(Paths.get(previousFile.getDirectory() + previousFile.getSaveName()));
 		try(SqlSession session = sqlSessionFactory.openSession(true)){
 			FileMapper fileMapper = session.getMapper(FileMapper.class);
 			return fileMapper.deleteFile(previousFile);
 		}
 	}
 
+	/**
+	 * 있는 경우 서버 파일, 디렉토리 및 DB 파일 정보 삭제
+	 *
+	 * @param previousFile 게시물 파일 정보 객체
+	 * @return
+	 * @throws IOException
+	 */
 	public int deleteDirectory(File previousFile) throws IOException {
-		Files.deleteIfExists(Paths.get(previousFile.getDirectory() + "\\"+ previousFile.getSaveName()));
+		Files.deleteIfExists(Paths.get(previousFile.getDirectory() + previousFile.getSaveName()));
 		Files.deleteIfExists(Paths.get(previousFile.getDirectory()));
 		try(SqlSession session = sqlSessionFactory.openSession(true)){
 			FileMapper fileMapper = session.getMapper(FileMapper.class);
@@ -106,7 +122,7 @@ public class FileService {
 	 */
 	public void relocateFileFromTempDirectory(File file)
 		throws IOException {
-		Path tempFilePath = Paths.get(FileProperties.tempDirectory + "\\" + file.getOriginalName());
+		Path tempFilePath = Paths.get(FileProperties.tempDirectory + file.getOriginalName());
 		Path savePath = Paths.get(file.getDirectory());
 		Files.createDirectories(savePath);
 		Files.move(tempFilePath, savePath.resolve(file.getSaveName()));
@@ -120,7 +136,7 @@ public class FileService {
 	 */
 	public File createFileVO(MultipartRequest multipartRequest, Long articleId) {
 
-		String saveDirectory = FileProperties.fileDirectory + "\\" + articleId;
+		String saveDirectory = FileProperties.fileDirectory + articleId;
 		String fileName = multipartRequest.getFilesystemName("file");
 		String extension = fileName.split("\\.")[1];
 		String saveName = UUID.randomUUID().toString().replaceAll("-", "") + "." + extension;
@@ -134,6 +150,12 @@ public class FileService {
 			.build();
 	}
 
+	/**
+	 * 파일 첨부 여부 확인
+	 *
+	 * @param articleId 대상 게시글 번호
+	 * @return
+	 */
 	public Boolean isFileAttached(Long articleId) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			FileMapper fileMapper = session.getMapper(FileMapper.class);

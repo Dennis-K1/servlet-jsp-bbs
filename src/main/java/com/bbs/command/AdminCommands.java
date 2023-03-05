@@ -188,9 +188,24 @@ public enum AdminCommands {
 	 */
 	COMMUNITY_DETAIL("/admin/community/detail"),
 
+	/**
+	 * 갤러리 관리 (admin/articles/management 공통 커맨드에서 해당하는 View 로 forward)
+	 */
 	GALLERY_MANAGEMENT("/admin/gallery"),
+
+	/**
+	 * 갤러리 상세페이지 (admin/articles/detail 공통 커맨드에서 해당하는 View 로 forward)
+	 */
 	GALLERY_DETAIL("/admin/gallery/detail"),
+
+	/**
+	 * 갤러리 등록 (admin/articles/input 공통 커맨드에서 해당하는 View 로 forward)
+	 */
 	GALLERY_INPUT("/admin/gallery/input"),
+
+	/**
+	 * 갤러리 등록 화면 (admin/articles/inputForm 공통 커맨드에서 해당하는 View 로 forward)
+	 */
 	GALLERY_INPUT_FORM("/admin/gallery/inputForm"),
 
 	/*

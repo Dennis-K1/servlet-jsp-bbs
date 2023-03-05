@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 유저 관리 목록 페이지 관련 커맨드
+ * 1. 검색값 및 페이지 번호 이용하여 페이지네이션 객체 (PageParameters) 생성
+ * 2. pageParameters 를 이용하여 검색값 기반 아이템 목록 및 총 갯수 조회하여 반환
  */
 public class ManagementCommand implements Command {
 

@@ -55,6 +55,8 @@
           COUNT(*)
     FROM
           article
+          INNER JOIN
+              user ON article.user_id = user.id
     WHERE
           board_id = #{boardId}
           AND article_deleted = 0
@@ -127,25 +129,49 @@
   <!--  게시글 등록   -->
   <insert id="inputArticle" parameterType="com.bbs.domain.Article">
     INSERT INTO
-        article (board_id, user_id, title, content)
+        article
+            (board_id,
+             user_id,
+             title,
+             content)
     VALUES
-        (#{boardId},
-        #{user.id},
-        #{title},
-        #{content})
+            (#{boardId},
+            #{user.id},
+            #{title},
+            #{content})
     <selectKey keyProperty="id" resultType="long">
         SELECT LAST_INSERT_ID()
     </selectKey>
   </insert>
 
-  <!-- 답글 등록 -->
+  <!-- 답글(댓글) 등록, 프론트에서 replyId (댓글 PK) 를 함께 보냈을 경우 대댓글로 등록 -->
   <insert id="inputReply" parameterType="com.bbs.domain.Reply">
-    INSERT INTO
-        reply (article_id, user_id, content)
-    VALUES
-        (#{articleId},
-         #{user.id},
-         #{content})
+    <choose>
+      <when test="replyId != null">
+        INSERT INTO
+            reply
+              (article_id,
+               user_id,
+               content,
+               reply_id)
+        VALUES
+              (#{articleId},
+               #{user.id},
+               #{content},
+               #{replyId})
+      </when>
+      <otherwise>
+        INSERT INTO
+            reply
+                (article_id,
+                 user_id,
+                 content)
+        VALUES
+                (#{articleId},
+                 #{user.id},
+                 #{content})
+      </otherwise>
+    </choose>
   </insert>
 
   <!--  유저 아이디로 유저 조회 -->
@@ -220,25 +246,25 @@
       <if test="endDate != null">
         AND #{endDate} + INTERVAL 1 DAY &gt; date_registered
       </if>
-      <if test="searchCategory == 0">
-        <if test="searchKeyword != null">
-          <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND (title LIKE #{keyword} OR content LIKE #{keyword})
-        </if>
-      </if>
       <if test="searchCategory == 1">
         <if test="searchKeyword != null">
           <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND title LIKE #{keyword}
+          AND (title LIKE #{keyword} OR content LIKE #{keyword} OR account LIKE #{keyword})
         </if>
       </if>
       <if test="searchCategory == 2">
         <if test="searchKeyword != null">
           <bind name="keyword" value="'%' + searchKeyword + '%'" />
-          AND account LIKE #{keyword}
+          AND title LIKE #{keyword}
         </if>
       </if>
       <if test="searchCategory == 3">
+        <if test="searchKeyword != null">
+          <bind name="keyword" value="'%' + searchKeyword + '%'" />
+          AND account LIKE #{keyword}
+        </if>
+      </if>
+      <if test="searchCategory == 4">
         <if test="searchKeyword != null">
           <bind name="keyword" value="'%' + searchKeyword + '%'" />
           AND content LIKE #{keyword}

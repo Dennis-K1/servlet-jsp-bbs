@@ -38,10 +38,10 @@
         <c:choose>
             <c:when test="${pageParameters.searchCategory != null}">
                 <select id="searchCategory" name="searchCategory" class="form-select form-select-sm ms-2" style="width: 10%" aria-label=".form-select-sm example">
-                    <option value="0" selected>모두 선택</option>
-                    <option value="1">제목</option>
-                    <option value="2">작성자</option>
-                    <option value="3">내용</option>
+                    <option value="1" selected>모두 선택</option>
+                    <option value="2">제목</option>
+                    <option value="3">작성자</option>
+                    <option value="4">내용</option>
                     <script>
                       let category = document.getElementById("searchCategory");
                       category.value = "${pageParameters.searchCategory}"
@@ -50,10 +50,10 @@
             </c:when>
             <c:otherwise>
                 <select id="searchCategory" name="searchCategory" class="form-select form-select-sm ms-2" style="width: 10%" aria-label=".form-select-sm example">
-                    <option value="0" selected>모두 선택</option>
-                    <option value="1">제목</option>
-                    <option value="2">작성자</option>
-                    <option value="3">내용</option>
+                    <option value="1" selected>모두 선택</option>
+                    <option value="2">제목</option>
+                    <option value="3">작성자</option>
+                    <option value="4">내용</option>
                 </select>
             </c:otherwise>
         </c:choose>

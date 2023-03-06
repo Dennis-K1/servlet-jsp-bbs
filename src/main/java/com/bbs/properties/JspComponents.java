@@ -105,12 +105,8 @@ public enum JspComponents {
 	/**
 	 * 목록 검색 컴포넌트
 	 */
-	SEARCH_BAR("/WEB-INF/views/admin/util/searchBar.jsp"),
+	SEARCH_BAR("/WEB-INF/views/admin/util/searchBar.jsp");
 
-	/**
-	 * 유효성 검사 실패 등의 에러 메세지가 백엔드에서 날라올 경우 실행되는 핸들러
-	 */
-	ERROR_HANDLER("/WEB-INF/views/admin/util/errorHandler.jsp");
 
 	String path;
 }

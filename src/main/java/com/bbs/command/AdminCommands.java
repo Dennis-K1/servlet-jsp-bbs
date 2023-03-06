@@ -208,6 +208,8 @@ public enum AdminCommands {
 	 */
 	GALLERY_INPUT_FORM("/admin/gallery/inputForm"),
 
+	ERROR_HANDLER("/admin/util/errorHandler"),
+
 	/*
 	편의를 위한 enum 끝 표시 //TODO THE_END_OF_ENUM 삭제
 	 */

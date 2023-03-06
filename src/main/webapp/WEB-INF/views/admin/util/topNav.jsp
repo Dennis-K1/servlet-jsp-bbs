@@ -9,7 +9,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<jsp:include page="errorHandler.jsp"></jsp:include>
+<script>
+  <%--이전 페이지에서 뒤로가기 하여 해당 페이지 도착한 경우 새로고침--%>
+  window.addEventListener( "pageshow", function ( event ) {
+    let historyTraversal = event.persisted ||
+        ( typeof window.performance != "undefined" &&
+            window.performance.navigation.type === 2 );
+    if ( historyTraversal ) {
+      // Handle page restore.
+      window.location.reload();
+    }
+  });
+</script>
 <script type="text/javascript"
         src="<%=request.getContextPath()%>/templates/javascript/page-util.js"></script>
 <link rel="stylesheet" type="text/css"

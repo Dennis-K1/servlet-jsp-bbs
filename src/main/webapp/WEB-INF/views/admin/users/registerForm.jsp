@@ -15,9 +15,6 @@
 </head>
 <body>
 
-<%-- 유효성 검증 실패시 에러 alert--%>
-<jsp:include page="<%=JspComponents.ERROR_MESSAGE.getPath()%>"/>
-
 <%--  탑 네브 바    --%>
 <jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
 

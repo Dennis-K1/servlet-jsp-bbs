@@ -14,7 +14,18 @@
 <%
     request.setAttribute("redirectURL", request.getParameter("redirectURL"));
 %>
-
+<script>
+  <%--이전 페이지에서 뒤로가기 하여 해당 페이지 도착한 경우 새로고침--%>
+  window.addEventListener( "pageshow", function ( event ) {
+    let historyTraversal = event.persisted ||
+        ( typeof window.performance != "undefined" &&
+            window.performance.navigation.type === 2 );
+    if ( historyTraversal ) {
+      // Handle page restore.
+      window.location.reload();
+    }
+  });
+</script>
 <html>
 <head>
     <!-- CSS only -->

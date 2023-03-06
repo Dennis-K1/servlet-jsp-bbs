@@ -123,4 +123,11 @@ public interface ArticleMapper {
 	 * @param replyId 대상 댓글 PK
 	 */
 	int recoverReplyById(Long replyId);
+
+	/**
+	 * 답글(댓글) 조회
+	 *
+	 * @param replyId 대상 댓글 번호
+	 */
+	Reply getReplyById(Long replyId);
 }

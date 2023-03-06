@@ -41,8 +41,9 @@ public class Controller extends HttpServlet {
 
 		Command command = CommandFactory.getCommand(requestURI);
 
-		if (!isValidRequestCommand(command)) {
-			command = CommandFactory.getCommand(AdminCommands.INDEX.getPath());
+		if (isInValidRequestCommand(command)) {
+			response.sendRedirect(AdminCommands.INDEX.getPath());
+			return;
 		}
 
 		View view = command.execute(request, response);
@@ -55,7 +56,7 @@ public class Controller extends HttpServlet {
 	/**
 	 * 요청값이 잘못되어 CommandFactory 에서 가져온 command 가 null 일 경우 인덱스 반환
 	 */
-	private boolean isValidRequestCommand(Command command) {
+	private boolean isInValidRequestCommand(Command command) {
 		return Objects.equals(command, null);
 	}
 
@@ -71,7 +72,6 @@ public class Controller extends HttpServlet {
 		if (requestURI.length() > 1 && requestURI.endsWith("/")) {
 			requestURI = requestURI.substring(0, requestURI.length() - 1);
 		}
-
 		return requestURI;
 	}
 

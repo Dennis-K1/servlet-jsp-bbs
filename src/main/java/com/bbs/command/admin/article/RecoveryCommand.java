@@ -2,6 +2,7 @@ package com.bbs.command.admin.article;
 
 import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.Errors;
 import com.bbs.domain.View;
 import com.bbs.service.ArticleService;
 import java.io.IOException;
@@ -20,9 +21,13 @@ public class RecoveryCommand implements Command {
 
 		ArticleService articleService = new ArticleService();
 
-		Long articleId = Long.valueOf(request.getParameter("articleId"));
+		String articleId = request.getParameter("articleId");
+		if (!articleService.isValidArticleId(articleId)) {
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
 
-		articleService.recoverArticleById(articleId);
+		articleService.recoverArticleById(Long.valueOf(articleId));
 
 		return View.redirectTo(AdminCommands.NOTICE_MANAGEMENT.getPath());
 	}

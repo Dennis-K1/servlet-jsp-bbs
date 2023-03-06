@@ -35,7 +35,7 @@ public class DetailCommand implements Command {
 		String account = String.valueOf(request.getParameter("account"));
 
 		if (!userService.isAccountValid(account)) {
-			View.redirectTo(AdminCommands.USER_MANAGEMENT.getPath(), Errors.INVALID_USER.getMessage());
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(), Errors.INVALID_USER.getMessage());
 		}
 
 		User user = userService.getUserByAccount(account);

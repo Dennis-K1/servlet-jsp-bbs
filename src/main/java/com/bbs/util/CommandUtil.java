@@ -13,6 +13,20 @@ import javax.servlet.http.HttpSession;
  */
 public class CommandUtil {
 
+	private static final int ACCOUNT_MIN = 3;
+	private static final int ACCOUNT_MAX = 9;
+	private static final int PASSWORD_MIN = 4;
+	private static final int PASSWORD_MAX = 15;
+	private static final String PASSWORD_FORM = "/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/";
+	private static final int TITLE_MIN = 5;
+	private static final int TITLE_MAX = 49;
+	private static final int CONTENT_MIN = 30;
+	private static final int CONTENT_MAX = 499;
+	private static final int REPLY_MIN = 1;
+	private static final int REPLY_MAX = 99;
+	private static final String[] IMAGE_EXTENSION_LIST = {"jpg", "jpeg", "png"};
+	private static final String SEARCH_PARAMETER_DATE_FORMAT = "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$";
+	private static final String ARTICLE_SEARCH_CATEGORY_ID_RANGE = "[1-4]";
 	/**
 	 * 세션 저장된 사용자 아이디 조회
 	 * @param request 요청 객체
@@ -30,7 +44,7 @@ public class CommandUtil {
 	 * @param parameter 문자열 입력
 	 * @return Boolean
 	 */
-	public static Boolean isPositiveInteger(String parameter) {
+	public static Boolean isStringPositiveInteger(String parameter) {
 		if (parameter == null) {
 			return false;
 		}
@@ -114,6 +128,93 @@ public class CommandUtil {
 		return false;
 	}
 
+	public static boolean isAccountValid(String account) {
+		if (isStringEmpty(account)) {
+			return false;
+		}
+		if (account.length() < ACCOUNT_MIN || account.length() > ACCOUNT_MAX) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isPasswordValid(String password) {
+		if (isStringEmpty(password)) {
+			return false;
+		}
+		if (!password.matches(PASSWORD_FORM)){
+			return false;
+		}
+		if (password.length() < PASSWORD_MIN || password.length() > PASSWORD_MAX) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isTitleValid(String title) {
+		if (isStringEmpty(title)) {
+			return false;
+		}
+		if (title.length() < TITLE_MIN || title.length() > TITLE_MAX) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isContentValid(String content) {
+		if (isStringEmpty(content)) {
+			return false;
+		}
+		if (content.length() < CONTENT_MIN || content.length() > CONTENT_MAX) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isReplyValid(String reply) {
+		if (isStringEmpty(reply)) {
+			return false;
+		}
+		if (reply.length() < REPLY_MIN || reply.length() > REPLY_MAX) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isImageExtensionValid(String fileExtension) {
+		for (String imageExtension : IMAGE_EXTENSION_LIST) {
+			if (imageExtension.equals(fileExtension)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 검색 범위 시작일 및 종료일 형태 검사후 유효하지 않을 시 null 반환 (null == 아무 것도 입력하지 않은 값)
+	 * @param date
+	 * @return
+	 */
+	public static String getValidatedSearchDate(String date) {
+		if (!isStringEmpty(date) && !date.matches(SEARCH_PARAMETER_DATE_FORMAT)) {
+			return null;
+		}
+		return date;
+	}
+
+	/**
+	 * 게시글 카테고리 번호 유효성 검사후, 유효하지 않을 시 null 반환 (null == 아무 것도 입력하지 않은 값)
+	 *
+	 * @param searchCategory 게시글 카테고리 번호
+	 * @return
+	 */
+	public static String getValidatedSearchCategory(String searchCategory) {
+		if (!isStringEmpty(searchCategory) && !searchCategory.matches(ARTICLE_SEARCH_CATEGORY_ID_RANGE)) {
+			return null;
+		}
+		return searchCategory;
+	}
+
 	/**
 	 * 게시판 번호에 해당하는 경로 반환 일치하지 않는 경우 인덱스 경로 반환
 	 *
@@ -137,11 +238,11 @@ public class CommandUtil {
 	 * @param pageNumber 사용자 입력 페이지 번호
 	 * @return
 	 */
-	public static int validatePageNumber(String pageNumber) {
+	public static int getValidatedPageNumber(String pageNumber) {
 		if (Objects.equals(null, pageNumber)){
 			return 1;
 		}
-		if (CommandUtil.isPositiveInteger(pageNumber)) {
+		if (CommandUtil.isStringPositiveInteger(pageNumber)) {
 			return Integer.parseInt(pageNumber);
 		}
 		return 1;

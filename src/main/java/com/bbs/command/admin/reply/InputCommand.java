@@ -2,6 +2,7 @@ package com.bbs.command.admin.reply;
 
 import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.Errors;
 import com.bbs.domain.Reply;
 import com.bbs.domain.User;
 import com.bbs.domain.View;
@@ -27,8 +28,19 @@ public class InputCommand implements Command {
 
 		ArticleService articleService = new ArticleService();
 
-		Long articleId = Long.valueOf(request.getParameter("articleId"));
+		String id = request.getParameter("articleId");
+		if (!articleService.isValidArticleId(id)) {
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
+
+		Long articleId = Long.valueOf(id);
+
 		String replyContent = request.getParameter("content");
+		if (!CommandUtil.isReplyValid(replyContent)) {
+			return  View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
 
 		User userInfo = User.builder()
 			.account(CommandUtil.getUserAccountFromSession(request, SessionKeys.LOGIN_ADMIN))

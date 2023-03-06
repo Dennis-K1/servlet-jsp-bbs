@@ -49,6 +49,16 @@
         article_id = #{value} AND reply_id IS NULL
   </select>
 
+  <!--  댓글 조회 -->
+  <select id="getReplyById" parameterType="long" resultType="com.bbs.domain.Reply">
+    SELECT
+      *
+    FROM
+      reply
+    WHERE
+      id = #{value}
+  </select>
+
   <!-- 검색 키워드 및 대상 게시판 기반 총 게시글 수 반환-->
   <select id="getNumberOfArticlesBySearch" resultType="int" parameterType="com.bbs.domain.PageParameters">
     SELECT

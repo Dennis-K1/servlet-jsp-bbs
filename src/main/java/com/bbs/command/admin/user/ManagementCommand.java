@@ -48,17 +48,16 @@ public class ManagementCommand implements Command {
 	 */
 	private PageParameters getPageParameters(HttpServletRequest request) {
 
-		//TODO 유효성 검사 (형태, 자료값 등)
 		String searchKeyword = request.getParameter("searchKeyword");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		String requestedPageNumber = request.getParameter("pageNumber");
+		String startDate = CommandUtil.getValidatedSearchDate(request.getParameter("startDate"));
+		String endDate = CommandUtil.getValidatedSearchDate(request.getParameter("endDate"));
+		int requestedPageNumber = CommandUtil.getValidatedPageNumber(request.getParameter("pageNumber"));
 
 		return PageParameters.builder()
 			.searchKeyword(searchKeyword)
 			.startDate(startDate)
 			.endDate(endDate)
-			.pageNumber(CommandUtil.validatePageNumber(requestedPageNumber))
+			.pageNumber(requestedPageNumber)
 			.build();
 	}
 }

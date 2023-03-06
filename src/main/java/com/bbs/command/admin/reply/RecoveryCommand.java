@@ -1,6 +1,8 @@
 package com.bbs.command.admin.reply;
 
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.Errors;
 import com.bbs.domain.View;
 import com.bbs.service.ArticleService;
 import com.bbs.util.CommandUtil;
@@ -20,12 +22,21 @@ public class RecoveryCommand implements Command {
 
 		ArticleService articleService = new ArticleService();
 
-		Long articleId = Long.valueOf(request.getParameter("articleId"));
-		Long replyId = Long.valueOf(request.getParameter("replyId"));
+		String articleId = request.getParameter("articleId");
+		if (!articleService.isValidArticleId(articleId)) {
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
 
-		articleService.recoverReplyById(replyId);
+		String replyId = request.getParameter("replyId");
+		if (!articleService.isValidReplyId(replyId)) {
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
 
-		String path = articleService.getBoardPathById(articleId);
+		articleService.recoverReplyById(Long.valueOf(replyId));
+
+		String path = articleService.getBoardPathById(Long.valueOf(articleId));
 
 		return View.redirectTo(path + "/detail?articleId=" + articleId);
 	}

@@ -30,6 +30,16 @@ public enum Errors {
 	 */
 	INVALID_USER("존재하지 않는 사용자입니다."),
 
+
+	/**
+	 * 게시글 등록 실패
+	 */
+	ARTICLE_INPUT_FAILURE("게시글 등록 실패"),
+
+	/**
+	 * 파일 등록 실패
+	 */
+	FILE_INPUT_FAILURE("파일 등록 실패"),
 	/**
 	 * 로그인 실패 시
 	 */

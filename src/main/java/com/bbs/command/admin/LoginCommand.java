@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
 			.build();
 
 		if (!userService.isUserValid(admin) || !userService.isAdmin(admin)) {
-			return View.redirectTo(AdminCommands.LOGIN_FORM.getPath(),
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
 				Errors.LOGIN_FAILURE.getMessage());
 		}
 

@@ -74,19 +74,18 @@ public class ManagementCommand implements Command {
 
 		Long boardId = CommandUtil.getBoardIdByRequest(request);
 
-		//TODO 유효성 검사 (형태, 자료값 등)
 		String searchKeyword = request.getParameter("searchKeyword");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		String searchCategory = request.getParameter("searchCategory");
-		String requestedPageNumber = request.getParameter("pageNumber");
+		String startDate = CommandUtil.getValidatedSearchDate(request.getParameter("startDate"));
+		String endDate = CommandUtil.getValidatedSearchDate(request.getParameter("endDate"));
+		String searchCategory = CommandUtil.getValidatedSearchCategory(request.getParameter("searchCategory"));
+		int requestedPageNumber = CommandUtil.getValidatedPageNumber(request.getParameter("pageNumber"));
 
 		return PageParameters.builder()
 			.searchKeyword(searchKeyword)
 			.startDate(startDate)
 			.endDate(endDate)
 			.searchCategory(searchCategory)
-			.pageNumber(CommandUtil.validatePageNumber(requestedPageNumber))
+			.pageNumber(requestedPageNumber)
 			.boardId(boardId)
 			.build();
 	}

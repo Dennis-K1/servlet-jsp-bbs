@@ -31,6 +31,8 @@ import org.apache.commons.io.FileUtils;
  */
 public class InputCommand implements Command {
 
+	private final Long GALLERY_BOARD_ID = 4L;
+
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
@@ -43,12 +45,23 @@ public class InputCommand implements Command {
 
 		MultipartRequest multipartRequest = fileService.getMultipartRequest(request);
 
+		// 제목 유효성 검사
 		String title = multipartRequest.getParameter("title");
+		if (!CommandUtil.isTitleValid(title)) {
+			return  View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
+
+		// 내용 유효성 검사
 		String content = multipartRequest.getParameter("content");
+		if (!CommandUtil.isContentValid(content)) {
+			return  View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
 
-
-		if (!isArticleInputValid(title,content)){
-			return View.redirectTo(path + "/inputForm",
+		// 갤러리 게시글이 파일 없이 등록되었을 경우 유효성 검증 실패
+		if (isGalleryArticleWithoutFile(multipartRequest, boardId)) {
+			return  View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
 				Errors.VALIDATION_ERROR.getMessage());
 		}
 
@@ -63,40 +76,43 @@ public class InputCommand implements Command {
 			.content(multipartRequest.getParameter("content"))
 			.build();
 
+		// 게시글 등록
 		int insertResult = (articleService.inputArticle(article));
-
 		if (insertResult != 1) {
 			FileUtils.cleanDirectory(new java.io.File(FileProperties.tempDirectory));
-			throw new RuntimeException("게시글 등록 실패");
+			throw new RuntimeException(Errors.ARTICLE_INPUT_FAILURE.getMessage());
 		}
 
 		if (CommandUtil.isFileUploaded(multipartRequest)) {
 			File file = fileService.createFileVO(multipartRequest, article.getId());
+
+			// 이미지 확장자 유효성 검사
+			if (!CommandUtil.isImageExtensionValid(file.getExtension())) {
+				articleService.deleteArticleById(article.getId());
+				return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+					Errors.VALIDATION_ERROR.getMessage());
+			}
+
+			// 파일 등록
 			insertResult = fileService.inputFile(file);
 			if (insertResult != 1) {
-				throw new RuntimeException("파일 등록 실패");
+				throw new RuntimeException(Errors.FILE_INPUT_FAILURE.getMessage());
 			}
 		}
-
 		return View.redirectTo(path);
 	}
 
 	/**
-	 * 입력값 서버 유효성 검증
+	 * 갤러리 게시글 파일 업로드 여부 확인
 	 *
-	 * @param title 제목
-	 * @param content 내용
+	 * @param multipartRequest 요청 객체
+	 * @param boardId 게시판 번호
 	 * @return
 	 */
-	private Boolean isArticleInputValid(String title, String content) {
-		if (Objects.equals("", title) || Objects.equals(null,title)) {
-			return false;
+	private boolean isGalleryArticleWithoutFile(MultipartRequest multipartRequest, Long boardId) {
+		if (!CommandUtil.isFileUploaded(multipartRequest) && boardId == GALLERY_BOARD_ID) {
+			return true;
 		}
-		if ("".equals(content) || Objects.equals(null,content)) {
-			return false;
-		}
-		return true;
+		return false;
 	}
-
-
 }

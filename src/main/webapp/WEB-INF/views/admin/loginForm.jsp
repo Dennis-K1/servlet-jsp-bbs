@@ -39,8 +39,6 @@
             crossorigin="anonymous"></script>
     <title>어드민 로그인</title>
 
-    <%--  백엔드에서 에러가 날라 올 경우 Alert  --%>
-    <jsp:include page="<%=JspComponents.ERROR_HANDLER.getPath()%>"/>
 </head>
 
 <body class="text-center">

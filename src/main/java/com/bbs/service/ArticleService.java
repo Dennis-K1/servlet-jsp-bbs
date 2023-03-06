@@ -221,4 +221,71 @@ public class ArticleService {
 		Long boardId = getBoardIdById(articleId);
 		return CommandUtil.getPathByBoardId(boardId);
 	}
+
+	/**
+	 * 요청 받은 게시글 번호가 숫자 형태이고 해당 게시판 경로에 해당하는 게시글 번호인지 유효성 검사
+	 *
+	 * @param articleId 요청 받은 게시글 번호
+	 * @param boardId 요청 받은 경로의 게시판 번호
+	 * @return
+	 */
+	public boolean isValidArticleId(String articleId, Long boardId) {
+		if (!CommandUtil.isStringPositiveInteger(articleId)) {
+			return false;
+		}
+		Article article = getArticleById(Long.valueOf(articleId));
+		if (Objects.equals(article, null)) {
+			return false;
+		}
+		if (article.getBoardId() != boardId) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 요청 받은 게시글 번호 유효한지 검사
+	 *
+	 * @param articleId 요청 받은 게시글 번호
+	 * @return
+	 */
+	public boolean isValidArticleId(String articleId) {
+		if (!CommandUtil.isStringPositiveInteger(articleId)) {
+			return false;
+		}
+		Article article = getArticleById(Long.valueOf(articleId));
+		if (Objects.equals(article, null)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 답글(댓글) 조회
+	 *
+	 * @param replyId 대상 댓글 번호
+	 */
+	public Reply getReplyById(Long replyId) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.getReplyById(replyId);
+		}
+	}
+
+	/**
+	 * 요청 받은 답글(댓글 번호 유효한지 검사
+	 *
+	 * @param replyId 요청 받은 답글(댓글 번호
+	 * @return
+	 */
+	public boolean isValidReplyId(String replyId) {
+		if (!CommandUtil.isStringPositiveInteger(replyId)) {
+			return false;
+		}
+		Reply reply = getReplyById(Long.valueOf(replyId));
+		if (Objects.equals(reply, null)) {
+			return false;
+		}
+		return true;
+	}
 }

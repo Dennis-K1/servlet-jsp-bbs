@@ -1,6 +1,8 @@
 package com.bbs.command.admin.article;
 
+import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.domain.Errors;
 import com.bbs.domain.File;
 import com.bbs.domain.View;
 import com.bbs.service.ArticleService;
@@ -26,8 +28,13 @@ public class DeleteCommand implements Command {
 		ArticleService articleService = new ArticleService();
 		FileService fileService = new FileService();
 
-		//TODO 유효성
-		Long id = Long.valueOf(request.getParameter("articleId"));
+		String articleId = request.getParameter("articleId");
+		if (!articleService.isValidArticleId(articleId)) {
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
+
+		Long id = Long.valueOf(articleId);
 
 		articleService.deleteArticleById(id);
 

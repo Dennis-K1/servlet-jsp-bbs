@@ -2,6 +2,8 @@ package com.bbs.command.admin.article;
 
 import com.bbs.command.AdminCommands;
 import com.bbs.command.Command;
+import com.bbs.command.CommandFactory;
+import com.bbs.domain.Errors;
 import com.bbs.domain.View;
 import com.bbs.domain.Article;
 import com.bbs.domain.File;
@@ -29,11 +31,18 @@ public class DetailCommand implements
 
 		ArticleService articleService = new ArticleService();
 
-		//TODO 유효성 검사 (값 꺼내어 검사 후 Long 변환)
-		Long articleId = Long.valueOf(request.getParameter("articleId"));
+		String id = request.getParameter("articleId");
+		Long boardId = CommandUtil.getBoardIdByRequest(request);
 
-		Article article = articleService.getArticleById(articleId);
+		if (!articleService.isValidArticleId(id, boardId)) {
+			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
+				Errors.VALIDATION_ERROR.getMessage());
+		}
+
+		Long articleId = Long.valueOf(id);
+
 		articleService.increaseArticleViewsById(articleId);
+		Article article = articleService.getArticleById(articleId);
 
 		FileService fileService = new FileService();
 

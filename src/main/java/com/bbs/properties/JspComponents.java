@@ -108,9 +108,9 @@ public enum JspComponents {
 	SEARCH_BAR("/WEB-INF/views/admin/util/searchBar.jsp"),
 
 	/**
-	 * 에러메세지 동작 컴포넌트
+	 * 유효성 검사 실패 등의 에러 메세지가 백엔드에서 날라올 경우 실행되는 핸들러
 	 */
-	ERROR_MESSAGE("/WEB-INF/views/admin/util/errorMessage.jsp");
+	ERROR_HANDLER("/WEB-INF/views/admin/util/errorHandler.jsp");
 
 	String path;
 }

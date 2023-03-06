@@ -18,7 +18,7 @@
 </div>
 
 <div class="card bg-white p-4 mt-3">
-    <form name="articleForm" action="<%=AdminCommands.ARTICLE_EDIT.getPath()%>" method="post"
+    <form name="noticeEditForm" action="<%=AdminCommands.ARTICLE_EDIT.getPath()%>" method="post" onsubmit="return validateNoticeEditForm();"
           enctype="multipart/form-data">
         <table class="d-flex mt-3 table table-borderless">
             <input type="hidden" name="articleId" id="articleId" value="${article.id}">
@@ -131,6 +131,36 @@
       removePreviewButton.style.display = "block";
     } else {
       removePreview();
+    }
+  }
+
+  const validateNoticeEditForm = () => {
+    let noticeEditForm = document.forms['noticeEditForm']
+    let title = noticeEditForm['title']
+    let content = noticeEditForm['content']
+
+    //제목
+    if (title.value === "") {
+      alert("제목을 입력해주세요.")
+      title.focus();
+      return false;
+    }
+    if (title.value.length < 5 || title.value.length > 50) {
+      alert("제목을 5글자 이상 50글자 미만으로 입력해주세요.")
+      title.focus();
+      return false;
+    }
+
+    //내용
+    if (content.value === "") {
+      alert("내용을 입력해주세요.")
+      content.focus();
+      return false;
+    }
+    if (content.value.length < 30 || content.value.length > 500) {
+      alert("내용을 30글자 이상 500글자 미만으로 입력해주세요.")
+      content.focus();
+      return false;
     }
   }
 </script>

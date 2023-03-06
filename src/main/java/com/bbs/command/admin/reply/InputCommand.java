@@ -49,7 +49,7 @@ public class InputCommand implements Command {
 
 		String path = articleService.getBoardPathById(articleId);
 
-		return View.redirectTo(path + "?articleId=" + articleId);
+		return View.redirectTo(path + "/detail?articleId=" + articleId);
 	}
 
 	/**

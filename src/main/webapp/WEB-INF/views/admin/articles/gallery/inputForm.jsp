@@ -17,7 +17,7 @@
 </div>
 
 <div class="card bg-white p-4 mt-3">
-    <form action="<%=AdminCommands.GALLERY_INPUT.getPath()%>" method="post"
+    <form name="galleryInputForm" action="<%=AdminCommands.GALLERY_INPUT.getPath()%>" method="post" onsubmit="return validateGalleryInputForm();"
           enctype="multipart/form-data">
         <table class="mt-3 table table-borderless">
             <tr>
@@ -59,5 +59,43 @@
         </button>
     </form>
 </div>
+<script>
+  const validateGalleryInputForm = () => {
+    let galleryInputForm = document.forms['galleryInputForm']
+    let title = galleryInputForm['title']
+    let content = galleryInputForm['content']
+    let file = galleryInputForm['file']
 
+    //제목
+    if (title.value === "") {
+      alert("제목을 입력해주세요.")
+      title.focus();
+      return false;
+    }
+    if (title.value.length < 5 || title.value.length > 50) {
+      alert("제목을 5글자 이상 50글자 미만으로 입력해주세요.")
+      title.focus();
+      return false;
+    }
+
+    //내용
+    if (content.value === "") {
+      alert("내용을 입력해주세요.")
+      content.focus();
+      return false;
+    }
+    if (content.value.length < 30 || content.value.length > 500) {
+      alert("내용을 30글자 이상 500글자 미만으로 입력해주세요.")
+      content.focus();
+      return false;
+    }
+
+    //파일
+    if (file.value === "") {
+      alert("이미지를 업로드해주세요.")
+      file.focus();
+      return false;
+    }
+  }
+</script>
 

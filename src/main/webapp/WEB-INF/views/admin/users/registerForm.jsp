@@ -14,6 +14,10 @@
     <title>회원 등록</title>
 </head>
 <body>
+
+<%-- 유효성 검증 실패시 에러 alert--%>
+<jsp:include page="<%=JspComponents.ERROR_MESSAGE.getPath()%>"/>
+
 <%--  탑 네브 바    --%>
 <jsp:include page="<%=JspComponents.TOP_NAV.getPath()%>"></jsp:include>
 
@@ -29,7 +33,8 @@
                 회원 등록
             </div>
             <div class="card bg-white p-4 mt-3">
-                <form action="<%=AdminCommands.USER_REGISTER.getPath()%>" method="post">
+                <form name="registerForm" action="<%=AdminCommands.USER_REGISTER.getPath()%>"
+                      method="post" onsubmit="return validateRegisterForm();">
                     <table class="mt-3 table table-borderless">
                         <tr>
                             <th class="font-weight-bold text-primary" style="width: 15%;">아이디</th>
@@ -41,13 +46,20 @@
                                         class="btn btn-primary">중복 검사
                                 </button>
                             </td>
-                            <td class="text-justify pt-3"><span id="idAvailabilityMessage"></span></td>
+                            <td class="text-justify pt-3"><span id="idAvailabilityMessage"></span>
+                            </td>
                         </tr>
                         <tr>
                             <th class="font-weight-bold text-primary" style="width: 15%;">비밀번호</th>
                             <td class="w-25"><input class="form-control" type="password"
                                                     name="password"
                                                     id="password" autocomplete="off"></td>
+                        </tr>
+                        <tr>
+                            <th class="font-weight-bold text-primary" style="width: 15%;">비밀번호 확인</th>
+                            <td class="w-25"><input class="form-control" type="password"
+                                                    name="passwordValidation"
+                                                    id="passwordValidation" autocomplete="off"></td>
                         </tr>
                     </table>
                     <button type="submit" class="btn btn-primary"
@@ -92,10 +104,54 @@
           }
         }
       };
-      httpRequest.open('GET', `<%=AdminCommands.USER_ID_AVAILABILITY_CHECK.getPath()%>?account=\${account}`);
+      httpRequest.open('GET',
+          `<%=AdminCommands.USER_ID_AVAILABILITY_CHECK.getPath()%>?account=\${account}`);
       httpRequest.responseType = "json";
       httpRequest.send();
     });
+  }
+
+  const validateRegisterForm = () => {
+    let registerForm = document.forms['registerForm'];
+    let account = registerForm['account'];
+    let password = registerForm['password'];
+    let passwordValidation = registerForm['passwordValidation'];
+
+    //아이디
+    if (account.value === "") {
+      alert("아이디를 입력해주세요.")
+      account.focus();
+      return false;
+    }
+    if (account.value.length < 3 || account.value.length > 10) {
+      alert("아이디를 3글자 이상 10글자 미만으로 입력해주세요.")
+      account.focus();
+      return false;
+    }
+
+    //비밀번호
+    if (password.value === "") {
+      alert("비밀번호를 입력해주세요.")
+      password.focus();
+      return false;
+    }
+    if (password.value.length < 4 || password.value.length > 16) {
+      alert("비밀번호는 특수문자( '!,@,$,%,^,&,*' 만 허용), 영문 대소문자, 숫자를 포함하여 " +
+          "4글자 이상 16글자 미만으로 입력해주세요.")
+      password.focus();
+      return false;
+    }
+    if (!password.value.match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/)) {
+      alert("비밀번호는 특수문자( '!,@,$,%,^,&,*' 만 허용), 영문 대소문자, 숫자를 포함하여 " +
+          "4글자 이상 16글자 미만으로 입력해주세요.")
+      password.focus();
+      return false;
+    }
+    if (password.value !== passwordValidation.value) {
+      alert("비밀번호 확인란에 동일한 비밀번호를 입력해주세요.")
+      passwordValidation.focus();
+      return false;
+    }
   }
 </script>
 </html>

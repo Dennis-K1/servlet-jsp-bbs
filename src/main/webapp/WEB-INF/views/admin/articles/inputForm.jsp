@@ -61,6 +61,8 @@
   }
 
   const setImagePreview = (event) => {
+    checkImageExtension()
+
     let preview = document.getElementById("preview");
     let removePreviewButton = document.getElementById("removePreviewButton");
     if (event.target.files.length > 0) {
@@ -70,6 +72,19 @@
       removePreviewButton.style.display = "block";
     } else {
       removePreview();
+    }
+
+    function checkImageExtension() {
+
+      let file = document.getElementById('file').value
+
+      let extension = file.slice(file.indexOf('.') + 1).toLowerCase()
+
+      if (extension !== 'jpg' || extension !== 'png' || extension !== 'jpeg') {
+        alert('이미지 파일은 jpg, jpeg, png 형식만 업로드 가능합니다.')
+        document.getElementById('file').value = '';
+        return;
+      }
     }
   }
 </script>

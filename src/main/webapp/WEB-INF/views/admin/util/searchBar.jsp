@@ -15,21 +15,21 @@
         <c:when test="${pageParameters.startDate != null}">
            <span class="mt-2"> 기간 : </span><input class="form-control ms-2" style="width: 10%;" type="date" id="startDate"
                         name="startDate"
-                        value="${pageParameters.startDate}">
+                        value="${pageParameters.startDate}" onchange="dateLimit(this.id)">
         </c:when>
         <c:otherwise>
            <span class="mt-2"> 기간 : </span><input class="form-control ms-2" style="width: 10%;" type="date" id="startDate"
-                        name="startDate">
+                        name="startDate" onchange="dateLimit(this.id)">
         </c:otherwise>
     </c:choose>
 
     <c:choose>
         <c:when test="${pageParameters.endDate != null}">
             <span class="mt-2 ms-2"> ~ </span><input class="form-control ms-2" style="width: 10%;" type="date" id="endDate" name="endDate"
-                   value="${pageParameters.endDate}">
+                   value="${pageParameters.endDate}" onchange="dateLimit(this.id)">
         </c:when>
         <c:otherwise>
-            <span class="mt-2 ms-2"> ~ </span><input class="form-control ms-2" style="width: 10%;" type="date" id="endDate" name="endDate">
+            <span class="mt-2 ms-2"> ~ </span><input class="form-control ms-2" style="width: 10%;" type="date" id="endDate" name="endDate" onchange="dateLimit(this.id)">
         </c:otherwise>
     </c:choose>
 
@@ -104,4 +104,16 @@
 
     linkTo(searchPath, parameterObject)
   }
+
+    <%-- 달력 날짜 제한 --%>
+    const dateLimit = (dateId) => {
+      let startDate = document.querySelector('#startDate');
+      let endDate = document.querySelector('#endDate');
+
+      if (dateId == 'startDate') {
+        endDate.min = startDate.value;
+      } else if (dateId == 'endDate') {
+        startDate.max = endDate.value;
+      }
+    }
 </script>

@@ -87,6 +87,9 @@
 
   const replyArticle = (articleId) => {
     let content = document.getElementById('reply').value
+    if (validateReply(content) === false) {
+      return;
+    }
     const parameterObject = {'articleId': articleId, 'content': content}
     const method = 'post'
     const action = '<%=AdminCommands.REPLY_INPUT.getPath()%>'
@@ -109,10 +112,24 @@
 
   const nestedReply = (replyId, articleId) => {
     let content = document.getElementById(`nestedReply\${replyId}`).value
+    if (validateReply(content) === false) {
+      return;
+    }
     const parameterObject = {'replyId': replyId, 'articleId': articleId, 'content': content}
     const method = 'post'
     const action = '<%=AdminCommands.REPLY_INPUT.getPath()%>'
     sendFormWithParameter(parameterObject, method, action)
+  }
+
+  function validateReply(content) {
+    if (content === ""){
+      alert("내용을 1글자 이상 100글자 미만으로 입력해주세요.")
+      return false;
+    }
+    if (content.length < 1 || content.length > 100){
+      alert("내용을 1글자 이상 100글자 미만으로 입력해주세요.")
+      return false;
+    }
   }
 </script>
 </html>

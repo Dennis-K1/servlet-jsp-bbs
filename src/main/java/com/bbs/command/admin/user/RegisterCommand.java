@@ -41,7 +41,7 @@ public class RegisterCommand implements Command {
 		}
 
 		String password = request.getParameter("password");
-		if (!CommandUtil.isAccountValid(password)) {
+		if (!CommandUtil.isPasswordValid(password)) {
 			return View.forwardTo(AdminCommands.ERROR_HANDLER.getPath(),
 				Errors.VALIDATION_ERROR.getMessage());
 		}

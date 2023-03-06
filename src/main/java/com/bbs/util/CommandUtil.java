@@ -128,6 +128,9 @@ public class CommandUtil {
 		return false;
 	}
 
+	/**
+	 * 아이디 입력값 유효성 검사
+	 */
 	public static boolean isAccountValid(String account) {
 		if (isStringEmpty(account)) {
 			return false;
@@ -138,6 +141,9 @@ public class CommandUtil {
 		return true;
 	}
 
+	/**
+	 * 비밀번호 입력값 유효성 검사
+	 */
 	public static boolean isPasswordValid(String password) {
 		if (isStringEmpty(password)) {
 			return false;
@@ -151,6 +157,9 @@ public class CommandUtil {
 		return true;
 	}
 
+	/**
+	 * 제목 입력값 유효성 검사
+	 */
 	public static boolean isTitleValid(String title) {
 		if (isStringEmpty(title)) {
 			return false;
@@ -161,6 +170,9 @@ public class CommandUtil {
 		return true;
 	}
 
+	/**
+	 * 내용 입력값 유효성 검사
+	 */
 	public static boolean isContentValid(String content) {
 		if (isStringEmpty(content)) {
 			return false;
@@ -171,6 +183,9 @@ public class CommandUtil {
 		return true;
 	}
 
+	/**
+	 * 답글(댓글) 입력값 유효성 검사
+	 */
 	public static boolean isReplyValid(String reply) {
 		if (isStringEmpty(reply)) {
 			return false;
@@ -181,6 +196,9 @@ public class CommandUtil {
 		return true;
 	}
 
+	/**
+	 * 이미지 확장자 유효성 검사
+	 */
 	public static boolean isImageExtensionValid(String fileExtension) {
 		for (String imageExtension : IMAGE_EXTENSION_LIST) {
 			if (imageExtension.equals(fileExtension)) {

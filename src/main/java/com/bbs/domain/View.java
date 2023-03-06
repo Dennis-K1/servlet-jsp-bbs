@@ -64,6 +64,8 @@ public class View {
 
 	/**
 	 * 앞단으로 정보 전달 및 화면 요청
+	 * redirect 는 바로,
+	 * forward 는 에러 메세지 있을 경우 setAttribute 하여 프론트 전달
 	 *
 	 * @param request  요청 객체
 	 * @param response 응답 객체
@@ -71,13 +73,12 @@ public class View {
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 		response.setContentType("text/html;charset=UTF-8");
-
 		if (isRedirect) {
-			if (errorMessage != null) {
-				request.getSession().setAttribute("error", errorMessage);
-			}
 			response.sendRedirect(path);
 			return;
+		}
+		if (errorMessage != null) {
+			request.setAttribute("error", errorMessage);
 		}
 		request.getRequestDispatcher(path).forward(request, response);
 	}
@@ -115,20 +116,6 @@ public class View {
 	public static View redirectTo(String path) {
 		return View.builder()
 			.isRedirect(true)
-			.path(path)
-			.build();
-	}
-
-	/**
-	 * 에러메세지 포함하여 path 로 단순 redirect
-	 *
-	 * @param path 경로명
-	 * @return
-	 */
-	public static View redirectTo(String path, String errorMessage) {
-		return View.builder()
-			.isRedirect(true)
-			.errorMessage(errorMessage)
 			.path(path)
 			.build();
 	}

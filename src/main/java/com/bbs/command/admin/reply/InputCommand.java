@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *  답글 등록 커맨드
+ *  답글(댓글) 대댓글 통합 등록 커맨드
+ *
+ *  1. 세션의 유저 정보를 이용하여 댓글 정보 객체 생성
+ *  2. 해당 댓글이 대댓글임을 알리는 "replyId (원 댓글의 PK)"를 프론트에서 보내왔는지 확인 후 답글(댓글) 등록
  */
 public class InputCommand implements Command {
 
@@ -37,8 +40,28 @@ public class InputCommand implements Command {
 			.content(replyContent)
 			.build();
 
+		if (isNestedReply(request)) {
+			Long replyId = Long.valueOf(request.getParameter("replyId"));
+			reply.setReplyId(replyId);
+		}
+
 		articleService.inputReply(reply);
 
-		return View.redirectTo(AdminCommands.INQUIRY_DETAIL.getPath() + "?articleId=" + articleId);
+		String path = articleService.getBoardPathById(articleId);
+
+		return View.redirectTo(path + "?articleId=" + articleId);
+	}
+
+	/**
+	 * 프론트에서 대댓글임을 알리는 replyId 를 보내왔는지 확인
+	 *
+	 * @param request
+	 */
+	private boolean isNestedReply(HttpServletRequest request) {
+		String replyId = request.getParameter("replyId");
+		if (replyId != null) {
+			return true;
+		}
+		return false;
 	}
 }

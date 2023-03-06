@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 게시글 등록 화면 커맨드
  */
-public class InputFormCommand implements
-	Command {
+public class InputFormCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
@@ -22,6 +21,7 @@ public class InputFormCommand implements
 		Long boardId = CommandUtil.getBoardIdByRequest(request);
 
 		request.setAttribute("boardId", boardId);
+
 		return View.forwardTo(AdminCommands.ARTICLE_INPUT_FORM.getPath());
 	}
 }

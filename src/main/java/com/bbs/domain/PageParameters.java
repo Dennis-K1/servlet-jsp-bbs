@@ -84,12 +84,10 @@ public class PageParameters {
 	/**
 	 * '사용자 요청 페이지 번호' 및 '검색값 기반 총 아이템 수'를 이용하여 페이지네이션 관련 변수 초기화
 	 *
-	 * @param requestedPageNumber 사용자 요청 페이지 번호
 	 * @param numberOfItems 검색값 기반 총 아이템 수
 	 */
-	public void setPaginationElements (String requestedPageNumber, int numberOfItems) {
+	public void setPaginationElements (int numberOfItems) {
 		this.numberOfItems = numberOfItems;
-		this.pageNumber = validatePageNumber(requestedPageNumber);
 		this.pageNumberOffset = getOffset(this.pageNumber);
 		this.pageCount = (int) (Math.ceil((double) numberOfItems / PAGE_SIZE));
 		this.startPage = (this.pageNumber / 10) * 10 + 1;
@@ -113,31 +111,18 @@ public class PageParameters {
 	}
 
 	/**
-	 * 페이지 번호 유효성 검사
-	 * 정수인 경우 대상에 맞게 반환, 아닌 경우 1 반환
-	 *
-	 * @param pageNumber 사용자 입력 페이지 번호
-	 * @return
-	 */
-	private int validatePageNumber(String pageNumber) {
-		if (CommandUtil.isPositiveInteger(pageNumber)) {
-			return Integer.parseInt(pageNumber);
-		}
-		return 1;
-	}
-
-	/**
 	 * 게시판 검색을 위한 초기 생성 빌더
 	 *
 	 * @param boardId 게시판 번호
 	 * @param searchKeyword 검색 키워드
 	 */
 	@Builder
-	public PageParameters(Long boardId, String searchKeyword, String startDate, String endDate, String searchCategory) {
+	public PageParameters(Long boardId, String searchKeyword, String startDate, String endDate, String searchCategory, int pageNumber) {
 		this.boardId = boardId;
 		this.searchKeyword = searchKeyword;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.searchCategory = searchCategory;
+		this.pageNumber = pageNumber;
 	}
 }

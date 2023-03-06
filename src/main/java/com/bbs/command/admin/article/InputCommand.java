@@ -22,26 +22,33 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * 게시글 등록 커맨드
+ *
+ * 1. request 객체를 이용하여 게시판 번호 및 경로 조회
+ * 2. multipartRequest 를 통해 입력된 게시글 정보 조회, 유효성 검사 실패시 등록 페이지로 redirect
+ * 3. 게시글 db 등록
+ * 4. 파일 저장 및 정보 db 등록
+ * 5. 해당 게시판 목록으로 redirect
  */
-public class InputCommand implements
-	Command {
+public class InputCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
-		Long boardId = CommandUtil.getBoardIdByRequest(request);
-
 		FileService fileService = new FileService();
 		ArticleService articleService = new ArticleService();
+
+		Long boardId = CommandUtil.getBoardIdByRequest(request);
+		String path = CommandUtil.getPathByBoardId(boardId);
 
 		MultipartRequest multipartRequest = fileService.getMultipartRequest(request);
 
 		String title = multipartRequest.getParameter("title");
 		String content = multipartRequest.getParameter("content");
 
+
 		if (!isArticleInputValid(title,content)){
-			return View.redirectTo(AdminCommands.NOTICE_INPUT.getPath(),
+			return View.redirectTo(path + "/inputForm",
 				Errors.VALIDATION_ERROR.getMessage());
 		}
 
@@ -56,7 +63,6 @@ public class InputCommand implements
 			.content(multipartRequest.getParameter("content"))
 			.build();
 
-
 		int insertResult = (articleService.inputArticle(article));
 
 		if (insertResult != 1) {
@@ -66,17 +72,13 @@ public class InputCommand implements
 
 		if (CommandUtil.isFileUploaded(multipartRequest)) {
 			File file = fileService.createFileVO(multipartRequest, article.getId());
-
-			fileService.relocateFileFromTempDirectory(file);
-
 			insertResult = fileService.inputFile(file);
-
 			if (insertResult != 1) {
 				throw new RuntimeException("파일 등록 실패");
 			}
 		}
 
-		return View.redirectTo(AdminCommands.NOTICE_MANAGEMENT.getPath());
+		return View.redirectTo(path);
 	}
 
 	/**

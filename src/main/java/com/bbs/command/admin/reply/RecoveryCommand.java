@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 답글(댓글) 복구 커맨드
+ */
 public class RecoveryCommand implements Command {
 
 	@Override
@@ -22,9 +25,7 @@ public class RecoveryCommand implements Command {
 
 		articleService.recoverReplyById(replyId);
 
-		Long boardId = articleService.getBoardIdById(articleId);
-
-		String path = CommandUtil.getPathByBoardId(boardId);
+		String path = articleService.getBoardPathById(articleId);
 
 		return View.redirectTo(path + "/detail?articleId=" + articleId);
 	}

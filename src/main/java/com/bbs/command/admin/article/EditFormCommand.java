@@ -16,13 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 게시글 수정 관련 커맨드
+ *
+ * 1. 게시글 정보 조회후, 파일이 있을 경우 함께 반환
  */
-public class EditFormCommand implements
-	Command {
+public class EditFormCommand implements Command {
 
 	@Override
 	public View execute(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+
 		ArticleService articleService = new ArticleService();
 
 		Long articleId = Long.valueOf(request.getParameter("articleId"));

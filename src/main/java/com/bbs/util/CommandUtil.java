@@ -129,4 +129,21 @@ public class CommandUtil {
 		}
 		return AdminCommands.INDEX.getPath();
 	}
+
+	/**
+	 * 페이지 번호 유효성 검사
+	 * 정수인 경우 대상에 맞게 반환, 아닌 경우 1 반환
+	 *
+	 * @param pageNumber 사용자 입력 페이지 번호
+	 * @return
+	 */
+	public static int validatePageNumber(String pageNumber) {
+		if (Objects.equals(null, pageNumber)){
+			return 1;
+		}
+		if (CommandUtil.isPositiveInteger(pageNumber)) {
+			return Integer.parseInt(pageNumber);
+		}
+		return 1;
+	}
 }

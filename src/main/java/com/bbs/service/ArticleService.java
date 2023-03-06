@@ -7,6 +7,7 @@ import com.bbs.mapper.UserMapper;
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
 import com.bbs.domain.User;
+import com.bbs.util.CommandUtil;
 import java.util.List;
 import java.util.Objects;
 import org.apache.ibatis.session.SqlSession;
@@ -112,11 +113,7 @@ public class ArticleService {
 	public Article getArticleById(Long id) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
-			Article article = articleMapper.getArticleById(id);
-			if (Objects.equals(null, article)) {
-				throw new RuntimeException();
-			}
-			return article;
+			return articleMapper.getArticleById(id);
 		}
 	}
 
@@ -213,5 +210,15 @@ public class ArticleService {
 			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
 			return articleMapper.recoverReplyById(replyId);
 		}
+	}
+
+	/**
+	 * 게시글 번호로 게시판 경로 조회
+	 *
+	 * @param articleId 대상 게시글 번호
+	 */
+	public String getBoardPathById(Long articleId) {
+		Long boardId = getBoardIdById(articleId);
+		return CommandUtil.getPathByBoardId(boardId);
 	}
 }

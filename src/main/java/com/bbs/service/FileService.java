@@ -59,13 +59,15 @@ public class FileService {
 	}
 
 	/**
-	 * DB 파일 정보 저장
+	 * temp 폴더에서 게시글 폴더로 파일 옮긴 후, DB에 파일 정보 저장
+	 *
 	 * @param file 파일 정보 객체
 	 * @return 수행 결과
 	 */
-	public int inputFile(File file) {
+	public int inputFile(File file) throws IOException {
 		try(SqlSession session = sqlSessionFactory.openSession(true)){
 			FileMapper fileMapper = session.getMapper(FileMapper.class);
+			relocateFileFromTempDirectory(file);
 			return fileMapper.inputFile(file);
 		}
 	}

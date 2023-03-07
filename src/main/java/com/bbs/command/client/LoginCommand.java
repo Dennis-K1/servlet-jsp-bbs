@@ -33,8 +33,7 @@ public class LoginCommand implements Command {
 			.build();
 
 		if (userService.login(user) == null) {
-			return View.redirectTo(ClientCommands.LOGIN_FORM.getPath(),
-				Errors.LOGIN_FAILURE.getMessage());
+			return View.redirectTo(ClientCommands.LOGIN_FORM.getPath());
 		}
 
 		session.setAttribute(SessionKeys.LOGIN_CLIENT, user.getAccount());

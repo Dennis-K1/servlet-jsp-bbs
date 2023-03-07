@@ -26,7 +26,7 @@ public class RegisterCommand implements Command {
 		String account = request.getParameter("account");
 
 		if (userService.getUserByAccount(account) != null) {
-			return View.redirectTo(ClientCommands.REGISTER_FORM.getPath(), Errors.ACCOUNT_NOT_AVAILABLE.getMessage());
+			return View.redirectTo(ClientCommands.REGISTER_FORM.getPath());
 		}
 
 		String password = request.getParameter("password");

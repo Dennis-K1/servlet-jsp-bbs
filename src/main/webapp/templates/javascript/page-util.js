@@ -31,3 +31,5 @@ const sendFormWithParameter = (parameterObject, method, action) => {
     }
     window.location.href = `${path}?${parameters}`
   }
+
+

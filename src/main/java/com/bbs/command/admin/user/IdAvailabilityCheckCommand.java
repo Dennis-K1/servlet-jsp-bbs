@@ -26,7 +26,7 @@ public class IdAvailabilityCheckCommand implements Command {
 
 		request.setAttribute("idAvailability", true);
 
-		if (userService.isAccountAvailable(account)) {
+		if (!userService.isAccountAvailable(account)) {
 			request.setAttribute("idAvailability", false);
 		}
 

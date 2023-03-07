@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
 		"/loginForm/",
 		"/register", "/register/", "/registerForm", "/registerForm/",
 		"/admin/login/", "/admin/login", "/admin/loginForm", "/admin/loginForm/",
-		".css", ".js", ".png", ".jpg"};
+		".css", ".js", ".png", ".jpg", "/admin/users/idAvailabilityCheck"};
 
 	/**
 	 * whiteList 에 해당하는 요청 경로일 경우 pass 아닌 경우 로그인 여부 확인 후 로그인 되어있을 경우 진행, 아닐 경우 로그인 페이지 이동

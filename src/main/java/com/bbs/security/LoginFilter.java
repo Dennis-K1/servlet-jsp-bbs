@@ -76,7 +76,18 @@ public class LoginFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		}
-		httpServletResponse.sendRedirect("/login");
+
+		if (requestURI.equals(ClientCommands.INDEX.getPath())) {
+			httpServletResponse.sendRedirect(ClientCommands.LOGIN_FORM.getPath());
+			return;
+		}
+		if (queryStrings != null) {
+			httpServletResponse.sendRedirect(
+				ClientCommands.LOGIN_FORM.getPath() + "?redirectURL=" + requestURI + "?" + queryStrings);
+			return;
+		}
+		httpServletResponse.sendRedirect(
+			ClientCommands.LOGIN_FORM.getPath() + "?redirectURL=" + requestURI);
 	}
 
 

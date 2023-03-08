@@ -13,6 +13,9 @@
 <%-- 1:1문의 관리 목록 페이지 컴포넌트 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div class="fs-3 fw-bold mt-4 text-secondary">
+  1:1문의 관리
+</div>
 
 <div class="card bg-white p-4 mt-3">
   <jsp:include page="<%=JspComponents.SEARCH_BAR.getPath()%>"/>

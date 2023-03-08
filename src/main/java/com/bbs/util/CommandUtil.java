@@ -13,20 +13,79 @@ import javax.servlet.http.HttpSession;
  */
 public class CommandUtil {
 
+	/**
+	 * 아이디 최소 길이
+	 */
 	private static final int ACCOUNT_MIN = 3;
+
+	/**
+	 * 아이디 최대 길이
+	 */
 	private static final int ACCOUNT_MAX = 9;
+
+	/**
+	 * 비밀번호 최소 길이
+	 */
 	private static final int PASSWORD_MIN = 4;
+
+	/**
+	 * 비밀번호 최대 길이
+	 */
 	private static final int PASSWORD_MAX = 15;
+
+	/**
+	 * 비밀번호 형태 제약 (영어 대, 소문자, 숫자, 특수기호 [!,@,#,$,%,^,&,*,?,_,~])
+	 */
 	private static final String PASSWORD_FORM = "/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/";
+
+	/**
+	 * 제목 최소 길이
+	 */
 	private static final int TITLE_MIN = 5;
+
+	/**
+	 * 제목 최대 길이
+	 */
 	private static final int TITLE_MAX = 49;
+
+	/**
+	 * 내용 최소 길이
+	 */
 	private static final int CONTENT_MIN = 30;
+
+	/**
+	 * 내용 최대 길이
+	 */
 	private static final int CONTENT_MAX = 499;
+
+	/**
+	 * 답글(댓글) 최소 길이
+	 */
 	private static final int REPLY_MIN = 1;
+
+	/**
+	 * 답글(댓글) 최대 길이
+	 */
 	private static final int REPLY_MAX = 99;
+
+	/**
+	 * 확장자 제한
+	 */
 	private static final String[] IMAGE_EXTENSION_LIST = {"jpg", "jpeg", "png"};
+
+	/**
+	 * 검색값 날짜 입력 형태 제약 yy-mm-dd
+	 */
 	private static final String SEARCH_PARAMETER_DATE_FORMAT = "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$";
+
+	/**
+	 * 검색값 카테고리 값 범위 (1 : 전체, 2 : 제목, 3 : 작성자, 4 : 내용)
+ 	 */
 	private static final String ARTICLE_SEARCH_CATEGORY_ID_RANGE = "[1-4]";
+
+	/**
+	 *
+	 */
 	/**
 	 * 세션 저장된 사용자 아이디 조회
 	 * @param request 요청 객체

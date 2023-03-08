@@ -16,11 +16,11 @@
         <ul class="navbar-nav d-flex flex-column mt-1 w-100">
             <hr class="nav-item-border">
             <li class="w-100">
-                <span class="nav-item-heading">대시보드</span>
+                <span class="nav-item-heading">메인</span>
                 <ul>
                     <li class="nav-item" id="<%=AdminCommands.INDEX.getPath()%>">
                         <a href="<%=AdminCommands.INDEX.getPath()%>"><span
-                                class="nav-item-text ps-4 p-2">통계</span></a>
+                                class="nav-item-text ps-4 p-2">대시보드</span></a>
                     </li>
                 </ul>
             </li>

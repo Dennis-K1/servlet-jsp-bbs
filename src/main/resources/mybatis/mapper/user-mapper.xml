@@ -65,6 +65,16 @@
         <include refid="searchParameters"/>
   </select>
 
+  <!--  총 활성 상태 유저 수 반환-->
+  <select id="getNumberOfActiveUsers" resultType="integer">
+    SELECT
+        COUNT(id)
+    FROM
+        user
+    WHERE
+        role_id = 2 AND user_deleted = 0
+  </select>
+
   <select id="getUserById" resultType="com.bbs.domain.User">
     SELECT
         *

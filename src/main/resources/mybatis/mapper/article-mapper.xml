@@ -18,6 +18,85 @@
     <collection property="nestedReplyList" column="{id=id, article_id=article_id}" javaType="java.util.ArrayList" ofType="com.bbs.domain.NestedReply" select="getNestedReplyListById"/>
   </resultMap>
 
+<!--  어드민 인덱스 대시보드 정보 객체-->
+  <resultMap id="adminDashboard" type="com.bbs.domain.AdminDashboard">
+    <association property="numberOfActiveUsers" column="id" select="com.bbs.mapper.UserMapper.getNumberOfActiveUsers"/>
+    <association property="numberOfPendingInquiries"  column="id" select="getNumberOfPendingInquiries"/>
+    <collection property="top5ViewsArticles" column="id" javaType="java.util.ArrayList" ofType="com.bbs.domain.Article" select="getTop5ViewsArticles"/>
+    <collection property="top3RecentArticlesByEachBoard" column="id" javaType="java.util.ArrayList" ofType="com.bbs.domain.Article" select="getTop3RecentArticlesByEachBoard"/>
+  </resultMap>
+
+
+<!--  각 게시판 활성 상태 게시글 수 조회하면서 adminDashboard resultMap 조회-->
+  <select id="getAdminDashboardResultMap" resultMap="adminDashboard">
+    SELECT
+        *,
+      COUNT(CASE WHEN board_id = 1 THEN 1 END) AS numberOfActiveNoticeArticles,
+      COUNT(CASE WHEN board_id = 2 THEN 1 END) AS numberOfActiveCommunityArticles,
+      COUNT(CASE WHEN board_id = 3 THEN 1 END) AS numberOfActiveInquiryArticles,
+      COUNT(CASE WHEN board_id = 4 THEN 1 END) AS numberOfActiveGalleryArticles
+    FROM
+        article
+    WHERE
+        article_deleted = 0;
+  </select>
+  
+  
+<!--  게시판 최근 게시글 각 3개-->
+  <select id="getTop3RecentArticlesByEachBoard" resultType="com.bbs.domain.Article">
+    SELECT
+        *
+    FROM
+        (SELECT
+             *,
+             ROW_NUMBER()
+                 OVER
+                    (PARTITION BY
+                        board_id
+                    ORDER BY
+                        date_registered ASC) AS ranking
+        FROM
+            article
+        WHERE
+            article_deleted = 0
+    ) article
+    WHERE
+        ranking &lt;= 3
+    ORDER BY
+        date_registered ASC;
+  </select>
+
+
+<!--  조회수 top5 게시글 목록 -->
+  <select id="getTop5ViewsArticles" resultType="com.bbs.domain.Article">
+    SELECT
+        article.*,
+        board_category.name AS boardName
+    FROM
+        article
+         INNER JOIN
+            board_category
+            ON article.board_id = board_category.id
+    WHERE
+        article_deleted = 0
+        ORDER BY
+            views DESC
+            LIMIT 5
+  </select>
+
+<!-- 답변 안된 1:1문의글 갯수 -->
+  <select id="getNumberOfPendingInquiries" resultType="integer">
+    SELECT
+        COUNT(*) as count
+    FROM
+        article
+        LEFT OUTER JOIN
+            reply
+            ON article.id = reply.article_id
+    WHERE
+        article_deleted = 0 AND board_id = 2 AND reply.id IS NULL
+  </select>
+
 <!--  댓글 삭제 처리-->
   <update id="deleteReplyById" parameterType="long">
     UPDATE

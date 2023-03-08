@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import com.bbs.config.MybatisSqlSessionFactory;
+import com.bbs.domain.AdminDashboard;
 import com.bbs.domain.Reply;
 import com.bbs.mapper.ArticleMapper;
 import com.bbs.mapper.UserMapper;
@@ -287,5 +288,15 @@ public class ArticleService {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * 어드민 인덱스 대시보드용 데이터 조회
+	 */
+	public AdminDashboard getAdminDashboard() {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+			return articleMapper.getAdminDashboardResultMap();
+		}
 	}
 }

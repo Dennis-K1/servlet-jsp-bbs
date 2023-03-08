@@ -1,5 +1,6 @@
 package com.bbs.mapper;
 
+import com.bbs.domain.AdminDashboard;
 import com.bbs.domain.Article;
 import com.bbs.domain.PageParameters;
 import com.bbs.domain.Reply;
@@ -130,4 +131,9 @@ public interface ArticleMapper {
 	 * @param replyId 대상 댓글 번호
 	 */
 	Reply getReplyById(Long replyId);
+
+	/**
+	 * 어드민 인덱스 대시보드용 데이터 조회
+	 */
+	AdminDashboard getAdminDashboardResultMap();
 }

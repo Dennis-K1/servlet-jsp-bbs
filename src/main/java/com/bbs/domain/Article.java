@@ -31,6 +31,11 @@ public class Article {
 	private Long boardId;
 
 	/**
+	 * 게시판 이름
+	 */
+	private String boardName;
+
+	/**
 	 * 사용자 테이블 PK
 	 */
 	@Setter

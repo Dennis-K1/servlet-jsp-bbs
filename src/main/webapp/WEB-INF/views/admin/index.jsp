@@ -34,7 +34,7 @@
             <div class="card bg-white p-4 mt-3">
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col">
-                        <div class="card border-primary">
+                        <div class="card border-primary h-100">
                             <div class="card-header bg-primary text-center">
                                 <medium class="text-light">게시판별 게시글 등록 비율</medium>
                             </div>
@@ -46,13 +46,19 @@
                     <div class="col">
                         <div class="row row-cols-1 row-cols-md-1 g-4">
                             <div class="col">
-                                <div class="card border-primary">
+                                <div class="card border-primary h-100">
                                     <div class="card-header bg-primary text-center">
                                         <medium class="text-light">총계</medium>
                                     </div>
                                     <div class="card-body">
                                         <p>총 활성 유저 수 : <span
                                                 class="text-primary fw-bold">${adminDashboard.numberOfActiveUsers}</span>
+                                        </p>
+                                        <p>총 게시글 수 : <span
+                                                class="text-primary fw-bold">${adminDashboard.numberOfActiveNoticeArticles +
+                                                                                adminDashboard.numberOfActiveCommunityArticles +
+                                                                                adminDashboard.numberOfActiveInquiryArticles +
+                                                                                adminDashboard.numberOfActiveGalleryArticles}</span>
                                         </p>
                                         <p>미답변 문의수 : <span
                                                 class="text-primary fw-bold">${adminDashboard.numberOfPendingInquiries}</span>
@@ -180,12 +186,10 @@
     type: 'pie',
     data: data,
     options: {
-      plugins: {
         legend: {
           position: 'bottom'
         }
       }
-    }
   });
 </script>
 <style>

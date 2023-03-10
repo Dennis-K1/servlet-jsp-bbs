@@ -1,4 +1,5 @@
-<%@ page import="com.bbs.command.AdminCommands" %><%--
+<%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.properties.JspComponents" %><%--
   Created by IntelliJ IDEA.
   User: bw120
   Date: 2023-03-04
@@ -36,4 +37,9 @@
         </div>
     </div>
 </c:forEach>
+<button class="btn btn-primary mt-2" style="width: 10%"
+        onclick="location.href=`<%=AdminCommands.GALLERY_INPUT_FORM.getPath()%>`">
+    등록
+</button>
+<jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"/>
 

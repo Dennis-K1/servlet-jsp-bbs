@@ -38,8 +38,8 @@
                             <div class="card-header bg-primary text-center">
                                 <medium class="text-light">게시판별 게시글 등록 비율</medium>
                             </div>
-                            <div class="card-body">
-                                <canvas id="articlesRatioChart"></canvas>
+                            <div class="card-body h-50">
+                                <canvas id="articlesRatioChart" class="mx-auto"></canvas>
                             </div>
                         </div>
                     </div>
@@ -193,6 +193,7 @@
   });
 </script>
 <style>
+
   .text-overflow {
     display: inline-block;
     white-space: nowrap;

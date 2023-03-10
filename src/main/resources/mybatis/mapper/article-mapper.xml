@@ -44,26 +44,13 @@
   
 <!--  게시판 최근 게시글 각 3개-->
   <select id="getTop3RecentArticlesByEachBoard" resultType="com.bbs.domain.Article">
-    SELECT
-        *
-    FROM
-        (SELECT
-             *,
-             ROW_NUMBER()
-                 OVER
-                    (PARTITION BY
-                        board_id
-                    ORDER BY
-                        date_registered ASC) AS ranking
-        FROM
-            article
-        WHERE
-            article_deleted = 0
-    ) article
-    WHERE
-        ranking &lt;= 3
-    ORDER BY
-        date_registered ASC;
+    (SELECT * FROM article WHERE article_deleted = 0 AND board_id = 1 ORDER BY date_registered LIMIT 3)
+    UNION ALL
+    (SELECT * FROM article WHERE article_deleted = 0 AND board_id = 2 ORDER BY date_registered LIMIT 3)
+    UNION ALL
+    (SELECT * FROM article WHERE article_deleted = 0 AND board_id = 3 ORDER BY date_registered LIMIT 3)
+    UNION ALL
+    (SELECT * FROM article WHERE article_deleted = 0 AND board_id = 4 ORDER BY date_registered LIMIT 3)
   </select>
 
 
@@ -94,7 +81,7 @@
             reply
             ON article.id = reply.article_id
     WHERE
-        article_deleted = 0 AND board_id = 2 AND reply.id IS NULL
+        article_deleted = 0 AND board_id = 3 AND reply.id IS NULL
   </select>
 
 <!--  댓글 삭제 처리-->

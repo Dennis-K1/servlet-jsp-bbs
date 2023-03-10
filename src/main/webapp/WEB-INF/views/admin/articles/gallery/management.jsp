@@ -33,12 +33,7 @@
         <div id="imageList" style="display: none">
             <jsp:include page="<%=JspComponents.ADMIN_GALLERY_MANAGEMENT_IMAGE.getPath()%>"/>
         </div>
-        <jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"/>
     </div>
-    <button class="btn btn-primary" style="width: 10%"
-            onclick="location.href=`<%=AdminCommands.GALLERY_INPUT_FORM.getPath()%>`">
-        등록
-    </button>
 </div>
 <script>
 

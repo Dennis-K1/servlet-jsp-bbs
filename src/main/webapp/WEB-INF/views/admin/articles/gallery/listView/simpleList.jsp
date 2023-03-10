@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.bbs.command.AdminCommands" %>
+<%@ page import="com.bbs.properties.JspComponents" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -38,3 +39,8 @@
         </tr>
     </c:forEach>
 </table>
+<button class="btn btn-primary" style="width: 10%"
+        onclick="location.href=`<%=AdminCommands.GALLERY_INPUT_FORM.getPath()%>`">
+    등록
+</button>
+<jsp:include page="<%=JspComponents.PAGINATION.getPath()%>"/>

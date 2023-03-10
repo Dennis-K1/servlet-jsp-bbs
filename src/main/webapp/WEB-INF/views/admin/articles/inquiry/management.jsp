@@ -39,10 +39,10 @@
         <td>${article.dateRegistered }</td>
         <c:choose>
           <c:when test="${fn:length(article.replyList)> 0}">
-            <td>답변 완료</td>
+            <td class="text-primary">답변 완료</td>
           </c:when>
           <c:otherwise>
-            <td>미답변</td>
+            <td class="text-danger">미답변</td>
           </c:otherwise>
         </c:choose>
         <td>

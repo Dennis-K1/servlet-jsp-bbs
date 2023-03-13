@@ -1,26 +1,16 @@
-***
 # 프로젝트 개요
-***
 ### 대시보드와 회원 및 게시글 관리 기능이 있는 관리자 페이지 (종합 게시판웹)
 - 개발 기간 : 3 주<br>
 
 ### 기술
 - 백엔드 : 
-<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">
-<img src="https://img.shields.io/badge/Servlet-green?style=for-the-badge">
-<img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
-<img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white">
+<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/Servlet-green?style=for-the-badge"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white">
 
 - 프론트 :
-<img src="https://img.shields.io/badge/JSP-orange?style=for-the-badge">
-<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+<img src="https://img.shields.io/badge/JSP-orange?style=for-the-badge"> <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
 
 -  배포 : 
-<img src="https://img.shields.io/badge/ubuntu-red?style=for-the-badge&logo=ubuntu&logoColor=black">
-<img src="https://img.shields.io/badge/GCP-blue?style=for-the-badge&logo=googlecloud&logoColor=black">
+<img src="https://img.shields.io/badge/ubuntu-red?style=for-the-badge&logo=ubuntu&logoColor=black"> <img src="https://img.shields.io/badge/GCP-blue?style=for-the-badge&logo=googlecloud&logoColor=black">
 
 ### 프로젝트 진행 중점 목표
   * 서버 유효성 검사
@@ -32,17 +22,20 @@
   * 회원 기능
     * 사용자 / 관리자 분리
   * 프론트 컨트롤러 / 커맨드 패턴 적용을 통한 스프링 프레임워크 모방
+    
+<br>
 
 # 데모 링크
-***
 
 * <http://34.64.189.244:8080/admin>
   * 테스트 계정 :
     * ID : zxc
     * PW : zxc
 
+<br>
+<br>
+
 # 목차
-***
 
 * [핵심 기능 목록](#핵심-기능-목록)
 * [ERD](#ERD)
@@ -59,10 +52,9 @@
   * [회원 기능](#회원-기능)
   * [스프링 프레임워크 모방](#스프링-프레임워크-모방)
 * [기타](#기타)
-***
+<br>
 
 # 핵심 기능 목록
-***
 
 1. 회원 기능
   -[x] 로그인 (서블릿 필터를 통한 검증 / 세션을 이용한 로그인 정보 저장)
@@ -85,10 +77,10 @@
   -[x] redirectURL (인덱스가 아닌 다른 경로로 접속 시도시, 로그인 후 접속 시도한 페이지로 이동)
   -[x] 클라이언트/서버 유효성 검증 (서버 유효성 검증 실패시 알러트 표시후 인덱스 이동)
 
+<br>
 
 
 # ERD
-***
 
 ![application erd](./src/readmeImage/application_erd.png)
 #### (컨트롤러부터 모델까지 모든 게시판을 공통 모듈에서 관리하는 것처럼, DB 역시 확장성을 위해 한 개의 게시글 테이블로 구성하였습니다.)
@@ -108,14 +100,13 @@
 - Role
   - 일반 사용자인지 관리자인지를 구분할 role_id 와 권한명이 담긴 테이블입니다.
 
+<br>
 
 # 애플리케이션 구조
-***
 
 ![application structure](./src/readmeImage/application_structure.png)
 
 ### 1. 로그인 필터
-***
 
 사용자의 요청이 먼저 거치게 되는 곳으로, 필터는 요청 경로를 분석하여 로그인 필요 여부를 판단합니다.<br>
 경로가 'whiteList' 에 해당하거나, 이미 클라이언트가 이미 로그인된 경우 요청은 프론트 컨트롤러로 전달되고,
@@ -202,7 +193,6 @@ public class PasswordEncryptionFilter implements Filter {
 <br>
 
 ### 2. 프론트 컨트롤러
-***
 
 MVC 패턴의 컨트롤러에 해당하며, 
 컨트롤러 중에서도 맨 앞에서 모든 요청을 받아 분배하는 역할을 하는 프론트 컨트롤러 입니다.<br>
@@ -253,7 +243,6 @@ public class Controller extends HttpServlet {
 <br>
 
 ### 3. 커맨드 팩토리
-***
 
 프론트 컨트롤러가 넘겨주는 요청에 맞추어 해당되는 커맨드를 반환해주는 역할을 합니다.<br>
 요청을 분석하여 클라이언트/어드민 요청을 판단하고, 경로와 해당하는 커맨드를 정리해둔 커맨드 맵에서 커맨드를 가져옵니다.
@@ -350,7 +339,6 @@ public enum ClientCommands {
 <br>
 
 ### 4. 커맨드
-***
 
 세분화된 컨트롤러의 역할을 합니다. <br>
 서비스 객체를 통해 필요한 로직을 수행하며, 
@@ -405,7 +393,6 @@ public class DetailCommand implements
 <br>
 
 ### 5. 뷰
-***
 
 요청에 알맞는 프론트를 넘기는 역할을 담당합니다.<br>
 resolvePath 를 통해 경로를 성정하며, render 를 통해 최종적으로 프론트를 호출하여 반환합니다.<br>
@@ -468,14 +455,13 @@ public void render(HttpServletRequest request, HttpServletResponse response)
     request.getRequestDispatcher(path).forward(request, response);
 }
 ```
+<br>
 
 
 # 프로젝트 중점 목표 및 솔루션
-***
 
 
 ### 서버 유효성 검사
-***
 
 사용자 입력값에 대해, 자바스크립트를 이용하여 클라이언트 단에서 기본적인 유효성 검사를 진행할 수 있지만 
 혹시 모를 경우를 대비하여 서버에서도 동일한 유효성 검증이 이루어져야 합니다. <br>
@@ -618,7 +604,6 @@ errorHandler 는 모든 페이지의 공통 요소인 탑 네비게이션 바에
 <br>
 
 ### 모듈화 (중복코드 최소화 및 재활용 최대화)
-***
 
 이번 프로젝트의 가장 큰 관심사 및 목표는 코드를 모듈화하여 재활용성을 극대화 시키고, 
 이를 통해 확장성을 높이는 것이었습니다.
@@ -675,7 +660,6 @@ errorHandler 는 모든 페이지의 공통 요소인 탑 네비게이션 바에
 <br>
 
 ### 유지보수성 증대
-***
 
 유지보수성 증대는 위의 모듈화화 궤를 같이 하는 목표 중 하나로, 남이 나의 코드를 보거나,
 내 자신이 나중에 이 프로젝트를 유지보수할 때도 어려움 없이 할 수 있도록 코드를 짜보자는 목표입니다.
@@ -761,7 +745,6 @@ Enum 과 Map 을 활용한 경로 및 커맨드 객체 관리, 프론트 단의 
 <br>
 
 ### 회원 기능
-***
 
 회원 기능은 필터를 적극 활용하여 관리자 회원 및 로그인 회원 여부를 검사하였고, 
 필요한 로직의 경우 CommandUtil 로 공통 로직을 관리하며 가용성을 높였습니다.
@@ -769,7 +752,6 @@ Enum 과 Map 을 활용한 경로 및 커맨드 객체 관리, 프론트 단의 
 <br>
 
 ### 스프링 프레임워크 모방
-***
 
 서블릿을 활용한 프로젝트이지만, 스프링을 좀 더 이해하고자 하는 목적이 있었던 만큼 스프링 프레임워크의 여러 방식을 모방하였고,
 그 예로 프론트 컨트롤러 및 커맨드 패턴 활용, View 객체 활용을 들 수 있으며, View - Controller - Service - Mapper 의 흐름으로 구성된
@@ -778,8 +760,7 @@ MVC 패턴을 적극 활용하였습니다.
 
 
 
-***
 # 감사합니다.
-***
+<br>
 
 

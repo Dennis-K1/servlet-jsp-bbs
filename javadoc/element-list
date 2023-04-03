@@ -1,0 +1,14 @@
+com.bbs.command
+com.bbs.command.admin
+com.bbs.command.admin.article
+com.bbs.command.admin.reply
+com.bbs.command.admin.user
+com.bbs.command.client
+com.bbs.config
+com.bbs.controller
+com.bbs.domain
+com.bbs.mapper
+com.bbs.properties
+com.bbs.security
+com.bbs.service
+com.bbs.util
